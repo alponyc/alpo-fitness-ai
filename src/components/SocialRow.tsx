@@ -5,10 +5,11 @@ const accounts = [
   { handle: "alponyceats", label: "AlpoNYCEats", url: "https://www.instagram.com/alponyceats" },
   { handle: "alposworld", label: "AlposWorld", url: "https://www.instagram.com/alposworld" },
   { handle: "thisisalponyc", label: "ThisIsAlpoNYC", url: "https://www.instagram.com/thisisalponyc" },
+  { handle: "slothystudios", label: "SlothyStudios", url: "https://www.instagram.com/slothystudios" },
 ];
 
 const SocialRow = () => (
-  <div className="grid grid-cols-4 gap-2 py-3">
+  <div className="grid grid-cols-5 gap-2 py-3">
     {accounts.map((a) => (
       <a
         key={a.handle}
