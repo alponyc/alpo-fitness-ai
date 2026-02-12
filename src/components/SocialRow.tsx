@@ -1,10 +1,10 @@
 import { Instagram } from "lucide-react";
 
 const accounts = [
-  { handle: "alponycfitness", url: "https://www.instagram.com/alponycfitness" },
-  { handle: "alponyceats", url: "https://www.instagram.com/alponyceats" },
-  { handle: "alposworld", url: "https://www.instagram.com/alposworld" },
-  { handle: "thisisalponyc", url: "https://www.instagram.com/thisisalponyc" },
+  { handle: "alponycfitness", label: "AlpoNYCFitness", url: "https://www.instagram.com/alponycfitness" },
+  { handle: "alponyceats", label: "AlpoNYCEats", url: "https://www.instagram.com/alponyceats" },
+  { handle: "alposworld", label: "AlposWorld", url: "https://www.instagram.com/alposworld" },
+  { handle: "thisisalponyc", label: "ThisIsAlpoNYC", url: "https://www.instagram.com/thisisalponyc" },
 ];
 
 const SocialRow = () => (
@@ -21,7 +21,7 @@ const SocialRow = () => (
           <Instagram className="w-4 h-4 text-primary" />
         </div>
         <span className="text-[8px] text-muted-foreground group-hover:text-primary transition-colors font-medium truncate max-w-[70px]">
-          @{a.handle.replace("alpo", "").replace("thisis", "")}
+          @{a.label}
         </span>
       </a>
     ))}
