@@ -414,6 +414,95 @@ export const kitchenDataByProfile: Record<ProfileKey, { fridgeItems: { name: str
   },
 };
 
+// === PR Cards per Profile ===
+export const prCardsByProfile: Record<ProfileKey, { lift: string; weight: string; date: string }[]> = {
+  alpo: [
+    { lift: "Incline DB Press", weight: "110 lbs", date: "2/8" },
+    { lift: "Lat Pulldown", weight: "140 lbs", date: "2/5" },
+    { lift: "Chest Press", weight: "200 lbs", date: "1/30" },
+    { lift: "Leg Press", weight: "450 lbs", date: "1/28" },
+    { lift: "Cable Row", weight: "160 lbs", date: "1/25" },
+    { lift: "Shoulder Press", weight: "70 lbs", date: "1/22" },
+    { lift: "Preacher Curl", weight: "80 lbs", date: "1/20" },
+    { lift: "Tricep Pushdown", weight: "90 lbs", date: "1/18" },
+    { lift: "Hack Squat", weight: "320 lbs", date: "1/15" },
+    { lift: "Calf Raise", weight: "280 lbs", date: "1/12" },
+  ],
+  client: [
+    { lift: "Flat Bench Press", weight: "225 lbs", date: "2/8" },
+    { lift: "Barbell Row", weight: "185 lbs", date: "2/6" },
+    { lift: "Squat", weight: "315 lbs", date: "2/3" },
+    { lift: "Overhead Press", weight: "135 lbs", date: "1/30" },
+    { lift: "Deadlift", weight: "365 lbs", date: "1/27" },
+    { lift: "Dumbbell Curl", weight: "50 lbs", date: "1/24" },
+    { lift: "Leg Extension", weight: "200 lbs", date: "1/20" },
+    { lift: "Lat Pulldown", weight: "180 lbs", date: "1/17" },
+  ],
+  family: [
+    { lift: "Goblet Squat", weight: "45 lbs", date: "2/9" },
+    { lift: "DB Shoulder Press", weight: "20 lbs", date: "2/7" },
+    { lift: "Hip Thrust", weight: "135 lbs", date: "2/4" },
+    { lift: "Lat Pulldown", weight: "70 lbs", date: "2/1" },
+    { lift: "Leg Press", weight: "180 lbs", date: "1/28" },
+    { lift: "Cable Kickback", weight: "30 lbs", date: "1/25" },
+    { lift: "Plank Hold", weight: "2:30 min", date: "1/22" },
+  ],
+};
+
+// === Weekly Schedule per Profile ===
+export const weeklyScheduleByProfile: Record<ProfileKey, { day: string; protocol: string; icon: string }[]> = {
+  alpo: [
+    { day: "Sun", protocol: "Rest / Sodium Flush", icon: "💧" },
+    { day: "Mon", protocol: "Larry Scott Pump", icon: "💪" },
+    { day: "Tue", protocol: "Fasted Productivity", icon: "🧠" },
+    { day: "Wed", protocol: "Vince Gironda Incline", icon: "📐" },
+    { day: "Thu", protocol: "Lyle McDonald RFL", icon: "🔥" },
+    { day: "Fri", protocol: "Cortisol Shield", icon: "🛡️" },
+    { day: "Sat", protocol: "Metabolic Reset", icon: "🔄" },
+  ],
+  client: [
+    { day: "Sun", protocol: "Rest / Active Recovery", icon: "🧘" },
+    { day: "Mon", protocol: "Chest & Triceps", icon: "💪" },
+    { day: "Tue", protocol: "Back & Biceps", icon: "🏋️" },
+    { day: "Wed", protocol: "LISS Cardio", icon: "🚶" },
+    { day: "Thu", protocol: "Legs & Core", icon: "🦵" },
+    { day: "Fri", protocol: "Shoulders & Arms", icon: "💪" },
+    { day: "Sat", protocol: "Full Body Circuit", icon: "🔄" },
+  ],
+  family: [
+    { day: "Sun", protocol: "Yoga Flow", icon: "🧘‍♀️" },
+    { day: "Mon", protocol: "HIIT Circuit", icon: "⚡" },
+    { day: "Tue", protocol: "Barre Class", icon: "🩰" },
+    { day: "Wed", protocol: "Pilates Core", icon: "🎯" },
+    { day: "Thu", protocol: "Upper Body Toning", icon: "💪" },
+    { day: "Fri", protocol: "Lower Body Sculpt", icon: "🦵" },
+    { day: "Sat", protocol: "Active Recovery Walk", icon: "🚶‍♀️" },
+  ],
+};
+
+// === Vitality Sleep/Steps/Recovery per Profile ===
+export const vitalityDetailsByProfile: Record<ProfileKey, {
+  sleep: { total: string; deep: string; rem: string; light: string; target: string; progress: number; status: string };
+  steps: { value: string; target: string; progress: number; distance: string; calories: string; floors: string; status: string };
+  recoveryInsight: string;
+}> = {
+  alpo: {
+    sleep: { total: "6h 45m", deep: "1h 20m", rem: "2h 05m", light: "3h 20m", target: "8h 00m", progress: 84, status: "Below Target" },
+    steps: { value: "4,144", target: "10,000", progress: 41, distance: "1.9 mi", calories: "178 kcal", floors: "4", status: "Below Target" },
+    recoveryInsight: 'Sleep is low (6h 45m); keeping caffeine high and sodium low for today\'s 196.2 goal. Step count at 4,144 — consider a 30-min evening walk to hit target. Cortisol within range but monitor post-commute.',
+  },
+  client: {
+    sleep: { total: "7h 10m", deep: "1h 45m", rem: "2h 20m", light: "3h 05m", target: "8h 00m", progress: 90, status: "Near Target" },
+    steps: { value: "6,210", target: "8,000", progress: 78, distance: "2.8 mi", calories: "245 kcal", floors: "6", status: "On Track" },
+    recoveryInsight: 'Sleep quality is improving at 7h 10m. Cortisol elevated at 21.5 — reduce PM caffeine after 2pm. Steps at 6,210 are trending up. Lower back tension noted — prioritize core bracing warm-ups before heavy lifts.',
+  },
+  family: {
+    sleep: { total: "7h 50m", deep: "2h 00m", rem: "2h 30m", light: "3h 20m", target: "8h 00m", progress: 98, status: "On Target" },
+    steps: { value: "8,320", target: "10,000", progress: 83, distance: "3.7 mi", calories: "310 kcal", floors: "8", status: "On Track" },
+    recoveryInsight: 'Excellent sleep at 7h 50m — deep sleep phase is strong. Steps at 8,320 are close to target. No injury concerns. Consider adding 15g protein post-Pilates to support muscle retention at 138 lbs.',
+  },
+};
+
 // === Scanner Hotspot Mock Responses ===
 export const scannerHotspots = {
    sampleMenu: {

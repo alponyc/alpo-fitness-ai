@@ -1,7 +1,7 @@
-import { Moon, Footprints, Brain, TrendingDown, Activity } from "lucide-react";
+import { Moon, Footprints, Brain, TrendingDown, TrendingUp, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { vitalityMetricsByProfile } from "@/data/executive-data";
+import { vitalityMetricsByProfile, vitalityDetailsByProfile } from "@/data/executive-data";
 import { useProfile } from "@/contexts/ProfileContext";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
@@ -18,6 +18,10 @@ const statusColor: Record<string, string> = {
 const Vitality = () => {
   const { activeProfile } = useProfile();
   const metrics = vitalityMetricsByProfile[activeProfile];
+  const details = vitalityDetailsByProfile[activeProfile];
+
+  const sleepOnTrack = details.sleep.progress >= 90;
+  const stepsOnTrack = details.steps.progress >= 70;
 
   return (
     <>
@@ -40,19 +44,19 @@ const Vitality = () => {
         <CardContent className="space-y-3">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-3xl font-black text-foreground">6h 45m</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">Target: 8h 00m</p>
+              <p className="text-3xl font-black text-foreground">{details.sleep.total}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">Target: {details.sleep.target}</p>
             </div>
-            <div className="flex items-center gap-1 text-destructive">
-              <TrendingDown className="w-4 h-4" />
-              <span className="text-xs font-bold">Below Target</span>
+            <div className={`flex items-center gap-1 ${sleepOnTrack ? "text-emerald-400" : "text-destructive"}`}>
+              {sleepOnTrack ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+              <span className="text-xs font-bold">{details.sleep.status}</span>
             </div>
           </div>
-          <Progress value={84} className="h-2 bg-secondary" />
+          <Progress value={details.sleep.progress} className="h-2 bg-secondary" />
           <div className="flex justify-between text-[10px] text-muted-foreground">
-            <span>Deep: 1h 20m</span>
-            <span>REM: 2h 05m</span>
-            <span>Light: 3h 20m</span>
+            <span>Deep: {details.sleep.deep}</span>
+            <span>REM: {details.sleep.rem}</span>
+            <span>Light: {details.sleep.light}</span>
           </div>
         </CardContent>
       </Card>
@@ -68,18 +72,19 @@ const Vitality = () => {
         <CardContent className="space-y-3">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-3xl font-black text-foreground">{metrics.find(m => m.name === "Step Count")?.value || "4,144"}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">Target: 10,000</p>
+              <p className="text-3xl font-black text-foreground">{details.steps.value}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">Target: {details.steps.target}</p>
             </div>
-            <div className="flex items-center gap-1 text-destructive">
-              <span className="text-xs font-bold">Below Target</span>
+            <div className={`flex items-center gap-1 ${stepsOnTrack ? "text-emerald-400" : "text-destructive"}`}>
+              {stepsOnTrack ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+              <span className="text-xs font-bold">{details.steps.status}</span>
             </div>
           </div>
-          <Progress value={41} className="h-2 bg-secondary" />
+          <Progress value={details.steps.progress} className="h-2 bg-secondary" />
           <div className="flex justify-between text-[10px] text-muted-foreground">
-            <span>Distance: 1.9 mi</span>
-            <span>Calories: 178 kcal</span>
-            <span>Floors: 4</span>
+            <span>Distance: {details.steps.distance}</span>
+            <span>Calories: {details.steps.calories}</span>
+            <span>Floors: {details.steps.floors}</span>
           </div>
         </CardContent>
       </Card>
@@ -117,7 +122,7 @@ const Vitality = () => {
           <RAGBadge />
         </div>
         <p className="text-sm text-foreground/90 leading-relaxed">
-          Sleep is low (<span className="font-bold text-destructive">6h 45m</span>); keeping caffeine high and sodium low for today's <span className="font-bold text-foreground">{metrics[0]?.value || "196.x"} goal</span>. Step count at <span className="font-bold text-destructive">{metrics.find(m => m.name === "Step Count")?.value || "4,144"}</span> — consider a 30-min evening walk to hit target. Cortisol within range but monitor post-commute.
+          {details.recoveryInsight}
         </p>
       </div>
 
