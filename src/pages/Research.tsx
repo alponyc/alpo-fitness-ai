@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { protocols } from "@/data/executive-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
+import SocialRow from "@/components/SocialRow";
 
 const weeklySchedule = [
   { day: "Sun", protocol: "Rest / Sodium Flush", icon: "💧" },
@@ -29,6 +30,14 @@ const Research = () => {
         <p className="text-xs text-muted-foreground">Protocol Library & Weekly Schedule</p>
       </div>
 
+      {/* Social Command Center */}
+      <Card className="border-border bg-card">
+        <CardContent className="py-3">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold text-center mb-1">Follow the Journey</p>
+          <SocialRow />
+        </CardContent>
+      </Card>
+
       {/* Weekly Schedule */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
@@ -50,7 +59,7 @@ const Research = () => {
         </CardContent>
       </Card>
 
-      {/* Protocol Library — 10 Clickable Cards */}
+      {/* Protocol Library */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">

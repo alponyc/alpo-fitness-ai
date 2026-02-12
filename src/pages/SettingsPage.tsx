@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Shield, Users, Lock, Bell, FileText, Instagram, Share2, AlertTriangle, X } from "lucide-react";
+import { Shield, Users, Lock, Bell, FileText, Instagram, Share2, AlertTriangle, X, Download, Watch, Smartphone, Heart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
+import SocialRow from "@/components/SocialRow";
 
 const SettingsPage = () => {
   const [consentOpen, setConsentOpen] = useState(false);
@@ -11,12 +13,61 @@ const SettingsPage = () => {
   const [aiConsent, setAiConsent] = useState(true);
   const [bioConsent, setBioConsent] = useState(false);
 
+  const handleDownload = (format: string) => {
+    toast({ title: `Exporting as ${format}`, description: "Your data export will be ready shortly." });
+  };
+
   return (
     <>
       <div className="space-y-1">
         <h2 className="text-xl font-black text-foreground tracking-tight">Settings</h2>
         <p className="text-xs text-muted-foreground">Privacy, sharing, and preferences.</p>
       </div>
+
+      {/* Social Command Center */}
+      <Card className="border-border bg-card">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
+            <Instagram className="w-4 h-4 text-primary" />
+            Social Command Center
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SocialRow />
+        </CardContent>
+      </Card>
+
+      {/* Health Sync */}
+      <Card className="border-border bg-card">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
+            <Heart className="w-4 h-4 text-primary" />
+            Health Sync
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Watch className="w-4 h-4 text-foreground" />
+              <div>
+                <p className="text-xs font-semibold text-foreground">Apple Health</p>
+                <p className="text-[10px] text-muted-foreground">Sync steps, sleep, and heart rate</p>
+              </div>
+            </div>
+            <Switch />
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Smartphone className="w-4 h-4 text-foreground" />
+              <div>
+                <p className="text-xs font-semibold text-foreground">Samsung Health</p>
+                <p className="text-[10px] text-muted-foreground">Sync Galaxy Watch biometrics</p>
+              </div>
+            </div>
+            <Switch />
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Shared Executive */}
       <Card className="border-border bg-card">
@@ -93,19 +144,25 @@ const SettingsPage = () => {
         </CardContent>
       </Card>
 
-      {/* GDPR Privacy */}
+      {/* Privacy & Data Rights (GDPR) */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
             <Shield className="w-4 h-4 text-primary" />
-            GDPR Privacy
+            Privacy & Data Rights (GDPR)
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full justify-start text-xs font-semibold h-10 border-border text-foreground">
-            <FileText className="w-4 h-4 mr-2 text-primary" />
-            Download My Data
-          </Button>
+          <div className="grid grid-cols-2 gap-2">
+            <Button variant="outline" onClick={() => handleDownload("PDF")} className="justify-start text-xs font-semibold h-10 border-border text-foreground">
+              <Download className="w-4 h-4 mr-1.5 text-primary" />
+              Export PDF
+            </Button>
+            <Button variant="outline" onClick={() => handleDownload("JSON")} className="justify-start text-xs font-semibold h-10 border-border text-foreground">
+              <FileText className="w-4 h-4 mr-1.5 text-primary" />
+              Export JSON
+            </Button>
+          </div>
           <Button variant="outline" onClick={() => setConsentOpen(true)} className="w-full justify-start text-xs font-semibold h-10 border-border text-foreground">
             <Lock className="w-4 h-4 mr-2 text-primary" />
             Manage Consent Preferences

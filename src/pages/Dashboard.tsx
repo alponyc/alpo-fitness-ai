@@ -5,34 +5,60 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MacroRing from "@/components/MacroRing";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
+import { useProfile } from "@/contexts/ProfileContext";
+import { dashboardDataByProfile, kitchenDataByProfile } from "@/data/executive-data";
+
+const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const executionLogsByDay: Record<string, { time: string; item: string; protein: string; icon: string }[]> = {
+  Sun: [
+    { time: "8:00 AM", item: "Protein Pancakes", protein: "30g", icon: "🥞" },
+    { time: "12:00 PM", item: "Grilled Chicken Salad", protein: "40g", icon: "🥗" },
+    { time: "6:00 PM", item: "Salmon + Rice", protein: "42g", icon: "🐟" },
+  ],
+  Mon: [
+    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+    { time: "10:00 AM", item: "Fairlife 42g", protein: "42g", icon: "🥤" },
+    { time: "1:00 PM", item: "Turkey Wrap", protein: "35g", icon: "🌯" },
+    { time: "7:00 PM", item: "Steak + Veggies", protein: "52g", icon: "🥩" },
+  ],
+  Tue: [
+    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+    { time: "12:00 PM", item: "Chicken Breast + Broccoli", protein: "43g", icon: "🍗" },
+    { time: "6:30 PM", item: "Egg Whites + Oats", protein: "28g", icon: "🍳" },
+  ],
+  Wed: [
+    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+    { time: "10:00 AM", item: "Fairlife 42g Shake", protein: "42g", icon: "🥤" },
+    { time: "12:30 PM", item: "Sophie's Grilled Chicken Wrap", protein: "38g", icon: "🌯" },
+    { time: "3:00 PM", item: "Oikos Triple Zero", protein: "15g", icon: "🥛" },
+    { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
+  ],
+  Thu: [
+    { time: "7:00 AM", item: "Protein Oatmeal", protein: "25g", icon: "🥣" },
+    { time: "12:00 PM", item: "Grilled Chicken Caesar", protein: "40g", icon: "🥗" },
+    { time: "4:00 PM", item: "Fairlife 42g", protein: "42g", icon: "🥤" },
+    { time: "7:30 PM", item: "Lean Beef + Sweet Potato", protein: "48g", icon: "🥩" },
+  ],
+  Fri: [
+    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+    { time: "11:00 AM", item: "Egg White Omelette", protein: "30g", icon: "🍳" },
+    { time: "2:00 PM", item: "Greek Yogurt + Berries", protein: "18g", icon: "🫐" },
+    { time: "7:00 PM", item: "Client Dinner — Souvlaki", protein: "38g", icon: "🍽️" },
+  ],
+  Sat: [
+    { time: "9:00 AM", item: "Protein Smoothie", protein: "35g", icon: "🥤" },
+    { time: "1:00 PM", item: "Churrasco + Rice", protein: "50g", icon: "🥩" },
+    { time: "7:00 PM", item: "Sophie's Date Night", protein: "32g", icon: "🍷" },
+  ],
+};
 
 const workoutDays = [
-  { label: "2 Days Ago", workout: "Upper Body Push (Chest & Shoulders)" },
-  { label: "Yesterday", workout: "High Volume Legs (Scott Protocol)" },
-  { label: "Today", workout: "Active Recovery Cardio (The Flush) – 30 mins" },
-];
-
-const fridgeItems = [
-  { name: "Churrasco", detail: "2 portions" },
-  { name: "Chicken", detail: "3 portions" },
-  { name: "Asparagus", detail: null },
-  { name: "Peppers", detail: null },
-  { name: "Onions", detail: null },
-  { name: "42g Fairlife", detail: "1" },
-];
-
-const timeline = [
-  { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
-  { time: "10:00 AM", item: "Fairlife 42g Shake", protein: "42g", icon: "🥤" },
-  { time: "12:30 PM", item: "Sophie's Grilled Chicken Wrap", protein: "38g", icon: "🌯" },
-  { time: "3:00 PM", item: "Oikos Triple Zero", protein: "15g", icon: "🥛" },
-  { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
-];
-
-const weightHistory = [
-  { date: "1/13", weight: "204.8", delta: null },
-  { date: "1/29", weight: "196.7", delta: "-8.1" },
-  { date: "2/11", weight: "196.2", delta: "-0.5" },
+  { label: "Yesterday", day: "Tue", workout: "High Volume Legs (Scott Protocol)" },
+  { label: "Today", day: "Wed", workout: "Active Recovery Cardio (The Flush) – 30 mins" },
+  { label: "Thursday", day: "Thu", workout: "Upper Body Push (Gironda Incline)" },
+  { label: "Friday", day: "Fri", workout: "Pull Day (Cable Row + Lat Focus)" },
+  { label: "Saturday", day: "Sat", workout: "Full Body — Metabolic Reset" },
 ];
 
 const prCards = [
@@ -49,25 +75,53 @@ const prCards = [
 ];
 
 const Dashboard = () => {
-  const [dayIndex, setDayIndex] = useState(1);
+  const { activeProfile } = useProfile();
+  const data = dashboardDataByProfile[activeProfile];
+  const kitchen = kitchenDataByProfile[activeProfile];
+  const [execDayIndex, setExecDayIndex] = useState(3); // Wed
+  const [workoutIndex, setWorkoutIndex] = useState(1); // Today
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const totalProtein = timeline.reduce((sum, t) => sum + parseInt(t.protein), 0);
+  const currentDayKey = weekDays[execDayIndex];
+  const currentTimeline = executionLogsByDay[currentDayKey] || data.timeline;
+  const totalProtein = currentTimeline.reduce((sum, t) => sum + parseInt(t.protein), 0);
 
   return (
     <>
-      {/* Wednesday Execution Log */}
+      {/* Swipeable Execution Log */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
             <Clock className="w-4 h-4 text-primary" />
-            Wednesday Execution Log
+            Execution Log
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {/* Day Selector */}
+          <div className="flex items-center justify-between mb-3">
+            <button onClick={() => setExecDayIndex(Math.max(0, execDayIndex - 1))} disabled={execDayIndex === 0} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <span className="text-xs font-black text-primary">{currentDayKey}</span>
+            <button onClick={() => setExecDayIndex(Math.min(6, execDayIndex + 1))} disabled={execDayIndex === 6} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+          {/* Day pills */}
+          <div className="flex justify-between mb-3 gap-1">
+            {weekDays.map((d, i) => (
+              <button
+                key={d}
+                onClick={() => setExecDayIndex(i)}
+                className={`text-[9px] font-bold px-2 py-1 rounded-full transition-colors ${i === execDayIndex ? "bg-primary text-primary-foreground" : "bg-secondary/50 text-muted-foreground"}`}
+              >
+                {d}
+              </button>
+            ))}
+          </div>
           <div className="relative pl-4 space-y-3">
             <div className="absolute left-[7px] top-1 bottom-1 w-px bg-primary/30" />
-            {timeline.map((entry, i) => (
+            {currentTimeline.map((entry, i) => (
               <div key={i} className="relative flex items-start gap-3">
                 <div className="absolute left-[-13px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary border-2 border-background z-10" />
                 <div className="flex-1 flex items-center justify-between bg-secondary/50 rounded-lg px-3 py-2">
@@ -100,7 +154,7 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-2">
-            {weightHistory.map((w) => (
+            {data.weightHistory.map((w) => (
               <div key={w.date} className="bg-secondary/50 rounded-lg px-3 py-2.5 text-center">
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{w.date}</p>
                 <p className="text-lg font-black text-foreground">{w.weight}</p>
@@ -140,7 +194,7 @@ const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Workout Log */}
+      {/* Swipeable Workout Log */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
@@ -150,14 +204,14 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between bg-secondary/50 rounded-lg p-3">
-            <button onClick={() => setDayIndex(Math.max(0, dayIndex - 1))} disabled={dayIndex === 0} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
+            <button onClick={() => setWorkoutIndex(Math.max(0, workoutIndex - 1))} disabled={workoutIndex === 0} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="text-center flex-1 px-2">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">{workoutDays[dayIndex].label}</p>
-              <p className="text-sm font-semibold text-foreground mt-0.5">{workoutDays[dayIndex].workout}</p>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">{workoutDays[workoutIndex].label}</p>
+              <p className="text-sm font-semibold text-foreground mt-0.5">{workoutDays[workoutIndex].workout}</p>
             </div>
-            <button onClick={() => setDayIndex(Math.min(workoutDays.length - 1, dayIndex + 1))} disabled={dayIndex === workoutDays.length - 1} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
+            <button onClick={() => setWorkoutIndex(Math.min(workoutDays.length - 1, workoutIndex + 1))} disabled={workoutIndex === workoutDays.length - 1} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
@@ -174,7 +228,7 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
-            {fridgeItems.map((item) => (
+            {kitchen.fridgeItems.map((item) => (
               <div key={item.name} className="bg-secondary/50 rounded-lg px-3 py-2">
                 <p className="text-xs font-semibold text-foreground">{item.name}</p>
                 {item.detail && <p className="text-[10px] text-muted-foreground">{item.detail}</p>}
@@ -195,9 +249,7 @@ const Dashboard = () => {
           <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Executive Insight</span>
           <RAGBadge />
         </div>
-        <p className="text-sm text-foreground/90 leading-relaxed">
-          I noticed the <span className="font-bold text-foreground">198.6</span> weigh-in. Based on Saturday's sodium, this is water. Skip the peppers/onions tonight to minimize bloat; stick to the <span className="font-bold text-foreground">Chicken and Water</span>. Kitchen is <span className="font-black text-primary">CLOSED</span>.
-        </p>
+        <p className="text-sm text-foreground/90 leading-relaxed">{data.insight}</p>
       </div>
 
       <EthicalGuardrail />
@@ -206,9 +258,9 @@ const Dashboard = () => {
       <div className="pt-2 pb-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium text-center mb-4">Daily Macros</p>
         <div className="flex justify-center gap-6">
-          <MacroRing label="Protein" value={153} max={200} unit="g" />
-          <MacroRing label="Carbs" value={20} max={150} unit="g" />
-          <MacroRing label="Fats" value={35} max={80} unit="g" />
+          <MacroRing label="Protein" value={data.macros.protein} max={200} unit="g" />
+          <MacroRing label="Carbs" value={data.macros.carbs} max={150} unit="g" />
+          <MacroRing label="Fats" value={data.macros.fats} max={80} unit="g" />
         </div>
       </div>
     </>
