@@ -42,12 +42,12 @@ export const vitalityMetrics = [
 
 // === Medical Vault ===
 export const medicalProfile = {
-  age: 34,
+  age: 43,
   gender: "Male",
   workWeek: "37.5 hours",
   surgicalHistory: [
-    { procedure: "Left Elbow Arthroscopy", date: "2022-03", notes: "Loose body removal, lateral epicondyle debridement" },
-    { procedure: "Wisdom Teeth Extraction", date: "2019-08", notes: "All four impacted, general anesthesia" },
+    { procedure: "Right Knee Meniscus Repair", date: "2011", notes: "Partial meniscectomy, arthroscopic. Full recovery." },
+    { procedure: "Left Elbow Arthroscopy", date: "2022", notes: "Loose body removal, lateral epicondyle debridement" },
   ],
   injuryGuardrails: [
     { area: "Left Elbow Sensitivity", protocol: "Neutral Grip Only", severity: "Active", notes: "Avoid pronated curls, skull crushers, close-grip bench" },
@@ -121,10 +121,10 @@ export const scannerHotspots = {
   fridgeAudit: {
     label: "Fridge Audit",
     icon: "🧊",
-    aiResponse: "RAG-Verified Fridge Audit: Current inventory supports 2.5 days of McDonald RFL protocol. Protein reserves: Adequate (Churrasco 2 portions, Arabic Chicken 3 portions). Vegetable stock: Low — restock asparagus and leafy greens. Alert: No Fairlife detected. Recommend grocery run for protein shakes and egg whites.",
+    aiResponse: "RAG-Verified Fridge Audit: Current inventory supports 2.5 days of McDonald RFL protocol. Protein reserves: Adequate (Churrasco 2 portions, Chicken 3 portions). Vegetable stock: Low — restock asparagus and leafy greens. Alert: No Fairlife detected. Recommend grocery run for protein shakes and egg whites.",
     safe: [
       { name: "Churrasco (2 portions)", cal: "480 cal", note: "High protein, moderate fat" },
-      { name: "Arabic Chicken (3 portions)", cal: "200 cal/serv", note: "Lean, well-seasoned" },
+      { name: "Chicken (3 portions)", cal: "200 cal/serv", note: "Lean, well-seasoned" },
       { name: "Asparagus", cal: "40 cal", note: "Low carb, anti-inflammatory" },
     ],
     avoid: [
