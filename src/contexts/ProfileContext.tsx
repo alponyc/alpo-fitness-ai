@@ -13,7 +13,7 @@ interface ProfileInfo {
 }
 
 export const profileMap: Record<ProfileKey, ProfileInfo> = {
-  alpo: { name: "ALPO", initials: "AL", label: "Alpo", avatar: avatarAlpo },
+  alpo: { name: "Alex", initials: "AL", label: "Alex", avatar: avatarAlpo },
   client: { name: "Penelope", initials: "PS", label: "Penelope", avatar: avatarPenelope },
   family: { name: "Sophie", initials: "SS", label: "Sophie", avatar: avatarSophie },
 };
