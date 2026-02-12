@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChefHat, Plus, Sparkles, Loader2, Zap, TrendingDown, Scale } from "lucide-react";
+import { ChefHat, Plus, Sparkles, Loader2, Zap, TrendingDown, Scale, UtensilsCrossed } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { pantryGuide } from "@/data/executive-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
+import { useProfile } from "@/contexts/ProfileContext";
 
 type PantryMode = "gain" | "lose" | "maintain";
 
@@ -17,6 +18,8 @@ const modeConfig: Record<PantryMode, { icon: typeof Zap; label: string }> = {
 };
 
 const Kitchen = () => {
+  const { activeProfile } = useProfile();
+  const isNewUser = !["alpo", "client", "family"].includes(activeProfile);
   const [activeMode, setActiveMode] = useState<PantryMode>("lose");
   const [items, setItems] = useState("");
   const [mealPlan, setMealPlan] = useState("");
@@ -59,44 +62,58 @@ const Kitchen = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-3 gap-2">
-            {(Object.keys(pantryGuide) as PantryMode[]).map((mode) => {
-              const Icon = modeConfig[mode].icon;
-              return (
-                <Button
-                  key={mode}
-                  variant={activeMode === mode ? "default" : "outline"}
-                  onClick={() => setActiveMode(mode)}
-                  className={cn(
-                    "text-[10px] font-bold h-9 flex flex-col gap-0.5 py-1",
-                    activeMode === mode
-                      ? "bg-primary text-primary-foreground"
-                      : "border-border text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  {modeConfig[mode].label}
-                </Button>
-              );
-            })}
-          </div>
-
-          <div className="space-y-1">
-            <p className="text-xs font-bold text-foreground">{currentPantry.label}</p>
-            <p className="text-[10px] text-muted-foreground">Protocol: {currentPantry.protocol}</p>
-          </div>
-
-          <div className="space-y-2">
-            {currentPantry.items.map((item) => (
-              <div key={item.name} className="flex items-center justify-between bg-secondary/50 rounded-lg px-3 py-2.5">
-                <div>
-                  <p className="text-xs font-semibold text-foreground">{item.name}</p>
-                  <p className="text-[10px] text-muted-foreground">{item.macros}</p>
-                </div>
-                <span className="text-[10px] font-bold text-primary">{item.cal}</span>
+          {isNewUser ? (
+            <div className="flex flex-col items-center justify-center py-8 text-center space-y-3">
+              <div className="w-12 h-12 rounded-full bg-secondary/50 flex items-center justify-center">
+                <UtensilsCrossed className="w-6 h-6 text-muted-foreground" />
               </div>
-            ))}
-          </div>
+              <div>
+                <p className="text-xs font-semibold text-foreground">No Pantry Data Yet</p>
+                <p className="text-[10px] text-muted-foreground mt-1">Use the AI Scanner to audit your fridge and populate your Executive Pantry.</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-3 gap-2">
+                {(Object.keys(pantryGuide) as PantryMode[]).map((mode) => {
+                  const Icon = modeConfig[mode].icon;
+                  return (
+                    <Button
+                      key={mode}
+                      variant={activeMode === mode ? "default" : "outline"}
+                      onClick={() => setActiveMode(mode)}
+                      className={cn(
+                        "text-[10px] font-bold h-9 flex flex-col gap-0.5 py-1",
+                        activeMode === mode
+                          ? "bg-primary text-primary-foreground"
+                          : "border-border text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {modeConfig[mode].label}
+                    </Button>
+                  );
+                })}
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-foreground">{currentPantry.label}</p>
+                <p className="text-[10px] text-muted-foreground">Protocol: {currentPantry.protocol}</p>
+              </div>
+
+              <div className="space-y-2">
+                {currentPantry.items.map((item) => (
+                  <div key={item.name} className="flex items-center justify-between bg-secondary/50 rounded-lg px-3 py-2.5">
+                    <div>
+                      <p className="text-xs font-semibold text-foreground">{item.name}</p>
+                      <p className="text-[10px] text-muted-foreground">{item.macros}</p>
+                    </div>
+                    <span className="text-[10px] font-bold text-primary">{item.cal}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
 
