@@ -54,11 +54,13 @@ const executionLogsByDay: Record<string, { time: string; item: string; protein: 
 };
 
 const workoutDays = [
-  { label: "Yesterday", day: "Tue", workout: "High Volume Legs (Scott Protocol)" },
-  { label: "Today", day: "Wed", workout: "Active Recovery Cardio (The Flush) – 30 mins" },
-  { label: "Thursday", day: "Thu", workout: "Upper Body Push (Gironda Incline)" },
-  { label: "Friday", day: "Fri", workout: "Pull Day (Cable Row + Lat Focus)" },
-  { label: "Saturday", day: "Sat", workout: "Full Body — Metabolic Reset" },
+  { label: "Thu 2/5", day: "Thu", workout: "Upper Body Push (Gironda Incline)" },
+  { label: "Fri 2/6", day: "Fri", workout: "Pull Day (Cable Row + Lat Focus)" },
+  { label: "Sat 2/7", day: "Sat", workout: "Full Body — Metabolic Reset" },
+  { label: "Sun 2/8", day: "Sun", workout: "High Volume Legs (Scott Protocol)" },
+  { label: "Mon 2/9", day: "Mon", workout: "Scott Protocol / Chest & Back" },
+  { label: "Tue 2/10", day: "Tue", workout: "Machine Flush / Neutral Grip" },
+  { label: "Wed 2/11", day: "Wed", workout: "Active Recovery Cardio (The Flush) – 30 mins" },
 ];
 
 const prCards = [
