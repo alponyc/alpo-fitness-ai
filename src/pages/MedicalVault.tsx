@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useProfile } from "@/contexts/ProfileContext";
 import { medicalProfilesByUser } from "@/data/executive-data";
+import { getDefaultMedicalProfile } from "@/data/default-profile-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
@@ -19,8 +20,8 @@ const symptomResponses: Record<string, string> = {
 };
 
 const MedicalVault = () => {
-  const { activeProfile } = useProfile();
-  const profile = medicalProfilesByUser[activeProfile];
+  const { activeProfile, info } = useProfile();
+  const profile = medicalProfilesByUser[activeProfile] ?? getDefaultMedicalProfile(info.name);
   const [symptomInput, setSymptomInput] = useState("");
   const [symptomLoading, setSymptomLoading] = useState(false);
   const [symptomResponse, setSymptomResponse] = useState("");

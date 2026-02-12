@@ -7,17 +7,18 @@ import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 import { useProfile } from "@/contexts/ProfileContext";
 import { dashboardDataByProfile, kitchenDataByProfile, workoutsByProfile, prCardsByProfile } from "@/data/executive-data";
+import { getDefaultDashboardData, getDefaultKitchenData, getDefaultWorkouts, getDefaultPRCards } from "@/data/default-profile-data";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 
 
 const Dashboard = () => {
-  const { activeProfile } = useProfile();
-  const data = dashboardDataByProfile[activeProfile];
-  const kitchen = kitchenDataByProfile[activeProfile];
-  const workoutDays = workoutsByProfile[activeProfile];
-  const prCards = prCardsByProfile[activeProfile];
+  const { activeProfile, info } = useProfile();
+  const data = dashboardDataByProfile[activeProfile] ?? getDefaultDashboardData(info.name, info.weight || "180", info.goal || "maintain");
+  const kitchen = kitchenDataByProfile[activeProfile] ?? getDefaultKitchenData(info.goal || "maintain");
+  const workoutDays = workoutsByProfile[activeProfile] ?? getDefaultWorkouts(info.goal || "maintain");
+  const prCards = prCardsByProfile[activeProfile] ?? getDefaultPRCards();
   const [execDayIndex, setExecDayIndex] = useState(3); // Wed
   const [workoutIndex, setWorkoutIndex] = useState(1); // Today
   const [weightIndex, setWeightIndex] = useState(data.weightHistory.length - 1);
