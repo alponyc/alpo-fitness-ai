@@ -6,6 +6,7 @@ import avatarSophie from "@/assets/avatar-sophie.jpg";
 export type ProfileKey = string;
 export type GoalType = "lose" | "gain" | "maintain";
 export type AccountType = "user" | "client" | "family" | "trainer";
+export type ActivityLevel = "sedentary" | "light" | "moderate" | "active" | "very_active";
 
 export interface ProfileInfo {
   name: string;
@@ -17,12 +18,15 @@ export interface ProfileInfo {
   accountType?: AccountType;
   email?: string;
   phone?: string;
+  age?: number;
+  gender?: string;
+  activityLevel?: ActivityLevel;
 }
 
 const defaultProfiles: Record<string, ProfileInfo> = {
-  alpo: { name: "Alex", initials: "AL", label: "Alex", avatar: avatarAlpo, goal: "lose", weight: "196.2", accountType: "user" },
-  client: { name: "Penelope", initials: "PS", label: "Penelope", avatar: avatarPenelope, goal: "lose", weight: "212.5", accountType: "client" },
-  family: { name: "Sophie", initials: "SS", label: "Sophie", avatar: avatarSophie, goal: "maintain", weight: "138.0", accountType: "family" },
+  alpo: { name: "Alex", initials: "AL", label: "Alex", avatar: avatarAlpo, goal: "lose", weight: "196.2", accountType: "user", age: 43, gender: "Male", activityLevel: "moderate" },
+  client: { name: "Penelope", initials: "PS", label: "Penelope", avatar: avatarPenelope, goal: "lose", weight: "212.5", accountType: "client", age: 38, gender: "Male", activityLevel: "active" },
+  family: { name: "Sophie", initials: "SS", label: "Sophie", avatar: avatarSophie, goal: "maintain", weight: "138.0", accountType: "family", age: 34, gender: "Female", activityLevel: "light" },
 };
 
 interface ProfileContextValue {

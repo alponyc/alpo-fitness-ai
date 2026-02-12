@@ -21,7 +21,7 @@ const symptomResponses: Record<string, string> = {
 
 const MedicalVault = () => {
   const { activeProfile, info } = useProfile();
-  const profile = medicalProfilesByUser[activeProfile] ?? getDefaultMedicalProfile(info.name);
+  const profile = medicalProfilesByUser[activeProfile] ?? getDefaultMedicalProfile(info.name, info.age, info.gender, info.activityLevel);
   const [symptomInput, setSymptomInput] = useState("");
   const [symptomLoading, setSymptomLoading] = useState(false);
   const [symptomResponse, setSymptomResponse] = useState("");

@@ -6,9 +6,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useProfile, GoalType, AccountType } from "@/contexts/ProfileContext";
+import { useProfile, GoalType, AccountType, ActivityLevel } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
+import avatarDefault from "@/assets/avatar-default.png";
 
 const Splash = () => {
   const navigate = useNavigate();
@@ -23,6 +24,9 @@ const Splash = () => {
   const [regPhone, setRegPhone] = useState("");
   const [regWeight, setRegWeight] = useState("");
   const [regGoal, setRegGoal] = useState<GoalType | "">("");
+  const [regAge, setRegAge] = useState("");
+  const [regGender, setRegGender] = useState("");
+  const [regActivity, setRegActivity] = useState<ActivityLevel | "">("");
 
   const handleProfileSelect = (key: string) => {
     setActiveProfile(key);
@@ -43,12 +47,15 @@ const Splash = () => {
       name: regName.trim(),
       initials,
       label: regName.trim().split(" ")[0],
-      avatar: "",
+      avatar: avatarDefault,
       goal: regGoal as GoalType,
       weight: regWeight.trim(),
       accountType: (regRole || "user") as AccountType,
       email: regEmail.trim(),
       phone: regPhone.trim(),
+      age: regAge ? parseInt(regAge) : undefined,
+      gender: regGender || undefined,
+      activityLevel: (regActivity || undefined) as ActivityLevel | undefined,
     });
 
     // Reset form
@@ -59,6 +66,9 @@ const Splash = () => {
     setRegPhone("");
     setRegWeight("");
     setRegGoal("");
+    setRegAge("");
+    setRegGender("");
+    setRegActivity("");
 
     // Auto-select and navigate
     setActiveProfile(newKey);
@@ -243,6 +253,46 @@ const Splash = () => {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Age</Label>
+                <Input
+                  type="number"
+                  placeholder="30"
+                  value={regAge}
+                  onChange={(e) => setRegAge(e.target.value)}
+                  className="bg-secondary/50 border-border text-foreground text-sm"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Gender</Label>
+                <Select value={regGender} onValueChange={setRegGender}>
+                  <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                    <SelectValue placeholder="Select…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border z-[60]">
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Activity Level</Label>
+              <Select value={regActivity} onValueChange={(v) => setRegActivity(v as ActivityLevel)}>
+                <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                  <SelectValue placeholder="Select activity…" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border z-[60]">
+                  <SelectItem value="sedentary">Sedentary — Desk / Remote</SelectItem>
+                  <SelectItem value="light">Light — Office + Commute</SelectItem>
+                  <SelectItem value="moderate">Moderate — On-your-feet job</SelectItem>
+                  <SelectItem value="active">Active — Physical labor / Training</SelectItem>
+                  <SelectItem value="very_active">Very Active — Athlete / Manual</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground font-semibold">Account Type</Label>
