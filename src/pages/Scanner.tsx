@@ -147,9 +147,23 @@ const Scanner = () => {
               <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Gemini RAG-Audit</span>
               <RAGBadge />
             </div>
-            <p className="text-sm text-foreground/90 leading-relaxed">
-              {currentResult.aiResponse}
-            </p>
+            <div className="space-y-2">
+              {currentResult.aiResponse.split("\n").map((line, i) => {
+                const trimmed = line.trim();
+                if (!trimmed) return null;
+                if (trimmed.startsWith("**") && trimmed.endsWith("**")) {
+                  return <p key={i} className="text-xs font-black text-foreground mt-3 first:mt-0">{trimmed.replace(/\*\*/g, "")}</p>;
+                }
+                if (trimmed.startsWith("**") && trimmed.includes(":**")) {
+                  const parts = trimmed.split(":**");
+                  return <p key={i} className="text-xs font-black text-foreground mt-3 first:mt-0">{parts[0].replace(/\*\*/g, "")}: <span className="font-normal text-foreground/80">{parts.slice(1).join(":**").replace(/\*\*/g, "")}</span></p>;
+                }
+                if (trimmed.startsWith("•")) {
+                  return <p key={i} className="text-xs text-foreground/80 leading-relaxed pl-3">{trimmed}</p>;
+                }
+                return <p key={i} className="text-sm text-foreground/90 leading-relaxed">{trimmed}</p>;
+              })}
+            </div>
           </div>
 
           
