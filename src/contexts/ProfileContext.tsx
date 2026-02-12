@@ -94,6 +94,9 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let isMounted = true;
 
+    // CRITICAL: Set loading to true immediately so ProtectedRoute waits
+    setLoading(true);
+
     const initializeProfiles = async () => {
       if (!user) {
         if (isMounted) {
