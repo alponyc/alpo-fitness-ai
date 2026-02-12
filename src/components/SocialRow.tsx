@@ -1,10 +1,10 @@
 import { Instagram } from "lucide-react";
 
 const accounts = [
-  { handle: "alponycfitness", url: "https://instagram.com/alponycfitness" },
-  { handle: "alponyceats", url: "https://instagram.com/alponyceats" },
-  { handle: "alposworld", url: "https://instagram.com/alposworld" },
-  { handle: "thisisalponyc", url: "https://instagram.com/thisisalponyc" },
+  { handle: "alponycfitness", url: "https://www.instagram.com/alponycfitness" },
+  { handle: "alponyceats", url: "https://www.instagram.com/alponyceats" },
+  { handle: "alposworld", url: "https://www.instagram.com/alposworld" },
+  { handle: "thisisalponyc", url: "https://www.instagram.com/thisisalponyc" },
 ];
 
 const SocialRow = () => (

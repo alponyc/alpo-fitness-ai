@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { ChevronLeft, ChevronRight, Dumbbell, Trophy, UtensilsCrossed, Brain, ScanLine, Clock, Scale, TrendingDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, Dumbbell, Trophy, UtensilsCrossed, Brain, Clock, Scale, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MacroRing from "@/components/MacroRing";
@@ -235,10 +235,9 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-9">
-            <ScanLine className="w-4 h-4 mr-1.5" />
-            Scan Grocery Receipt
-          </Button>
+           <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-9">
+             Update Inventory
+           </Button>
         </CardContent>
       </Card>
 
@@ -252,7 +251,7 @@ const Dashboard = () => {
         <p className="text-sm text-foreground/90 leading-relaxed">{data.insight}</p>
       </div>
 
-      <EthicalGuardrail />
+      
 
       {/* Macro Rings */}
       <div className="pt-2 pb-4">

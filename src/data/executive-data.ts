@@ -43,8 +43,8 @@ export const vitalityMetricsByProfile: Record<ProfileKey, VitalityMetric[]> = {
     { id: 9, name: "Commute Energy", value: "Medium", unit: "", target: "Low", status: "tracking" },
     { id: 10, name: "Injury Status", value: "Left Elbow", unit: "", target: "Neutral Grip", status: "active" },
   ],
-  client: [
-    { id: 1, name: "Weight", value: "212.5", unit: "lbs", target: "205.0", status: "tracking" },
+   client: [
+     { id: 1, name: "Weight", value: "267.4", unit: "lbs", target: "260.0", status: "tracking" },
     { id: 2, name: "Body Fat %", value: "22.1", unit: "%", target: "18.0", status: "tracking" },
     { id: 3, name: "Skeletal Muscle Mass", value: "78.4", unit: "lbs", target: "82.0", status: "building" },
     { id: 4, name: "Sleep Score", value: "74", unit: "/100", target: "85", status: "low" },
@@ -245,19 +245,20 @@ export const kitchenDataByProfile: Record<ProfileKey, { fridgeItems: { name: str
 
 // === Scanner Hotspot Mock Responses ===
 export const scannerHotspots = {
-  sampleMenu: {
-    label: "Sophie's",
-    icon: "🍽️",
-    aiResponse: "RAG-Verified Analysis: Detected 'Grilled Salmon' (360 cal, 42g P) — Safe for current RFL protocol at 196.2 handle. 'Caesar Salad w/ Dressing' (280 cal, 18g sodium flag) — Swap to oil & vinegar. 'Garlic Bread' — AVOID (310 cal, refined carbs, high sodium). ⚠️ At 196.2, sodium sensitivity is elevated.",
-    safe: [
-      { name: "Grilled Salmon", cal: "360 cal", note: "42g protein, omega-3 rich" },
-      { name: "Steamed Broccoli", cal: "55 cal", note: "Fiber-dense, anti-inflammatory" },
-    ],
-    avoid: [
-      { name: "Garlic Bread", cal: "310 cal", note: "Refined carbs, high sodium" },
-      { name: "Caesar Dressing", cal: "180 cal", note: "Hidden sodium, excess fat" },
-    ],
-  },
+   sampleMenu: {
+     label: "Sophie's Cuban",
+     icon: "🍽️",
+     aiResponse: "**RAG-Verified Analysis: Sophie's Cuban**\n\n**Recommended:**\n• Grilled Chicken/Pechuga (360 cal, 42g P) — Lean protein, ideal for current handle\n• Black Beans (150 cal, 8g P) — Fiber-rich carb source\n• White Rice (200 cal, 4g C) — Clean carb\n\n**Cautions:**\n• ⚠️ Sodium: Beans are high — Request low-salt option\n• ⚠️ Plantain chips — Skip (refined carbs, high sodium)\n\n**Post-Meal Protocol:**\n• Drink 16oz water flush within 30 mins\n• Monitor sodium intake for next 4 hours\n• At 196.2 handle, sodium sensitivity is HIGH",
+     safe: [
+       { name: "Grilled Chicken/Pechuga", cal: "360 cal", note: "42g protein, clean grilled" },
+       { name: "Black Beans (low-salt)", cal: "150 cal", note: "Fiber + carbs, request low sodium" },
+       { name: "White Rice", cal: "200 cal", note: "Clean carb base" },
+     ],
+     avoid: [
+       { name: "Plantain Chips", cal: "280 cal", note: "Refined carbs, high sodium" },
+       { name: "Ropa Vieja", cal: "420 cal", note: "Heavy sauce, sodium bomb" },
+     ],
+   },
   steakhouse: {
     label: "Steakhouse",
     icon: "🥩",
@@ -284,19 +285,19 @@ export const scannerHotspots = {
       { name: "Baklava", cal: "310 cal", note: "Sugar bomb, refined pastry" },
     ],
   },
-  macaroniGrill: {
-    label: "Macaroni Grill",
-    icon: "🍝",
-    aiResponse: "RAG-Verified Macaroni Grill: 'Grilled Chicken Spiedini' (380 cal, 44g P) — Best option, skip the pasta side. 'Caesar Salad' — Caution (dressing has 680mg sodium). 'Fettuccine Alfredo' — AVOID (1,220 cal, 72g fat). ⚠️ At 196.2, this restaurant is a sodium minefield. Stick to grilled proteins only.",
-    safe: [
-      { name: "Chicken Spiedini", cal: "380 cal", note: "44g protein, skip pasta side" },
-      { name: "Steamed Vegetables", cal: "80 cal", note: "Request no butter" },
-    ],
-    avoid: [
-      { name: "Fettuccine Alfredo", cal: "1,220 cal", note: "72g fat, sodium overload" },
-      { name: "Bread + Olive Oil", cal: "340 cal", note: "Refined carbs, triggers bloat at 196.2" },
-    ],
-  },
+   italianGrill: {
+     label: "Italian Grill",
+     icon: "🍝",
+     aiResponse: "RAG-Verified Italian Grill: 'Grilled Chicken Spiedini' (380 cal, 44g P) — Best option, skip the pasta side. 'Caesar Salad' — Caution (dressing has 680mg sodium). 'Fettuccine Alfredo' — AVOID (1,220 cal, 72g fat). ⚠️ At 196.2, this restaurant is a sodium minefield. Stick to grilled proteins only.",
+     safe: [
+       { name: "Chicken Spiedini", cal: "380 cal", note: "44g protein, skip pasta side" },
+       { name: "Steamed Vegetables", cal: "80 cal", note: "Request no butter" },
+     ],
+     avoid: [
+       { name: "Fettuccine Alfredo", cal: "1,220 cal", note: "72g fat, sodium overload" },
+       { name: "Bread + Olive Oil", cal: "340 cal", note: "Refined carbs, triggers bloat at 196.2" },
+     ],
+   },
   sampleReceipt: {
     label: "Receipt",
     icon: "🧾",
