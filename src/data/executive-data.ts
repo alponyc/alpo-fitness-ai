@@ -5,7 +5,7 @@ export const protocols = [
   { id: 1, name: "Larry Scott Pump", category: "Gain", description: "High-volume bicep/shoulder focus with preacher curls", icon: "💪" },
   { id: 2, name: "Lyle McDonald RFL", category: "Lose", description: "Rapid fat loss protocol with protein-sparing modified fast", icon: "🔥" },
   { id: 3, name: "Vince Gironda Incline", category: "Gain", description: "45° incline press for upper chest hypertrophy", icon: "📐" },
-  { id: 4, name: "Sophie's Audible", category: "Social", description: "Dynamic macro adjustments for spontaneous dining", icon: "🎯" },
+  { id: 4, name: "Alpo's Audible", category: "Social", description: "Dynamic macro adjustments for spontaneous dining", icon: "🎯" },
   { id: 5, name: "Client Dinner Mode", category: "Social", description: "Stealth dieting protocol for business dinners", icon: "🍽️" },
   { id: 6, name: "Flight Retention", category: "Travel", description: "Anti-bloat strategy for air travel days", icon: "✈️" },
   { id: 7, name: "Fasted Productivity", category: "Performance", description: "16:8 intermittent fasting with cognitive stacking", icon: "🧠" },
