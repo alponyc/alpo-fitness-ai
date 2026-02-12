@@ -36,6 +36,7 @@ interface ProfileContextValue {
   profiles: Record<string, ProfileInfo>;
   profileKeys: ProfileKey[];
   addProfile: (profile: ProfileInfo) => ProfileKey;
+  removeProfile: (key: ProfileKey) => void;
 }
 
 const ProfileContext = createContext<ProfileContextValue>({
@@ -45,6 +46,7 @@ const ProfileContext = createContext<ProfileContextValue>({
   profiles: defaultProfiles,
   profileKeys: Object.keys(defaultProfiles),
   addProfile: () => "",
+  removeProfile: () => {},
 });
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
@@ -55,6 +57,16 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     const key = profile.name.toLowerCase().replace(/\s+/g, "_") + "_" + Date.now();
     setProfiles((prev) => ({ ...prev, [key]: profile }));
     return key;
+  };
+
+  const removeProfile = (key: ProfileKey) => {
+    if (["alpo", "client", "family"].includes(key)) return;
+    setProfiles((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+    if (activeProfile === key) setActiveProfile("alpo");
   };
 
   const profileKeys = Object.keys(profiles);
@@ -68,6 +80,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         profiles,
         profileKeys,
         addProfile,
+        removeProfile,
       }}
     >
       {children}
