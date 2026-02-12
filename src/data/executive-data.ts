@@ -345,6 +345,37 @@ export const dashboardDataByProfile: Record<ProfileKey, {
   },
 };
 
+// === Workout Schedules per Profile ===
+export const workoutsByProfile: Record<ProfileKey, { label: string; day: string; workout: string }[]> = {
+  alpo: [
+    { label: "Thu 2/5", day: "Thu", workout: "Upper Body Push (Gironda Incline)" },
+    { label: "Fri 2/6", day: "Fri", workout: "Pull Day (Cable Row + Lat Focus)" },
+    { label: "Sat 2/7", day: "Sat", workout: "Full Body — Metabolic Reset" },
+    { label: "Sun 2/8", day: "Sun", workout: "High Volume Legs (Scott Protocol)" },
+    { label: "Mon 2/9", day: "Mon", workout: "Scott Protocol / Chest & Back" },
+    { label: "Tue 2/10", day: "Tue", workout: "Machine Flush / Neutral Grip" },
+    { label: "Wed 2/11", day: "Wed", workout: "Active Recovery Cardio (The Flush) – 30 mins" },
+  ],
+  client: [
+    { label: "Thu 2/5", day: "Thu", workout: "Chest & Triceps (Flat Bench Focus)" },
+    { label: "Fri 2/6", day: "Fri", workout: "Back & Biceps (Deadlift + Rows)" },
+    { label: "Sat 2/7", day: "Sat", workout: "Rest Day — Stretching & Foam Roll" },
+    { label: "Sun 2/8", day: "Sun", workout: "Legs (Squat + Leg Press)" },
+    { label: "Mon 2/9", day: "Mon", workout: "Shoulders & Arms (OHP + Curls)" },
+    { label: "Tue 2/10", day: "Tue", workout: "Push/Pull Superset Day" },
+    { label: "Wed 2/11", day: "Wed", workout: "LISS Cardio — 40 min Walk" },
+  ],
+  family: [
+    { label: "Thu 2/5", day: "Thu", workout: "Pilates — Core & Glutes (45 min)" },
+    { label: "Fri 2/6", day: "Fri", workout: "Upper Body Toning (Light Dumbbells)" },
+    { label: "Sat 2/7", day: "Sat", workout: "Yoga Flow — 60 min" },
+    { label: "Sun 2/8", day: "Sun", workout: "Lower Body (Goblet Squats + Lunges)" },
+    { label: "Mon 2/9", day: "Mon", workout: "HIIT Circuit — 25 min" },
+    { label: "Tue 2/10", day: "Tue", workout: "Barre Class — Full Body" },
+    { label: "Wed 2/11", day: "Wed", workout: "Active Recovery — Walk + Stretch" },
+  ],
+};
+
 // === Kitchen Data per Profile ===
 export const kitchenDataByProfile: Record<ProfileKey, { fridgeItems: { name: string; detail: string | null; level: "full" | "mid" | "low" }[] }> = {
   alpo: {
