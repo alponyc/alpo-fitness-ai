@@ -6,11 +6,7 @@ import { profileMap, ProfileKey, useProfile } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
 
-const profiles: { key: ProfileKey; label: string }[] = [
-  { key: "alpo", label: "Alpo" },
-  { key: "client", label: "Client 1" },
-  { key: "family", label: "Sophie" },
-];
+const profileKeys: ProfileKey[] = ["alpo", "client", "family"];
 
 const Splash = () => {
   const navigate = useNavigate();
@@ -80,12 +76,12 @@ const Splash = () => {
               Select Profile
             </p>
             <div className="space-y-2">
-              {profiles.map((p) => {
-                const info = profileMap[p.key];
+              {profileKeys.map((key) => {
+                const info = profileMap[key];
                 return (
                   <button
-                    key={p.key}
-                    onClick={() => handleProfileSelect(p.key)}
+                    key={key}
+                    onClick={() => handleProfileSelect(key)}
                     className="w-full flex items-center gap-3 bg-card/80 backdrop-blur-sm border border-border rounded-xl px-4 py-3 hover:border-primary/40 transition-colors"
                   >
                     <Avatar className="h-10 w-10 border-2 border-primary/30">
@@ -95,7 +91,7 @@ const Splash = () => {
                       </AvatarFallback>
                     </Avatar>
                     <div className="text-left">
-                      <p className="text-sm font-bold text-foreground">{p.label}</p>
+                      <p className="text-sm font-bold text-foreground">{info.label}</p>
                       <p className="text-[10px] text-muted-foreground">{info.name}</p>
                     </div>
                   </button>
