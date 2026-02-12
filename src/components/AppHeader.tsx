@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { ChevronDown, LogOut, Plus, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useAuth } from "@/contexts/AuthContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 
 const AppHeader = () => {
-  const { info } = useProfile();
+  const { activeProfile, setActiveProfile, info, profiles, profileKeys, removeProfile } = useProfile();
   const { signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -38,15 +38,46 @@ const AppHeader = () => {
                 {info.initials}
               </AvatarFallback>
             </Avatar>
+            <ChevronDown className="w-3 h-3 text-muted-foreground" />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-card border-border min-w-[160px]">
-          <DropdownMenuItem className="text-xs font-semibold text-foreground cursor-default">
-            <Avatar className="h-6 w-6 mr-2">
-              <AvatarImage src={info.avatar} alt={info.label} className="object-cover" />
-              <AvatarFallback className="bg-secondary text-foreground text-[8px] font-bold">{info.initials}</AvatarFallback>
-            </Avatar>
-            {info.name || "User"}
+          {profileKeys.map((key) => {
+            const p = profiles[key];
+            const isFirst = key === profileKeys[0]; // First profile is the "owner" — can't delete
+            return (
+              <DropdownMenuItem
+                key={key}
+                onClick={() => setActiveProfile(key)}
+                className={`text-xs font-semibold cursor-pointer ${activeProfile === key ? "text-primary" : "text-foreground"}`}
+              >
+                <Avatar className="h-6 w-6 mr-2">
+                  <AvatarImage src={p.avatar} alt={p.label} className="object-cover" />
+                  <AvatarFallback className="bg-secondary text-foreground text-[8px] font-bold">{p.initials}</AvatarFallback>
+                </Avatar>
+                {p.label}
+                {p.accountType && p.accountType !== "user" && (
+                  <span className="ml-1 text-[8px] text-muted-foreground capitalize">({p.accountType})</span>
+                )}
+                {activeProfile === key && <span className="ml-auto text-[8px] text-primary">●</span>}
+                {!isFirst && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); removeProfile(key); }}
+                    className="ml-auto p-0.5 rounded hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </DropdownMenuItem>
+            );
+          })}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => navigate("/settings")}
+            className="text-xs font-semibold text-primary cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5 mr-2" />
+            Add Profile
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleSignOut}

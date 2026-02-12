@@ -33,7 +33,7 @@ const Splash = () => {
     navigate("/dashboard");
   };
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     if (!regName.trim() || !regGoal || !regWeight.trim()) return;
 
     const initials = regName
@@ -43,7 +43,7 @@ const Splash = () => {
       .join("")
       .slice(0, 2);
 
-    const newKey = addProfile({
+    const newKey = await addProfile({
       name: regName.trim(),
       initials,
       label: regName.trim().split(" ")[0],
@@ -71,7 +71,7 @@ const Splash = () => {
     setRegActivity("");
 
     // Auto-select and navigate
-    setActiveProfile(newKey);
+    if (newKey) setActiveProfile(newKey);
     navigate("/dashboard");
   };
 
