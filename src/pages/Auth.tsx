@@ -4,12 +4,14 @@ import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { authSchema } from "@/lib/validation";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
 
 const Auth = () => {
   const { user, loading, signIn, signUp } = useAuth();
+  const { toast } = useToast();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -188,6 +190,50 @@ const Auth = () => {
             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.53-3.23 0-1.44.62-2.2.44-3.06-.4C4.24 16.7 4.89 10.5 8.82 10.3c1.23.06 2.08.7 2.8.74.96-.2 1.88-.76 2.93-.69 1.24.1 2.18.58 2.79 1.49-2.56 1.53-1.95 4.89.58 5.83-.46 1.17-.99 2.33-1.87 3.61zM12.05 10.23c-.12-2.19 1.68-4.07 3.72-4.23.28 2.42-2.17 4.32-3.72 4.23z"/>
           </svg>
           Continue with Apple
+        </button>
+
+        <button
+          type="button"
+          onClick={() => toast({ title: "Coming Soon", description: "Facebook sign-in will be available soon." })}
+          className="w-full flex items-center justify-center gap-2 bg-secondary/50 border border-border text-foreground font-semibold text-sm py-2.5 rounded-lg hover:bg-secondary/80 transition-colors opacity-60"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Continue with Facebook
+        </button>
+
+        <button
+          type="button"
+          onClick={() => toast({ title: "Coming Soon", description: "LinkedIn sign-in will be available soon." })}
+          className="w-full flex items-center justify-center gap-2 bg-secondary/50 border border-border text-foreground font-semibold text-sm py-2.5 rounded-lg hover:bg-secondary/80 transition-colors opacity-60"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+          </svg>
+          Continue with LinkedIn
+        </button>
+
+        <button
+          type="button"
+          onClick={() => toast({ title: "Coming Soon", description: "X sign-in will be available soon." })}
+          className="w-full flex items-center justify-center gap-2 bg-secondary/50 border border-border text-foreground font-semibold text-sm py-2.5 rounded-lg hover:bg-secondary/80 transition-colors opacity-60"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.207-6.8-5.974 6.8h-3.31l7.73-8.835L2.6 2.25h6.836l4.713 6.231 5.379-6.231zM17.002 18.807h1.844L6.74 3.556H4.66l12.342 15.251z"/>
+          </svg>
+          Continue with X
+        </button>
+
+        <button
+          type="button"
+          onClick={() => toast({ title: "Coming Soon", description: "TikTok sign-in will be available soon." })}
+          className="w-full flex items-center justify-center gap-2 bg-secondary/50 border border-border text-foreground font-semibold text-sm py-2.5 rounded-lg hover:bg-secondary/80 transition-colors opacity-60"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.321 5.562a5.122 5.122 0 0 1-.869-.071v.008a5.07 5.07 0 0 1-4.769-5.109v.002a.744.744 0 0 0-.744.742v11.652a3.882 3.882 0 1 1-3.882-3.882.744.744 0 0 0 .744-.745V5.329a.744.744 0 0 0-.745-.742 6.37 6.37 0 1 0 6.37 6.37v-7.1a8.067 8.067 0 0 0 4.551 1.308.743.743 0 0 0 .744-.743V6.304a.744.744 0 0 0-.621-.742z"/>
+          </svg>
+          Continue with TikTok
         </button>
       </div>
     </div>
