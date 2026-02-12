@@ -10,6 +10,8 @@ import EthicalGuardrail from "@/components/EthicalGuardrail";
 
 type HotspotKey = keyof typeof scannerHotspots;
 
+const stripEthicalLabel = (text: string) => text.replace(/^Ethical Guardrail:/, "").trim();
+
 const Scanner = () => {
   const [menuText, setMenuText] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
@@ -150,7 +152,7 @@ const Scanner = () => {
             </p>
           </div>
 
-          <EthicalGuardrail />
+          
 
           <Card className="border-border bg-card">
             <CardHeader className="pb-3">

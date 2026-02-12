@@ -9,8 +9,8 @@ interface ProfileInfo {
 }
 
 export const profileMap: Record<ProfileKey, ProfileInfo> = {
-  alpo: { name: "Alpo", initials: "AL", label: "Executive" },
-  client: { name: "Client", initials: "CL", label: "Coach View" },
+  alpo: { name: "ALPO", initials: "AL", label: "Executive" },
+  client: { name: "User 2", initials: "U2", label: "Client 1" },
   family: { name: "Family", initials: "FA", label: "Sophie" },
 };
 
