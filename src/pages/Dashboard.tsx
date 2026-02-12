@@ -184,14 +184,28 @@ const Dashboard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div ref={carouselRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
-            {prCards.map((pr, i) => (
-              <div key={i} className="snap-start shrink-0 w-28 bg-secondary/50 rounded-lg px-3 py-2.5 text-center">
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{pr.date}</p>
-                <p className="text-xs font-bold text-foreground mt-1 truncate">{pr.lift}</p>
-                <p className="text-sm font-black text-primary mt-0.5">{pr.weight}</p>
-              </div>
-            ))}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => carouselRef.current?.scrollBy({ left: -140, behavior: "smooth" })}
+              className="p-1 text-muted-foreground hover:text-foreground transition-colors shrink-0"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <div ref={carouselRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory flex-1">
+              {prCards.map((pr, i) => (
+                <div key={i} className="snap-start shrink-0 w-28 bg-secondary/50 rounded-lg px-3 py-2.5 text-center">
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{pr.date}</p>
+                  <p className="text-xs font-bold text-foreground mt-1 truncate">{pr.lift}</p>
+                  <p className="text-sm font-black text-primary mt-0.5">{pr.weight}</p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => carouselRef.current?.scrollBy({ left: 140, behavior: "smooth" })}
+              className="p-1 text-muted-foreground hover:text-foreground transition-colors shrink-0"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
           <Button size="sm" className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-8">
             Log New PR
