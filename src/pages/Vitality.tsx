@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { vitalityMetricsByProfile, vitalityDetailsByProfile } from "@/data/executive-data";
 import { useProfile } from "@/contexts/ProfileContext";
+import { getDefaultVitalityMetrics, getDefaultVitalityDetails } from "@/data/default-profile-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
@@ -16,9 +17,9 @@ const statusColor: Record<string, string> = {
 };
 
 const Vitality = () => {
-  const { activeProfile } = useProfile();
-  const metrics = vitalityMetricsByProfile[activeProfile];
-  const details = vitalityDetailsByProfile[activeProfile];
+  const { activeProfile, info } = useProfile();
+  const metrics = vitalityMetricsByProfile[activeProfile] ?? getDefaultVitalityMetrics(info.name, info.weight || "180", info.goal || "maintain");
+  const details = vitalityDetailsByProfile[activeProfile] ?? getDefaultVitalityDetails();
 
   const sleepOnTrack = details.sleep.progress >= 90;
   const stepsOnTrack = details.steps.progress >= 70;

@@ -1,31 +1,71 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserPlus, X } from "lucide-react";
+import { UserPlus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { profileMap, ProfileKey, useProfile } from "@/contexts/ProfileContext";
+import { useProfile, GoalType, AccountType } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
 
-const profileKeys: ProfileKey[] = ["alpo", "client", "family"];
-
 const Splash = () => {
   const navigate = useNavigate();
-  const { setActiveProfile } = useProfile();
+  const { setActiveProfile, profiles, profileKeys, addProfile } = useProfile();
   const [showPicker, setShowPicker] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+
+  // Form state
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
-  const [regRole, setRegRole] = useState("");
+  const [regRole, setRegRole] = useState<AccountType | "">("");
   const [regPhone, setRegPhone] = useState("");
+  const [regWeight, setRegWeight] = useState("");
+  const [regGoal, setRegGoal] = useState<GoalType | "">("");
 
-  const handleProfileSelect = (key: ProfileKey) => {
+  const handleProfileSelect = (key: string) => {
     setActiveProfile(key);
     navigate("/dashboard");
   };
+
+  const handleCreateAccount = () => {
+    if (!regName.trim() || !regGoal || !regWeight.trim()) return;
+
+    const initials = regName
+      .trim()
+      .split(" ")
+      .map((w) => w[0]?.toUpperCase())
+      .join("")
+      .slice(0, 2);
+
+    const newKey = addProfile({
+      name: regName.trim(),
+      initials,
+      label: regName.trim().split(" ")[0],
+      avatar: "",
+      goal: regGoal as GoalType,
+      weight: regWeight.trim(),
+      accountType: (regRole || "user") as AccountType,
+      email: regEmail.trim(),
+      phone: regPhone.trim(),
+    });
+
+    // Reset form
+    setShowRegister(false);
+    setRegName("");
+    setRegEmail("");
+    setRegRole("");
+    setRegPhone("");
+    setRegWeight("");
+    setRegGoal("");
+
+    // Auto-select and navigate
+    setActiveProfile(newKey);
+    navigate("/dashboard");
+  };
+
+  const isFormValid = regName.trim() && regGoal && regWeight.trim();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
@@ -78,15 +118,15 @@ const Splash = () => {
           Tactical Intelligence for the Elite Athlete
         </p>
 
-        {/* Phase 2: Profile Picker */}
+        {/* Profile Picker */}
         {showPicker ? (
           <div className="animate-fade-in w-full max-w-[280px] space-y-3">
             <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">
               Select Profile
             </p>
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-[320px] overflow-y-auto scrollbar-hide">
               {profileKeys.map((key) => {
-                const info = profileMap[key];
+                const info = profiles[key];
                 return (
                   <button
                     key={key}
@@ -99,10 +139,21 @@ const Splash = () => {
                         {info.initials}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="text-left">
+                    <div className="text-left flex-1">
                       <p className="text-sm font-bold text-foreground">{info.label}</p>
-                      <p className="text-[10px] text-muted-foreground">{info.name}</p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {info.goal ? `${info.goal.charAt(0).toUpperCase() + info.goal.slice(1)} · ${info.weight} lbs` : info.name}
+                      </p>
                     </div>
+                    {info.goal && (
+                      <span className={`text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full ${
+                        info.goal === "lose" ? "bg-red-500/20 text-red-400" :
+                        info.goal === "gain" ? "bg-emerald-500/20 text-emerald-400" :
+                        "bg-amber-500/20 text-amber-400"
+                      }`}>
+                        {info.goal}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -138,9 +189,9 @@ const Splash = () => {
               Register a new profile on Alpo Fitness AI
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 pt-2">
+          <div className="space-y-3.5 pt-1">
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Full Name</Label>
+              <Label className="text-xs text-muted-foreground font-semibold">Full Name *</Label>
               <Input
                 placeholder="e.g. Jordan Smith"
                 value={regName}
@@ -168,9 +219,34 @@ const Splash = () => {
                 className="bg-secondary/50 border-border text-foreground text-sm"
               />
             </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Weight (lbs) *</Label>
+                <Input
+                  type="number"
+                  placeholder="185"
+                  value={regWeight}
+                  onChange={(e) => setRegWeight(e.target.value)}
+                  className="bg-secondary/50 border-border text-foreground text-sm"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Goal *</Label>
+                <Select value={regGoal} onValueChange={(v) => setRegGoal(v as GoalType)}>
+                  <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                    <SelectValue placeholder="Select…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border z-[60]">
+                    <SelectItem value="lose">Lose</SelectItem>
+                    <SelectItem value="gain">Gain</SelectItem>
+                    <SelectItem value="maintain">Maintain</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground font-semibold">Account Type</Label>
-              <Select value={regRole} onValueChange={setRegRole}>
+              <Select value={regRole} onValueChange={(v) => setRegRole(v as AccountType)}>
                 <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
                   <SelectValue placeholder="Select role…" />
                 </SelectTrigger>
@@ -183,14 +259,9 @@ const Splash = () => {
               </Select>
             </div>
             <button
-              onClick={() => {
-                setShowRegister(false);
-                setRegName("");
-                setRegEmail("");
-                setRegRole("");
-                setRegPhone("");
-              }}
-              className="w-full bg-primary text-primary-foreground font-bold text-sm py-2.5 rounded-lg hover:bg-primary/90 transition-colors mt-2"
+              onClick={handleCreateAccount}
+              disabled={!isFormValid}
+              className="w-full bg-primary text-primary-foreground font-bold text-sm py-2.5 rounded-lg hover:bg-primary/90 transition-colors mt-1 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Create Account
             </button>

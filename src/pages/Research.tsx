@@ -4,13 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { protocols, weeklyScheduleByProfile } from "@/data/executive-data";
 import { useProfile } from "@/contexts/ProfileContext";
+import { getDefaultWeeklySchedule } from "@/data/default-profile-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
 const Research = () => {
   const [expanded, setExpanded] = useState<number | null>(null);
-  const { activeProfile } = useProfile();
-  const weeklySchedule = weeklyScheduleByProfile[activeProfile];
+  const { activeProfile, info } = useProfile();
+  const weeklySchedule = weeklyScheduleByProfile[activeProfile] ?? getDefaultWeeklySchedule(info.goal || "maintain");
 
   return (
     <>

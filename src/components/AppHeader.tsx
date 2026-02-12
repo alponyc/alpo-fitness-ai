@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useProfile, profileMap, ProfileKey } from "@/contexts/ProfileContext";
+import { useProfile } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 
 const AppHeader = () => {
-  const { activeProfile, setActiveProfile, info } = useProfile();
+  const { activeProfile, setActiveProfile, info, profiles, profileKeys } = useProfile();
   const navigate = useNavigate();
 
   return (
@@ -36,8 +36,8 @@ const AppHeader = () => {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-card border-border min-w-[160px]">
-          {(Object.keys(profileMap) as ProfileKey[]).map((key) => {
-            const p = profileMap[key];
+          {profileKeys.map((key) => {
+            const p = profiles[key];
             return (
               <DropdownMenuItem
                 key={key}
