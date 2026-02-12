@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProfile, GoalType, ActivityLevel } from "@/contexts/ProfileContext";
+import { useAuth } from "@/contexts/AuthContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const { info, updateProfile } = useProfile();
+  const { signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/auth");
+  };
 
   const [name, setName] = useState(info.name || "");
   const [weight, setWeight] = useState(info.weight || "");
@@ -42,6 +50,15 @@ const Onboarding = () => {
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       <img src={splashBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-background/70" />
+
+      {/* Sign out button */}
+      <button
+        onClick={handleSignOut}
+        className="absolute top-4 right-4 z-20 flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors bg-secondary/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-border"
+      >
+        <LogOut className="w-3.5 h-3.5" />
+        Sign Out
+      </button>
 
       <div className="relative z-10 flex flex-col items-center gap-5 px-6 w-full max-w-[360px]">
         <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
