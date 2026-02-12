@@ -167,9 +167,6 @@ const Dashboard = () => {
                   <span className="text-xs font-bold text-primary">{data.weightHistory[weightIndex].delta} lbs</span>
                 </div>
               )}
-              {data.weightHistory[weightIndex].note && (
-                <p className="text-[10px] text-muted-foreground mt-1.5 italic">{data.weightHistory[weightIndex].note}</p>
-              )}
             </div>
             <button onClick={() => setWeightIndex(Math.min(data.weightHistory.length - 1, weightIndex + 1))} disabled={weightIndex === data.weightHistory.length - 1} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
               <ChevronRight className="w-5 h-5" />
