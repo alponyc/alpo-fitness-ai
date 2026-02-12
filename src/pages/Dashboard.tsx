@@ -157,9 +157,6 @@ const Dashboard = () => {
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
-          <Button size="sm" className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-8">
-            Log New PR
-          </Button>
         </CardContent>
       </Card>
 
