@@ -3,9 +3,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
 import { ProfileProvider } from "./contexts/ProfileContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/AppLayout";
 import Splash from "./pages/Splash";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Scanner from "./pages/Scanner";
 import Vitality from "./pages/Vitality";
@@ -19,25 +22,28 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <ProfileProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Splash />} />
-            <Route element={<AppLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/scanner" element={<Scanner />} />
-              <Route path="/research" element={<Research />} />
-              <Route path="/vitality" element={<Vitality />} />
-              <Route path="/medical" element={<MedicalVault />} />
-              <Route path="/kitchen" element={<Kitchen />} />
-              <Route path="/settings" element={<SettingsPage />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </ProfileProvider>
+      <AuthProvider>
+        <ProfileProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Splash />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/scanner" element={<Scanner />} />
+                <Route path="/research" element={<Research />} />
+                <Route path="/vitality" element={<Vitality />} />
+                <Route path="/medical" element={<MedicalVault />} />
+                <Route path="/kitchen" element={<Kitchen />} />
+                <Route path="/settings" element={<SettingsPage />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ProfileProvider>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
