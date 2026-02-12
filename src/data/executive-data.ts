@@ -25,6 +25,19 @@ export const protocols = [
   { id: 8, name: "Sodium Flush", category: "Lose", description: "Water manipulation via potassium/sodium cycling", icon: "💧" },
   { id: 9, name: "Cortisol Shield", category: "Recovery", description: "Stress management protocol with adaptogens", icon: "🛡️" },
   { id: 10, name: "Metabolic Reset", category: "Recovery", description: "2-week refeed strategy to restore metabolic rate", icon: "🔄" },
+  // Penelope's Protocols
+  { id: 11, name: "Chest & Triceps Split", category: "Gain", description: "Heavy compound pressing with isolation tricep finishers for upper body mass", icon: "🏋️" },
+  { id: 12, name: "Back & Biceps Split", category: "Gain", description: "Row-dominant pull day with barbell and dumbbell curl supersets", icon: "🏋️" },
+  { id: 13, name: "LISS Cardio", category: "Recovery", description: "Low-intensity steady-state cardio for active recovery and fat oxidation", icon: "🚶" },
+  { id: 14, name: "Legs & Core", category: "Gain", description: "Squat-focused leg day with weighted core circuit finisher", icon: "🦵" },
+  { id: 15, name: "Full Body Circuit", category: "Performance", description: "Time-under-tension full body circuit for conditioning and endurance", icon: "🔄" },
+  // Sophie's Protocols
+  { id: 16, name: "Yoga Flow", category: "Recovery", description: "Dynamic vinyasa flow for flexibility, balance, and stress relief", icon: "🧘‍♀️" },
+  { id: 17, name: "HIIT Circuit", category: "Lose", description: "High-intensity interval training with bodyweight and light resistance", icon: "⚡" },
+  { id: 18, name: "Barre Class", category: "Tone", description: "Ballet-inspired isometric holds for lean muscle definition and posture", icon: "🩰" },
+  { id: 19, name: "Pilates Core", category: "Tone", description: "Mat Pilates focused on deep core stabilization and pelvic alignment", icon: "🎯" },
+  { id: 20, name: "Upper Body Toning", category: "Tone", description: "Light dumbbell circuits for shoulders, arms, and back definition", icon: "💪" },
+  { id: 21, name: "Lower Body Sculpt", category: "Tone", description: "Glute bridges, hip thrusts, and banded squats for lower body shaping", icon: "🦵" },
 ];
 
 // === 10 Vision Scenarios ===
