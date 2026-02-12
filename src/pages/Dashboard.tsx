@@ -61,28 +61,36 @@ const Dashboard = () => {
               </button>
             ))}
           </div>
-          <div className="relative pl-4 space-y-3">
-            <div className="absolute left-[7px] top-1 bottom-1 w-px bg-primary/30" />
-            {currentTimeline.map((entry, i) => (
-              <div key={i} className="relative flex items-start gap-3">
-                <div className="absolute left-[-13px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary border-2 border-background z-10" />
-                <div className="flex-1 flex items-center justify-between bg-secondary/50 rounded-lg px-3 py-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-base">{entry.icon}</span>
-                    <div>
-                      <p className="text-xs font-semibold text-foreground">{entry.item}</p>
-                      <p className="text-[10px] text-muted-foreground">{entry.time}</p>
+          {currentTimeline.length === 0 ? (
+            <div className="text-center py-6">
+              <p className="text-xs text-muted-foreground italic">No entries yet — log your first meal</p>
+            </div>
+          ) : (
+            <div className="relative pl-4 space-y-3">
+              <div className="absolute left-[7px] top-1 bottom-1 w-px bg-primary/30" />
+              {currentTimeline.map((entry, i) => (
+                <div key={i} className="relative flex items-start gap-3">
+                  <div className="absolute left-[-13px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary border-2 border-background z-10" />
+                  <div className="flex-1 flex items-center justify-between bg-secondary/50 rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base">{entry.icon}</span>
+                      <div>
+                        <p className="text-xs font-semibold text-foreground">{entry.item}</p>
+                        <p className="text-[10px] text-muted-foreground">{entry.time}</p>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-bold text-primary">{entry.protein} P</span>
                   </div>
-                  <span className="text-[10px] font-bold text-primary">{entry.protein} P</span>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-3 flex items-center justify-between bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
-            <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Total Protein</span>
-            <span className="text-sm font-black text-primary">~{totalProtein}g</span>
-          </div>
+              ))}
+            </div>
+          )}
+          {totalProtein > 0 && (
+            <div className="mt-3 flex items-center justify-between bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+              <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Total Protein</span>
+              <span className="text-sm font-black text-primary">~{totalProtein}g</span>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -187,30 +195,36 @@ const Dashboard = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-2">
-            {kitchen.fridgeItems.map((item) => {
-              const levelStyles = item.level === "low"
-                ? "bg-destructive/10 border border-destructive/20"
-                : item.level === "mid"
-                ? "bg-amber-500/10 border border-amber-500/20"
-                : "bg-emerald-500/10 border border-emerald-500/20";
-              const badgeStyles = item.level === "low"
-                ? "text-destructive"
-                : item.level === "mid"
-                ? "text-amber-400"
-                : "text-emerald-400";
-              const badgeLabel = item.level === "low" ? "Low" : item.level === "mid" ? "Mid" : "Full";
-              return (
-                <div key={item.name} className={`rounded-lg px-3 py-2 ${levelStyles}`}>
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs font-semibold text-foreground">{item.name}</p>
-                    <span className={`text-[9px] font-black uppercase ${badgeStyles}`}>{badgeLabel}</span>
+          {kitchen.fridgeItems.length === 0 ? (
+            <div className="text-center py-6">
+              <p className="text-xs text-muted-foreground italic">No inventory — scan your fridge to get started</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-2">
+              {kitchen.fridgeItems.map((item) => {
+                const levelStyles = item.level === "low"
+                  ? "bg-destructive/10 border border-destructive/20"
+                  : item.level === "mid"
+                  ? "bg-amber-500/10 border border-amber-500/20"
+                  : "bg-emerald-500/10 border border-emerald-500/20";
+                const badgeStyles = item.level === "low"
+                  ? "text-destructive"
+                  : item.level === "mid"
+                  ? "text-amber-400"
+                  : "text-emerald-400";
+                const badgeLabel = item.level === "low" ? "Low" : item.level === "mid" ? "Mid" : "Full";
+                return (
+                  <div key={item.name} className={`rounded-lg px-3 py-2 ${levelStyles}`}>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold text-foreground">{item.name}</p>
+                      <span className={`text-[9px] font-black uppercase ${badgeStyles}`}>{badgeLabel}</span>
+                    </div>
+                    {item.detail && <p className="text-[10px] text-muted-foreground">{item.detail}</p>}
                   </div>
-                  {item.detail && <p className="text-[10px] text-muted-foreground">{item.detail}</p>}
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 
