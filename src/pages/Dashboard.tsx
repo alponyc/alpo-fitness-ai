@@ -6,19 +6,10 @@ import MacroRing from "@/components/MacroRing";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 import { useProfile } from "@/contexts/ProfileContext";
-import { dashboardDataByProfile, kitchenDataByProfile } from "@/data/executive-data";
+import { dashboardDataByProfile, kitchenDataByProfile, workoutsByProfile } from "@/data/executive-data";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const workoutDays = [
-  { label: "Thu 2/5", day: "Thu", workout: "Upper Body Push (Gironda Incline)" },
-  { label: "Fri 2/6", day: "Fri", workout: "Pull Day (Cable Row + Lat Focus)" },
-  { label: "Sat 2/7", day: "Sat", workout: "Full Body — Metabolic Reset" },
-  { label: "Sun 2/8", day: "Sun", workout: "High Volume Legs (Scott Protocol)" },
-  { label: "Mon 2/9", day: "Mon", workout: "Scott Protocol / Chest & Back" },
-  { label: "Tue 2/10", day: "Tue", workout: "Machine Flush / Neutral Grip" },
-  { label: "Wed 2/11", day: "Wed", workout: "Active Recovery Cardio (The Flush) – 30 mins" },
-];
 
 const prCards = [
   { lift: "Incline DB Press", weight: "110 lbs", date: "2/8" },
@@ -37,6 +28,7 @@ const Dashboard = () => {
   const { activeProfile } = useProfile();
   const data = dashboardDataByProfile[activeProfile];
   const kitchen = kitchenDataByProfile[activeProfile];
+  const workoutDays = workoutsByProfile[activeProfile];
   const [execDayIndex, setExecDayIndex] = useState(3); // Wed
   const [workoutIndex, setWorkoutIndex] = useState(1); // Today
   const [weightIndex, setWeightIndex] = useState(data.weightHistory.length - 1);
