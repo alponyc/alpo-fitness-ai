@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserPlus } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { profileMap, ProfileKey, useProfile } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
@@ -89,6 +89,7 @@ const Splash = () => {
                     className="w-full flex items-center gap-3 bg-card/80 backdrop-blur-sm border border-border rounded-xl px-4 py-3 hover:border-primary/40 transition-colors"
                   >
                     <Avatar className="h-10 w-10 border-2 border-primary/30">
+                      <AvatarImage src={info.avatar} alt={info.label} className="object-cover" />
                       <AvatarFallback className="bg-secondary text-foreground text-xs font-bold">
                         {info.initials}
                       </AvatarFallback>

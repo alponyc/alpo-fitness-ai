@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useProfile, profileMap, ProfileKey } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
@@ -27,6 +27,7 @@ const AppHeader = () => {
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-1.5 focus:outline-none">
             <Avatar className="h-9 w-9 border-2 border-primary/40">
+              <AvatarImage src={info.avatar} alt={info.label} className="object-cover" />
               <AvatarFallback className="bg-secondary text-foreground text-[10px] font-bold">
                 {info.initials}
               </AvatarFallback>
@@ -44,6 +45,7 @@ const AppHeader = () => {
                 className={`text-xs font-semibold cursor-pointer ${activeProfile === key ? "text-primary" : "text-foreground"}`}
               >
                 <Avatar className="h-6 w-6 mr-2">
+                  <AvatarImage src={p.avatar} alt={p.label} className="object-cover" />
                   <AvatarFallback className="bg-secondary text-foreground text-[8px] font-bold">{p.initials}</AvatarFallback>
                 </Avatar>
                 {p.label}

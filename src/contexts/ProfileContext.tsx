@@ -1,4 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import avatarAlpo from "@/assets/avatar-alpo.jpg";
+import avatarPenelope from "@/assets/avatar-penelope.jpg";
+import avatarSophie from "@/assets/avatar-sophie.jpg";
 
 export type ProfileKey = "alpo" | "client" | "family";
 
@@ -6,12 +9,13 @@ interface ProfileInfo {
   name: string;
   initials: string;
   label: string;
+  avatar: string;
 }
 
 export const profileMap: Record<ProfileKey, ProfileInfo> = {
-  alpo: { name: "ALPO", initials: "AL", label: "Alpo" },
-  client: { name: "Penelope", initials: "PS", label: "Client 1" },
-  family: { name: "Sophie", initials: "SS", label: "Sophie" },
+  alpo: { name: "ALPO", initials: "AL", label: "Alpo", avatar: avatarAlpo },
+  client: { name: "Penelope", initials: "PS", label: "Penelope", avatar: avatarPenelope },
+  family: { name: "Sophie", initials: "SS", label: "Sophie", avatar: avatarSophie },
 };
 
 interface ProfileContextValue {
