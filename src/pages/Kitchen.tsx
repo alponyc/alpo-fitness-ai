@@ -19,7 +19,7 @@ const modeConfig: Record<PantryMode, { icon: typeof Zap; label: string }> = {
 
 const Kitchen = () => {
   const { activeProfile } = useProfile();
-  const isNewUser = !["alpo", "client", "family"].includes(activeProfile);
+  const isNewUser = true; // All users start fresh with per-user profiles
   const [activeMode, setActiveMode] = useState<PantryMode>("lose");
   const [items, setItems] = useState("");
   const [mealPlan, setMealPlan] = useState("");
