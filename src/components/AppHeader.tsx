@@ -14,7 +14,7 @@ const AppHeader = () => {
         <img src={alpoLogo} alt="Alpo Fitness" className="w-8 h-8 rounded-lg object-cover" />
         <div>
           <h1 className="text-base font-black tracking-tight leading-none">
-            Alpo <span className="text-primary">Fitness</span> OS
+            Alpo <span className="text-primary">Fitness</span> AI
           </h1>
           <p className="text-[7px] uppercase tracking-[0.2em] text-muted-foreground font-bold leading-none mt-0.5">
             A.L.P.O. — Adaptive Lifestyle Performance Optimization
