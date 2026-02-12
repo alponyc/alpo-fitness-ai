@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-import avatarAlpo from "@/assets/avatar-alpo.jpg";
-import avatarPenelope from "@/assets/avatar-penelope.jpg";
-import avatarSophie from "@/assets/avatar-sophie.jpg";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
+import { useAuth } from "./AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import avatarDefault from "@/assets/avatar-default.png";
 
 export type ProfileKey = string;
 export type GoalType = "lose" | "gain" | "maintain";
@@ -23,10 +23,11 @@ export interface ProfileInfo {
   activityLevel?: ActivityLevel;
 }
 
-const defaultProfiles: Record<string, ProfileInfo> = {
-  alpo: { name: "Alex", initials: "AL", label: "Alex", avatar: avatarAlpo, goal: "lose", weight: "196.2", accountType: "user", age: 43, gender: "Male", activityLevel: "moderate" },
-  client: { name: "Penelope", initials: "PS", label: "Penelope", avatar: avatarPenelope, goal: "lose", weight: "212.5", accountType: "client", age: 38, gender: "Male", activityLevel: "active" },
-  family: { name: "Sophie", initials: "SS", label: "Sophie", avatar: avatarSophie, goal: "maintain", weight: "138.0", accountType: "family", age: 34, gender: "Female", activityLevel: "light" },
+const emptyProfile: ProfileInfo = {
+  name: "",
+  initials: "",
+  label: "",
+  avatar: avatarDefault,
 };
 
 interface ProfileContextValue {
@@ -37,50 +38,125 @@ interface ProfileContextValue {
   profileKeys: ProfileKey[];
   addProfile: (profile: ProfileInfo) => ProfileKey;
   removeProfile: (key: ProfileKey) => void;
+  updateProfile: (updates: Partial<ProfileInfo>) => Promise<void>;
+  loading: boolean;
 }
 
 const ProfileContext = createContext<ProfileContextValue>({
-  activeProfile: "alpo",
+  activeProfile: "me",
   setActiveProfile: () => {},
-  info: defaultProfiles.alpo,
-  profiles: defaultProfiles,
-  profileKeys: Object.keys(defaultProfiles),
+  info: emptyProfile,
+  profiles: {},
+  profileKeys: [],
   addProfile: () => "",
   removeProfile: () => {},
+  updateProfile: async () => {},
+  loading: true,
 });
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
-  const [profiles, setProfiles] = useState<Record<string, ProfileInfo>>(defaultProfiles);
-  const [activeProfile, setActiveProfile] = useState<ProfileKey>("alpo");
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<ProfileInfo>(emptyProfile);
+  const [loading, setLoading] = useState(true);
 
-  const addProfile = (profile: ProfileInfo): ProfileKey => {
-    const key = profile.name.toLowerCase().replace(/\s+/g, "_") + "_" + Date.now();
-    setProfiles((prev) => ({ ...prev, [key]: profile }));
-    return key;
+  const fetchProfile = useCallback(async () => {
+    if (!user) {
+      setProfile(emptyProfile);
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Error fetching profile:", error);
+      setLoading(false);
+      return;
+    }
+
+    if (data) {
+      setProfile({
+        name: data.name,
+        initials: data.initials || data.name.substring(0, 2).toUpperCase(),
+        label: data.name,
+        avatar: data.avatar_url || avatarDefault,
+        goal: (data.goal as GoalType) || undefined,
+        weight: data.weight || undefined,
+        accountType: (data.account_type as AccountType) || "user",
+        email: data.email || undefined,
+        phone: data.phone || undefined,
+        age: data.age || undefined,
+        gender: data.gender || undefined,
+        activityLevel: (data.activity_level as ActivityLevel) || undefined,
+      });
+    }
+    setLoading(false);
+  }, [user]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  const updateProfile = async (updates: Partial<ProfileInfo>) => {
+    if (!user) return;
+
+    const dbUpdates: Record<string, unknown> = {};
+    if (updates.name !== undefined) {
+      dbUpdates.name = updates.name;
+      dbUpdates.initials = updates.name.substring(0, 2).toUpperCase();
+    }
+    if (updates.goal !== undefined) dbUpdates.goal = updates.goal;
+    if (updates.weight !== undefined) dbUpdates.weight = updates.weight;
+    if (updates.accountType !== undefined) dbUpdates.account_type = updates.accountType;
+    if (updates.email !== undefined) dbUpdates.email = updates.email;
+    if (updates.phone !== undefined) dbUpdates.phone = updates.phone;
+    if (updates.age !== undefined) dbUpdates.age = updates.age;
+    if (updates.gender !== undefined) dbUpdates.gender = updates.gender;
+    if (updates.activityLevel !== undefined) dbUpdates.activity_level = updates.activityLevel;
+    if (updates.avatar !== undefined) dbUpdates.avatar_url = updates.avatar;
+
+    const { error } = await supabase
+      .from("profiles")
+      .update(dbUpdates)
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error updating profile:", error);
+      return;
+    }
+
+    setProfile((prev) => ({ ...prev, ...updates }));
   };
 
-  const removeProfile = (key: ProfileKey) => {
-    if (["alpo", "client", "family"].includes(key)) return;
-    setProfiles((prev) => {
-      const next = { ...prev };
-      delete next[key];
-      return next;
-    });
-    if (activeProfile === key) setActiveProfile("alpo");
+  // Keep the same interface shape for backward compat
+  const profiles: Record<string, ProfileInfo> = { me: profile };
+  const profileKeys = ["me"];
+
+  const addProfile = (_profile: ProfileInfo): ProfileKey => {
+    // No-op in per-user mode
+    return "me";
   };
 
-  const profileKeys = Object.keys(profiles);
+  const removeProfile = (_key: ProfileKey) => {
+    // No-op in per-user mode
+  };
 
   return (
     <ProfileContext.Provider
       value={{
-        activeProfile,
-        setActiveProfile,
-        info: profiles[activeProfile] || profiles.alpo,
+        activeProfile: "me",
+        setActiveProfile: () => {},
+        info: profile,
         profiles,
         profileKeys,
         addProfile,
         removeProfile,
+        updateProfile,
+        loading,
       }}
     >
       {children}
@@ -90,6 +166,5 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
 export const useProfile = () => useContext(ProfileContext);
 
-// Keep backward compat — components that import profileMap get the live profiles via context instead
-// For static imports, expose defaultProfiles
-export const profileMap = defaultProfiles;
+// Backward compat export — now returns empty since profiles are per-user
+export const profileMap: Record<string, ProfileInfo> = {};
