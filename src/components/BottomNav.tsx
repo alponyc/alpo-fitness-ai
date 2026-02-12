@@ -1,13 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, ScanLine, Heart, BookOpen, Stethoscope, Settings } from "lucide-react";
+import { LayoutDashboard, ScanLine, BookOpen, Heart, Stethoscope, ChefHat, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const tabs = [
-  { path: "/", label: "Dashboard", icon: LayoutDashboard },
-  { path: "/scanner", label: "Scanner", icon: ScanLine },
+  { path: "/", label: "Dash", icon: LayoutDashboard },
+  { path: "/scanner", label: "Scan", icon: ScanLine },
   { path: "/research", label: "Research", icon: BookOpen },
-  { path: "/vitality", label: "Vitality", icon: Heart },
+  { path: "/vitality", label: "Vitals", icon: Heart },
   { path: "/medical", label: "Vault", icon: Stethoscope },
+  { path: "/kitchen", label: "Kitchen", icon: ChefHat },
   { path: "/settings", label: "Settings", icon: Settings },
 ];
 
@@ -25,14 +26,12 @@ const BottomNav = () => {
               key={tab.path}
               onClick={() => navigate(tab.path)}
               className={cn(
-                "flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg transition-colors min-w-0",
-                isActive
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
+                "flex flex-col items-center gap-0.5 px-1 py-2 rounded-lg transition-colors min-w-0",
+                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <tab.icon className={cn("w-5 h-5", isActive && "drop-shadow-[0_0_6px_hsl(var(--primary))]")} />
-              <span className={cn("text-[9px] font-semibold tracking-wide", isActive && "text-primary")}>
+              <tab.icon className={cn("w-4.5 h-4.5", isActive && "drop-shadow-[0_0_6px_hsl(var(--primary))]")} />
+              <span className={cn("text-[8px] font-semibold tracking-wide", isActive && "text-primary")}>
                 {tab.label}
               </span>
             </button>
