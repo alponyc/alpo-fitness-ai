@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserPlus } from "lucide-react";
+import { UserPlus, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { profileMap, ProfileKey, useProfile } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
@@ -12,6 +16,11 @@ const Splash = () => {
   const navigate = useNavigate();
   const { setActiveProfile } = useProfile();
   const [showPicker, setShowPicker] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [regName, setRegName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regRole, setRegRole] = useState("");
+  const [regPhone, setRegPhone] = useState("");
 
   const handleProfileSelect = (key: ProfileKey) => {
     setActiveProfile(key);
@@ -98,7 +107,10 @@ const Splash = () => {
                 );
               })}
               {/* Add Account */}
-              <button className="w-full flex items-center gap-3 bg-card/40 backdrop-blur-sm border border-dashed border-border rounded-xl px-4 py-3 hover:border-primary/40 transition-colors">
+              <button
+                onClick={() => setShowRegister(true)}
+                className="w-full flex items-center gap-3 bg-card/40 backdrop-blur-sm border border-dashed border-border rounded-xl px-4 py-3 hover:border-primary/40 transition-colors"
+              >
                 <div className="h-10 w-10 rounded-full border-2 border-muted-foreground/30 flex items-center justify-center">
                   <UserPlus className="w-4 h-4 text-muted-foreground" />
                 </div>
@@ -116,6 +128,75 @@ const Splash = () => {
           </button>
         )}
       </div>
+
+      {/* Register Dialog */}
+      <Dialog open={showRegister} onOpenChange={setShowRegister}>
+        <DialogContent className="bg-card border-border max-w-[340px] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-foreground text-lg font-black">Create Account</DialogTitle>
+            <DialogDescription className="text-muted-foreground text-xs">
+              Register a new profile on Alpo Fitness AI
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Full Name</Label>
+              <Input
+                placeholder="e.g. Jordan Smith"
+                value={regName}
+                onChange={(e) => setRegName(e.target.value)}
+                className="bg-secondary/50 border-border text-foreground text-sm"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Email</Label>
+              <Input
+                type="email"
+                placeholder="jordan@example.com"
+                value={regEmail}
+                onChange={(e) => setRegEmail(e.target.value)}
+                className="bg-secondary/50 border-border text-foreground text-sm"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Phone (optional)</Label>
+              <Input
+                type="tel"
+                placeholder="+1 (555) 000-0000"
+                value={regPhone}
+                onChange={(e) => setRegPhone(e.target.value)}
+                className="bg-secondary/50 border-border text-foreground text-sm"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Account Type</Label>
+              <Select value={regRole} onValueChange={setRegRole}>
+                <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                  <SelectValue placeholder="Select role…" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border z-[60]">
+                  <SelectItem value="user">User — Personal Training</SelectItem>
+                  <SelectItem value="client">Client — Coached Athlete</SelectItem>
+                  <SelectItem value="family">Family — Shared Access</SelectItem>
+                  <SelectItem value="trainer">Trainer — Coach / PT</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <button
+              onClick={() => {
+                setShowRegister(false);
+                setRegName("");
+                setRegEmail("");
+                setRegRole("");
+                setRegPhone("");
+              }}
+              className="w-full bg-primary text-primary-foreground font-bold text-sm py-2.5 rounded-lg hover:bg-primary/90 transition-colors mt-2"
+            >
+              Create Account
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
