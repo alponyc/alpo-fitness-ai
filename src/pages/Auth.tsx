@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authSchema } from "@/lib/validation";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
 
@@ -33,16 +34,22 @@ const Auth = () => {
     setSubmitting(true);
 
     if (isSignUp) {
-      if (!name.trim()) {
-        setError("Name is required");
+      const result = authSchema.safeParse({ email, password, name });
+      if (!result.success) {
+        setError(result.error.errors[0].message);
         setSubmitting(false);
         return;
       }
-      if (password.length < 6) {
-        setError("Password must be at least 6 characters");
+    } else {
+      const result = authSchema.omit({ name: true }).safeParse({ email, password });
+      if (!result.success) {
+        setError(result.error.errors[0].message);
         setSubmitting(false);
         return;
       }
+    }
+
+    if (isSignUp) {
       const { error } = await signUp(email, password, name.trim());
       if (error) {
         setError(error.message);
