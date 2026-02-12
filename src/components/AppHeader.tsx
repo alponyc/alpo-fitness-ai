@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -7,6 +8,7 @@ import alpoLogo from "@/assets/alpo-logo.png";
 
 const AppHeader = () => {
   const { activeProfile, setActiveProfile, info } = useProfile();
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border px-4 py-3 flex items-center justify-between">
@@ -50,9 +52,12 @@ const AppHeader = () => {
             );
           })}
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-xs font-semibold text-destructive cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => navigate("/")}
+            className="text-xs font-semibold text-destructive cursor-pointer"
+          >
             <LogOut className="w-3.5 h-3.5 mr-2" />
-            Logout
+            Sign Out
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
