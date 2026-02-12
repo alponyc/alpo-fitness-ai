@@ -117,7 +117,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
         if (!isMounted) return;
 
         if (error) {
-          console.error("Error fetching profiles:", error);
+          if (import.meta.env.DEV) console.error("Error fetching profiles:", error);
           setLoading(false);
           return;
         }
@@ -133,7 +133,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
             return data[0].id;
           });
         } else {
-          console.warn("No profiles found for user:", user.id);
+          if (import.meta.env.DEV) console.warn("No profiles found for user:", user.id);
           setProfiles({});
         }
       } finally {
@@ -170,7 +170,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       .single();
 
     if (error) {
-      console.error("Error adding profile:", error);
+      if (import.meta.env.DEV) console.error("Error adding profile:", error);
       return "";
     }
 
@@ -190,7 +190,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       .eq("id", key);
 
     if (error) {
-      console.error("Error removing profile:", error);
+      if (import.meta.env.DEV) console.error("Error removing profile:", error);
       return;
     }
 
@@ -229,7 +229,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
       .eq("id", activeProfile);
 
     if (error) {
-      console.error("Error updating profile:", error);
+      if (import.meta.env.DEV) console.error("Error updating profile:", error);
       return;
     }
 
