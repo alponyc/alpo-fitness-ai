@@ -248,7 +248,7 @@ export const scannerHotspots = {
    sampleMenu: {
      label: "Sophie's Cuban",
      icon: "🍽️",
-     aiResponse: "**RAG-Verified Analysis: Sophie's Cuban**\n\n**Recommended:**\n• Grilled Chicken/Pechuga (360 cal, 42g P) — Lean protein, ideal for current handle\n• Black Beans (150 cal, 8g P) — Fiber-rich carb source\n• White Rice (200 cal, 4g C) — Clean carb\n\n**Cautions:**\n• ⚠️ Sodium: Beans are high — Request low-salt option\n• ⚠️ Plantain chips — Skip (refined carbs, high sodium)\n\n**Post-Meal Protocol:**\n• Drink 16oz water flush within 30 mins\n• Monitor sodium intake for next 4 hours\n• At 196.2 handle, sodium sensitivity is HIGH",
+     aiResponse: "**RAG-Verified Analysis: Sophie's Cuban**\n\n**Assessment:**\n• 75% menu compliance — stick to grilled proteins + beans\n• Sodium risk is ELEVATED at 196.2 handle\n• Request low-salt on all sides\n\n**Post-Meal Protocol:**\n• Drink 16oz water flush within 30 mins\n• Monitor sodium intake for next 4 hours\n• Kitchen is CLOSED after this meal",
      safe: [
        { name: "Grilled Chicken/Pechuga", cal: "360 cal", note: "42g protein, clean grilled" },
        { name: "Black Beans (low-salt)", cal: "150 cal", note: "Fiber + carbs, request low sodium" },
@@ -262,7 +262,7 @@ export const scannerHotspots = {
   steakhouse: {
     label: "Steakhouse",
     icon: "🥩",
-    aiResponse: "**RAG-Verified Analysis: Steakhouse**\n\n**Recommended:**\n• NY Strip 12oz (580 cal, 62g P) — Excellent for Scott Protocol\n• Grilled Asparagus (40 cal) — Low cal, anti-inflammatory\n\n**Cautions:**\n• ⚠️ Creamed Spinach (220 cal) — Hidden cream, request steamed\n• ⚠️ Skip the bread basket entirely\n\n**Post-Meal Protocol:**\n• Order steak with asparagus, no sides\n• At 196.2 handle, carb sensitivity is elevated\n• Avoid loaded potato — 38g carbs + butter/sour cream",
+    aiResponse: "**RAG-Verified Analysis: Steakhouse**\n\n**Assessment:**\n• Strong Scott Protocol alignment — protein-dense options available\n• Carb sensitivity is elevated at 196.2 handle\n• Order steak with asparagus only, no sides\n\n**Post-Meal Protocol:**\n• Skip bread basket entirely — triggers bloat at 196.2\n• Request steamed spinach instead of creamed\n• No dessert — close the kitchen after this meal",
     safe: [
       { name: "NY Strip 12oz", cal: "580 cal", note: "62g protein, ideal for gain protocol" },
       { name: "Grilled Asparagus", cal: "40 cal", note: "Low cal, anti-inflammatory" },
@@ -275,7 +275,7 @@ export const scannerHotspots = {
   greek: {
     label: "Greek",
     icon: "🫒",
-    aiResponse: "**RAG-Verified Analysis: Greek Menu**\n\n**Recommended:**\n• Chicken Souvlaki (320 cal, 38g P) — Protocol-safe, request no pita\n• Greek Salad (180 cal) — Safe with oil & vinegar dressing\n\n**Cautions:**\n• ⚠️ Feta sodium — Limit to 1oz at 196.2 handle\n• ⚠️ Moussaka (480 cal) — Heavy béchamel, skip\n\n**Post-Meal Protocol:**\n• Stick to grilled proteins + salad only\n• Avoid baklava (310 cal sugar bomb)\n• Monitor sodium for next 4 hours",
+    aiResponse: "**RAG-Verified Analysis: Greek Menu**\n\n**Assessment:**\n• Moderate compliance — grilled proteins are strong here\n• Feta sodium is a concern — limit to 1oz at 196.2 handle\n• Request oil & vinegar dressing, skip pita bread\n\n**Post-Meal Protocol:**\n• Stick to grilled proteins + salad only\n• Monitor sodium for next 4 hours\n• No baklava — sugar bomb, triggers insulin spike",
     safe: [
       { name: "Chicken Souvlaki (no pita)", cal: "320 cal", note: "38g protein, lean grilled" },
       { name: "Greek Salad", cal: "180 cal", note: "Oil & vinegar dressing only" },
@@ -288,7 +288,7 @@ export const scannerHotspots = {
    italianGrill: {
      label: "Italian Grill",
      icon: "🍝",
-     aiResponse: "**RAG-Verified Analysis: Italian Grill**\n\n**Recommended:**\n• Chicken Spiedini (380 cal, 44g P) — Best option, skip pasta side\n• Steamed Vegetables (80 cal) — Request no butter\n\n**Cautions:**\n• ⚠️ Caesar Salad dressing — 680mg sodium, request on the side\n• ⚠️ This restaurant is a sodium minefield at 196.2\n\n**Post-Meal Protocol:**\n• Stick to grilled proteins only\n• Avoid Fettuccine Alfredo (1,220 cal, 72g fat)\n• Skip bread + olive oil (triggers bloat at 196.2)",
+     aiResponse: "**RAG-Verified Analysis: Italian Grill**\n\n**Assessment:**\n• HIGH RISK venue — sodium minefield at 196.2 handle\n• Only grilled proteins are compliant here\n• Caesar dressing alone is 680mg sodium — request on the side\n\n**Post-Meal Protocol:**\n• Skip bread + olive oil entirely — triggers bloat\n• Request all sauces on the side\n• 16oz water flush within 30 mins post-meal",
      safe: [
        { name: "Chicken Spiedini", cal: "380 cal", note: "44g protein, skip pasta side" },
        { name: "Steamed Vegetables", cal: "80 cal", note: "Request no butter" },
@@ -301,7 +301,7 @@ export const scannerHotspots = {
   sampleReceipt: {
     label: "Receipt",
     icon: "🧾",
-    aiResponse: "**RAG-Verified Analysis: Receipt Scan**\n\n**Compliant Items (3/4):**\n• ✓ Fairlife 42g Protein Shake — Protocol-aligned\n• ✓ Oikos Triple Zero — 15g protein, low sugar\n• ✓ Chicken Breast 2lb — Lean protein staple\n\n**Flagged Items:**\n• ❌ Doritos Family Size — Non-compliant, 140mg sodium/serving\n\n**Assessment:**\n• 75% compliance with McDonald RFL protocol\n• Replace Doritos with rice cakes or protein chips\n• Overall grocery haul is solid",
+    aiResponse: "**RAG-Verified Analysis: Receipt Scan**\n\n**Assessment:**\n• 75% compliance with McDonald RFL protocol\n• 3 of 4 items are protocol-aligned\n• Replace Doritos with rice cakes or protein chips\n\n**Action Items:**\n• Add egg whites to next grocery run\n• Stock up on leafy greens for fiber gap\n• Overall grocery haul is solid — keep this pattern",
     safe: [
       { name: "Fairlife 42g Shake", cal: "230 cal", note: "Protocol-aligned protein source" },
       { name: "Oikos Triple Zero", cal: "120 cal", note: "15g protein, zero added sugar" },
@@ -314,7 +314,7 @@ export const scannerHotspots = {
   fridgeAudit: {
     label: "Fridge Audit",
     icon: "🧊",
-    aiResponse: "**RAG-Verified Analysis: Fridge Audit**\n\n**Inventory Status:** 2.5 days of RFL protocol coverage\n\n**Adequate:**\n• ✓ Churrasco (2 portions) — High protein, moderate fat\n• ✓ Chicken (3 portions) — Lean, well-seasoned\n• ✓ Asparagus — Low carb, anti-inflammatory\n\n**Restock Needed:**\n• ⚠️ No Fairlife detected — Critical for protein targets\n• ⚠️ Low leafy greens — Fiber and micronutrient gap\n\n**Action:**\n• Grocery run needed for protein shakes + egg whites\n• Restock leafy greens within 24 hours",
+    aiResponse: "**RAG-Verified Analysis: Fridge Audit**\n\n**Assessment:**\n• 2.5 days of RFL protocol coverage remaining\n• Protein sources are adequate but need restocking soon\n• Critical gap: no Fairlife shakes detected\n\n**Action Items:**\n• Grocery run needed — protein shakes + egg whites\n• Restock leafy greens within 24 hours\n• Add Greek yogurt for snack-tier protein",
     safe: [
       { name: "Churrasco (2 portions)", cal: "480 cal", note: "High protein, moderate fat" },
       { name: "Chicken (3 portions)", cal: "200 cal/serv", note: "Lean, well-seasoned" },
