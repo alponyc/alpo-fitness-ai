@@ -262,7 +262,7 @@ export const scannerHotspots = {
   steakhouse: {
     label: "Steakhouse",
     icon: "🥩",
-    aiResponse: "RAG-Verified Steakhouse Scan: 'NY Strip 12oz' (580 cal, 62g P) — Excellent for Scott Protocol. 'Loaded Baked Potato' — AVOID (420 cal, 38g C, butter/sour cream). 'Creamed Spinach' — Caution (220 cal, hidden cream). ⚠️ At 196.2, skip the bread basket entirely. Order steak with asparagus.",
+    aiResponse: "**RAG-Verified Analysis: Steakhouse**\n\n**Recommended:**\n• NY Strip 12oz (580 cal, 62g P) — Excellent for Scott Protocol\n• Grilled Asparagus (40 cal) — Low cal, anti-inflammatory\n\n**Cautions:**\n• ⚠️ Creamed Spinach (220 cal) — Hidden cream, request steamed\n• ⚠️ Skip the bread basket entirely\n\n**Post-Meal Protocol:**\n• Order steak with asparagus, no sides\n• At 196.2 handle, carb sensitivity is elevated\n• Avoid loaded potato — 38g carbs + butter/sour cream",
     safe: [
       { name: "NY Strip 12oz", cal: "580 cal", note: "62g protein, ideal for gain protocol" },
       { name: "Grilled Asparagus", cal: "40 cal", note: "Low cal, anti-inflammatory" },
@@ -275,7 +275,7 @@ export const scannerHotspots = {
   greek: {
     label: "Greek",
     icon: "🫒",
-    aiResponse: "RAG-Verified Greek Menu: 'Chicken Souvlaki' (320 cal, 38g P) — Protocol-safe, request no pita. 'Greek Salad' (180 cal) — Safe with oil/vinegar. 'Moussaka' — AVOID (480 cal, heavy béchamel). 'Baklava' — AVOID (310 cal, sugar bomb). ⚠️ At 196.2, feta sodium is a concern — limit to 1oz.",
+    aiResponse: "**RAG-Verified Analysis: Greek Menu**\n\n**Recommended:**\n• Chicken Souvlaki (320 cal, 38g P) — Protocol-safe, request no pita\n• Greek Salad (180 cal) — Safe with oil & vinegar dressing\n\n**Cautions:**\n• ⚠️ Feta sodium — Limit to 1oz at 196.2 handle\n• ⚠️ Moussaka (480 cal) — Heavy béchamel, skip\n\n**Post-Meal Protocol:**\n• Stick to grilled proteins + salad only\n• Avoid baklava (310 cal sugar bomb)\n• Monitor sodium for next 4 hours",
     safe: [
       { name: "Chicken Souvlaki (no pita)", cal: "320 cal", note: "38g protein, lean grilled" },
       { name: "Greek Salad", cal: "180 cal", note: "Oil & vinegar dressing only" },
@@ -288,7 +288,7 @@ export const scannerHotspots = {
    italianGrill: {
      label: "Italian Grill",
      icon: "🍝",
-     aiResponse: "RAG-Verified Italian Grill: 'Grilled Chicken Spiedini' (380 cal, 44g P) — Best option, skip the pasta side. 'Caesar Salad' — Caution (dressing has 680mg sodium). 'Fettuccine Alfredo' — AVOID (1,220 cal, 72g fat). ⚠️ At 196.2, this restaurant is a sodium minefield. Stick to grilled proteins only.",
+     aiResponse: "**RAG-Verified Analysis: Italian Grill**\n\n**Recommended:**\n• Chicken Spiedini (380 cal, 44g P) — Best option, skip pasta side\n• Steamed Vegetables (80 cal) — Request no butter\n\n**Cautions:**\n• ⚠️ Caesar Salad dressing — 680mg sodium, request on the side\n• ⚠️ This restaurant is a sodium minefield at 196.2\n\n**Post-Meal Protocol:**\n• Stick to grilled proteins only\n• Avoid Fettuccine Alfredo (1,220 cal, 72g fat)\n• Skip bread + olive oil (triggers bloat at 196.2)",
      safe: [
        { name: "Chicken Spiedini", cal: "380 cal", note: "44g protein, skip pasta side" },
        { name: "Steamed Vegetables", cal: "80 cal", note: "Request no butter" },
@@ -301,7 +301,7 @@ export const scannerHotspots = {
   sampleReceipt: {
     label: "Receipt",
     icon: "🧾",
-    aiResponse: "RAG-Verified Receipt Scan: Fairlife 42g Protein Shake (✓ Protocol-aligned), Oikos Triple Zero (✓ 15g protein, low sugar), Chicken Breast 2lb (✓ Lean protein staple), Doritos Family Size — FLAGGED (non-compliant, 140mg sodium/serving). Overall: 3/4 items compliant with current McDonald RFL protocol.",
+    aiResponse: "**RAG-Verified Analysis: Receipt Scan**\n\n**Compliant Items (3/4):**\n• ✓ Fairlife 42g Protein Shake — Protocol-aligned\n• ✓ Oikos Triple Zero — 15g protein, low sugar\n• ✓ Chicken Breast 2lb — Lean protein staple\n\n**Flagged Items:**\n• ❌ Doritos Family Size — Non-compliant, 140mg sodium/serving\n\n**Assessment:**\n• 75% compliance with McDonald RFL protocol\n• Replace Doritos with rice cakes or protein chips\n• Overall grocery haul is solid",
     safe: [
       { name: "Fairlife 42g Shake", cal: "230 cal", note: "Protocol-aligned protein source" },
       { name: "Oikos Triple Zero", cal: "120 cal", note: "15g protein, zero added sugar" },
@@ -314,7 +314,7 @@ export const scannerHotspots = {
   fridgeAudit: {
     label: "Fridge Audit",
     icon: "🧊",
-    aiResponse: "RAG-Verified Fridge Audit: Current inventory supports 2.5 days of McDonald RFL protocol. Protein reserves: Adequate (Churrasco 2 portions, Chicken 3 portions). Vegetable stock: Low — restock asparagus and leafy greens. Alert: No Fairlife detected. Recommend grocery run for protein shakes and egg whites.",
+    aiResponse: "**RAG-Verified Analysis: Fridge Audit**\n\n**Inventory Status:** 2.5 days of RFL protocol coverage\n\n**Adequate:**\n• ✓ Churrasco (2 portions) — High protein, moderate fat\n• ✓ Chicken (3 portions) — Lean, well-seasoned\n• ✓ Asparagus — Low carb, anti-inflammatory\n\n**Restock Needed:**\n• ⚠️ No Fairlife detected — Critical for protein targets\n• ⚠️ Low leafy greens — Fiber and micronutrient gap\n\n**Action:**\n• Grocery run needed for protein shakes + egg whites\n• Restock leafy greens within 24 hours",
     safe: [
       { name: "Churrasco (2 portions)", cal: "480 cal", note: "High protein, moderate fat" },
       { name: "Chicken (3 portions)", cal: "200 cal/serv", note: "Lean, well-seasoned" },
