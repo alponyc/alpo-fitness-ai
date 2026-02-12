@@ -1,4 +1,19 @@
-import { ProfileKey } from "@/contexts/ProfileContext";
+import { ProfileKey, ProfileInfo } from "@/contexts/ProfileContext";
+
+/**
+ * Maps a database profile to the hardcoded executive-data key.
+ * Alex → "alpo", Penelope → "client", Sophie → "family"
+ */
+export function getDataKey(info: ProfileInfo): ProfileKey {
+  const name = info.name?.toLowerCase();
+  if (name === "alex") return "alpo";
+  if (name === "penelope") return "client";
+  if (name === "sophie") return "family";
+  // Fallback by accountType
+  if (info.accountType === "client") return "client";
+  if (info.accountType === "family") return "family";
+  return "alpo"; // default
+}
 
 // === 10 Protocols ===
 export const protocols = [

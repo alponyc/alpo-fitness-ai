@@ -6,7 +6,7 @@ import MacroRing from "@/components/MacroRing";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 import { useProfile } from "@/contexts/ProfileContext";
-import { dashboardDataByProfile, kitchenDataByProfile, workoutsByProfile, prCardsByProfile } from "@/data/executive-data";
+import { dashboardDataByProfile, kitchenDataByProfile, workoutsByProfile, prCardsByProfile, getDataKey } from "@/data/executive-data";
 import { getDefaultDashboardData, getDefaultKitchenData, getDefaultWorkouts, getDefaultPRCards } from "@/data/default-profile-data";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -15,10 +15,11 @@ const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const Dashboard = () => {
   const { activeProfile, info } = useProfile();
-  const data = dashboardDataByProfile[activeProfile] ?? getDefaultDashboardData(info.name, info.weight || "180", info.goal || "maintain");
-  const kitchen = kitchenDataByProfile[activeProfile] ?? getDefaultKitchenData(info.goal || "maintain");
-  const workoutDays = workoutsByProfile[activeProfile] ?? getDefaultWorkouts(info.goal || "maintain");
-  const prCards = prCardsByProfile[activeProfile] ?? getDefaultPRCards();
+  const dataKey = getDataKey(info);
+  const data = dashboardDataByProfile[dataKey] ?? getDefaultDashboardData(info.name, info.weight || "180", info.goal || "maintain");
+  const kitchen = kitchenDataByProfile[dataKey] ?? getDefaultKitchenData(info.goal || "maintain");
+  const workoutDays = workoutsByProfile[dataKey] ?? getDefaultWorkouts(info.goal || "maintain");
+  const prCards = prCardsByProfile[dataKey] ?? getDefaultPRCards();
   const [execDayIndex, setExecDayIndex] = useState(3); // Wed
   const [workoutIndex, setWorkoutIndex] = useState(1); // Today
   const [weightIndex, setWeightIndex] = useState(data.weightHistory.length - 1);
