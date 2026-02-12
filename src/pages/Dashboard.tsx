@@ -23,6 +23,10 @@ const Dashboard = () => {
   const [execDayIndex, setExecDayIndex] = useState(3); // Wed
   const [workoutIndex, setWorkoutIndex] = useState(1); // Today
   const [weightIndex, setWeightIndex] = useState(data.weightHistory.length - 1);
+
+  // Clamp weightIndex when data changes (e.g. profile switch)
+  const safeWeightIndex = Math.min(weightIndex, data.weightHistory.length - 1);
+  const currentWeight = data.weightHistory[safeWeightIndex];
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const currentDayKey = weekDays[execDayIndex];
@@ -105,20 +109,20 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between bg-secondary/50 rounded-lg p-3">
-            <button onClick={() => setWeightIndex(Math.max(0, weightIndex - 1))} disabled={weightIndex === 0} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
+            <button onClick={() => setWeightIndex(Math.max(0, safeWeightIndex - 1))} disabled={safeWeightIndex === 0} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="text-center flex-1 px-2">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">{data.weightHistory[weightIndex].date}</p>
-              <p className="text-2xl font-black text-foreground mt-0.5">{data.weightHistory[weightIndex].weight} lbs</p>
-              {data.weightHistory[weightIndex].delta && (
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">{currentWeight?.date ?? "—"}</p>
+              <p className="text-2xl font-black text-foreground mt-0.5">{currentWeight?.weight ?? "—"} lbs</p>
+              {currentWeight?.delta && (
                 <div className="flex items-center justify-center gap-1 mt-1">
                   <TrendingDown className="w-3 h-3 text-primary" />
-                  <span className="text-xs font-bold text-primary">{data.weightHistory[weightIndex].delta} lbs</span>
+                  <span className="text-xs font-bold text-primary">{currentWeight.delta} lbs</span>
                 </div>
               )}
             </div>
-            <button onClick={() => setWeightIndex(Math.min(data.weightHistory.length - 1, weightIndex + 1))} disabled={weightIndex === data.weightHistory.length - 1} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
+            <button onClick={() => setWeightIndex(Math.min(data.weightHistory.length - 1, safeWeightIndex + 1))} disabled={safeWeightIndex === data.weightHistory.length - 1} className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors">
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
