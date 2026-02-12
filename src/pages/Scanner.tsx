@@ -4,28 +4,38 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { scannerHotspots } from "@/data/executive-data";
+import RAGBadge from "@/components/RAGBadge";
+import EthicalGuardrail from "@/components/EthicalGuardrail";
 
-const safeResults = [
-  { name: "Grilled Salmon", cal: "360 cal", note: "High omega-3, clean protein" },
-  { name: "Asparagus (steamed)", cal: "40 cal", note: "Low carb, anti-inflammatory" },
-];
-
-const avoidResults = [
-  { name: "Garlic Bread", cal: "310 cal", note: "High sodium, refined carbs" },
-];
+type HotspotKey = keyof typeof scannerHotspots;
 
 const Scanner = () => {
   const [menuText, setMenuText] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [activeHotspot, setActiveHotspot] = useState<HotspotKey | null>(null);
+
+  const currentResult = activeHotspot ? scannerHotspots[activeHotspot] : scannerHotspots.sampleMenu;
 
   const handleAnalyze = () => {
+    setAnalyzing(true);
+    setShowResults(false);
+    setActiveHotspot(null);
+    setTimeout(() => {
+      setAnalyzing(false);
+      setShowResults(true);
+    }, 2000);
+  };
+
+  const handleHotspot = (key: HotspotKey) => {
+    setActiveHotspot(key);
     setAnalyzing(true);
     setShowResults(false);
     setTimeout(() => {
       setAnalyzing(false);
       setShowResults(true);
-    }, 2000);
+    }, 1500);
   };
 
   const handleUpload = () => {
@@ -38,8 +48,33 @@ const Scanner = () => {
   return (
     <>
       <div className="space-y-1">
-        <h2 className="text-xl font-black text-foreground tracking-tight">Menu Analysis</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-black text-foreground tracking-tight">Menu Analysis</h2>
+          <RAGBadge />
+        </div>
         <p className="text-xs text-muted-foreground">Upload an Uber Eats screenshot or paste a menu for AI breakdown.</p>
+      </div>
+
+      {/* Hotspot Buttons */}
+      <div className="grid grid-cols-3 gap-2">
+        {(Object.keys(scannerHotspots) as HotspotKey[]).map((key) => {
+          const spot = scannerHotspots[key];
+          return (
+            <Button
+              key={key}
+              variant={activeHotspot === key ? "default" : "outline"}
+              onClick={() => handleHotspot(key)}
+              className={
+                activeHotspot === key
+                  ? "bg-primary text-primary-foreground text-[10px] font-bold h-auto py-2 flex flex-col gap-1"
+                  : "border-border text-muted-foreground hover:text-foreground text-[10px] font-bold h-auto py-2 flex flex-col gap-1"
+              }
+            >
+              <span className="text-base">{spot.icon}</span>
+              {spot.label}
+            </Button>
+          );
+        })}
       </div>
 
       {/* Upload Area */}
@@ -93,15 +128,18 @@ const Scanner = () => {
       {/* Analysis Results */}
       {showResults && (
         <>
-          <div className="glass rounded-2xl p-4 space-y-1.5">
+          <div className="glass rounded-2xl p-4 space-y-2">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Gemini-Powered Analysis</span>
+              <RAGBadge />
             </div>
             <p className="text-sm text-foreground/90 leading-relaxed">
-              <span className="font-bold text-foreground">Grilled Salmon & Asparagus</span> detected. (<span className="font-bold text-emerald-400">Safe</span>). Avoid the <span className="font-bold text-primary">Garlic Bread</span> (High Sodium).
+              {currentResult.aiResponse}
             </p>
           </div>
+
+          <EthicalGuardrail />
 
           <Card className="border-border bg-card">
             <CardHeader className="pb-3">
@@ -111,7 +149,7 @@ const Scanner = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {safeResults.map((item) => (
+              {currentResult.safe.map((item) => (
                 <div key={item.name} className="flex items-center justify-between bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2.5">
                   <div>
                     <p className="text-xs font-semibold text-foreground">{item.name}</p>
@@ -125,19 +163,19 @@ const Scanner = () => {
 
           <Card className="border-border bg-card">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-bold flex items-center gap-2 text-primary">
+              <CardTitle className="text-sm font-bold flex items-center gap-2 text-destructive">
                 <ShieldAlert className="w-4 h-4" />
                 Avoid – Skip These
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {avoidResults.map((item) => (
-                <div key={item.name} className="flex items-center justify-between bg-primary/10 border border-primary/20 rounded-lg px-3 py-2.5">
+              {currentResult.avoid.map((item) => (
+                <div key={item.name} className="flex items-center justify-between bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2.5">
                   <div>
                     <p className="text-xs font-semibold text-foreground">{item.name}</p>
                     <p className="text-[10px] text-muted-foreground">{item.note}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-primary">{item.cal}</span>
+                  <span className="text-[10px] font-bold text-destructive">{item.cal}</span>
                 </div>
               ))}
             </CardContent>

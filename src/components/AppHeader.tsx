@@ -7,7 +7,7 @@ const AppHeader = () => (
     <div className="flex items-center gap-2.5">
       <img src={alpoLogo} alt="Alpo Fitness" className="w-8 h-8 rounded-lg object-cover" />
       <h1 className="text-lg font-black tracking-tight">
-        Alpo <span className="text-primary">Fitness</span> AI
+        Alpo <span className="text-primary">Executive</span> OS
       </h1>
     </div>
     <Avatar className="h-9 w-9 border-2 border-primary/40">

@@ -3,6 +3,8 @@ import { ChevronLeft, ChevronRight, Dumbbell, Trophy, UtensilsCrossed, Brain, Sc
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MacroRing from "@/components/MacroRing";
+import RAGBadge from "@/components/RAGBadge";
+import EthicalGuardrail from "@/components/EthicalGuardrail";
 
 const workoutDays = [
   { label: "2 Days Ago", workout: "Upper Body Push (Chest & Shoulders)" },
@@ -113,17 +115,20 @@ const Dashboard = () => {
         <div className="flex items-center gap-2">
           <Brain className="w-4 h-4 text-primary" />
           <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Executive Insight</span>
+          <RAGBadge />
         </div>
         <p className="text-sm text-foreground/90 leading-relaxed">
           I noticed the <span className="font-bold text-foreground">198.6</span> weigh-in. Based on Saturday's sodium, this is water. Skip the peppers/onions tonight to minimize bloat; stick to the <span className="font-bold text-foreground">Chicken and Water</span>. Kitchen is <span className="font-black text-primary">CLOSED</span>.
         </p>
       </div>
 
+      <EthicalGuardrail />
+
       {/* Macro Rings */}
       <div className="pt-2 pb-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium text-center mb-4">Daily Macros</p>
         <div className="flex justify-center gap-6">
-          <MacroRing label="Protein" value={142} max={200} unit="g" />
+          <MacroRing label="Protein" value={153} max={200} unit="g" />
           <MacroRing label="Carbs" value={20} max={150} unit="g" />
           <MacroRing label="Fats" value={35} max={80} unit="g" />
         </div>
