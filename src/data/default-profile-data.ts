@@ -80,7 +80,36 @@ export function getDefaultVitalityDetails() {
   return {
     sleep: { total: "—", deep: "—", rem: "—", light: "—", target: "8h 00m", progress: 0, status: "No Data" },
     steps: { value: "0", target: "10,000", progress: 0, distance: "0 mi", calories: "0 kcal", floors: "0", status: "No Data" },
-    recoveryInsight: "Welcome! Start logging your sleep and activity to receive personalized recovery insights.",
+    recoveryInsight: "Welcome! Sync your Apple Health or Samsung Health to receive personalized recovery insights.",
+  };
+}
+
+export function getSyncedVitalityMetrics(_name: string, weight: string, goal: GoalType) {
+  const w = parseFloat(weight) || 180;
+  const targetWeight = goal === "lose" ? (w - 10).toFixed(1) : goal === "gain" ? (w + 10).toFixed(1) : w.toFixed(1);
+  return [
+    { id: 1, name: "Weight", value: w.toFixed(1), unit: "lbs", target: targetWeight, status: "tracking" },
+    { id: 2, name: "Body Fat %", value: "19.8", unit: "%", target: "17.0", status: "tracking" },
+    { id: 3, name: "Skeletal Muscle Mass", value: (w * 0.4).toFixed(1), unit: "lbs", target: (w * 0.43).toFixed(1), status: "building" },
+    { id: 4, name: "Sleep Score", value: "72", unit: "/100", target: "85", status: "low" },
+    { id: 5, name: "Cortisol Level", value: "16.4", unit: "μg/dL", target: "<20", status: "normal" },
+    { id: 6, name: "Daily Protein", value: "0", unit: "g", target: `${Math.round(w)}`, status: "tracking" },
+    { id: 7, name: "Water Intake", value: "1.8", unit: "L", target: "3.0", status: "under" },
+    { id: 8, name: "Step Count", value: "6,241", unit: "steps", target: "10,000", status: "low" },
+    { id: 9, name: "Commute Energy", value: "Medium", unit: "", target: "Low", status: "tracking" },
+    { id: 10, name: "Injury Status", value: "None", unit: "", target: "—", status: "normal" },
+  ];
+}
+
+export function getSyncedVitalityDetails(goal: GoalType) {
+  return {
+    sleep: { total: "6h 48m", deep: "1h 12m", rem: "1h 34m", light: "4h 02m", target: "8h 00m", progress: 72, status: "Below Target" },
+    steps: { value: "6,241", target: "10,000", progress: 62, distance: "2.8 mi", calories: "284 kcal", floors: "4", status: "In Progress" },
+    recoveryInsight: goal === "lose"
+      ? "Sleep deficit detected — 6h 48m vs 8h target. Cortisol may be elevated which slows fat loss. Prioritize 30min earlier bedtime tonight. Step count is progressing but aim for 10K to support your deficit protocol."
+      : goal === "gain"
+        ? "Sleep quality is moderate — deep sleep at 1h 12m supports muscle recovery but could improve. Consider magnesium supplementation before bed. Step count is solid for a gain phase — don't overdo cardio."
+        : "Maintenance metrics look steady. Sleep could use improvement — aim for 7.5h minimum. Activity level is on track. Keep hydration above 2.5L today.",
   };
 }
 

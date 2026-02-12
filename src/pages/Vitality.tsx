@@ -1,9 +1,11 @@
-import { Moon, Footprints, Brain, TrendingDown, TrendingUp, Activity } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Moon, Footprints, Brain, TrendingDown, TrendingUp, Activity, Smartphone, Watch } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { vitalityMetricsByProfile, vitalityDetailsByProfile } from "@/data/executive-data";
 import { useProfile } from "@/contexts/ProfileContext";
-import { getDefaultVitalityMetrics, getDefaultVitalityDetails } from "@/data/default-profile-data";
+import { getDefaultVitalityMetrics, getDefaultVitalityDetails, getSyncedVitalityMetrics, getSyncedVitalityDetails } from "@/data/default-profile-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
@@ -18,8 +20,27 @@ const statusColor: Record<string, string> = {
 
 const Vitality = () => {
   const { activeProfile, info } = useProfile();
-  const metrics = vitalityMetricsByProfile[activeProfile] ?? getDefaultVitalityMetrics(info.name, info.weight || "180", info.goal || "maintain");
-  const details = vitalityDetailsByProfile[activeProfile] ?? getDefaultVitalityDetails();
+  const [healthSynced, setHealthSynced] = useState(false);
+  const [syncSource, setSyncSource] = useState<"apple" | "samsung" | null>(null);
+
+  const hasHardcodedData = !!vitalityMetricsByProfile[activeProfile];
+
+  const metrics = hasHardcodedData
+    ? vitalityMetricsByProfile[activeProfile]
+    : healthSynced
+      ? getSyncedVitalityMetrics(info.name, info.weight || "180", info.goal || "maintain")
+      : getDefaultVitalityMetrics(info.name, info.weight || "180", info.goal || "maintain");
+
+  const details = hasHardcodedData
+    ? vitalityDetailsByProfile[activeProfile]
+    : healthSynced
+      ? getSyncedVitalityDetails(info.goal || "maintain")
+      : getDefaultVitalityDetails();
+
+  const handleSync = (source: "apple" | "samsung") => {
+    setSyncSource(source);
+    setHealthSynced(true);
+  };
 
   const sleepOnTrack = details.sleep.progress >= 90;
   const stepsOnTrack = details.steps.progress >= 70;
@@ -27,9 +48,39 @@ const Vitality = () => {
   return (
     <>
       <div className="space-y-1">
-        <div className="flex items-center gap-2">
-          <h2 className="text-xl font-black text-foreground tracking-tight">Vitality Hub</h2>
-          <RAGBadge />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-black text-foreground tracking-tight">Vitality Hub</h2>
+            <RAGBadge />
+          </div>
+          {!hasHardcodedData && (
+            <div className="flex gap-1.5">
+              <Button
+                size="sm"
+                variant={syncSource === "apple" ? "default" : "outline"}
+                onClick={() => handleSync("apple")}
+                className={syncSource === "apple"
+                  ? "bg-emerald-600 text-white text-[10px] font-bold h-7 px-2.5"
+                  : "border-border text-muted-foreground text-[10px] font-bold h-7 px-2.5"
+                }
+              >
+                <Watch className="w-3 h-3 mr-1" />
+                {syncSource === "apple" ? "Apple ✓" : "Apple Health"}
+              </Button>
+              <Button
+                size="sm"
+                variant={syncSource === "samsung" ? "default" : "outline"}
+                onClick={() => handleSync("samsung")}
+                className={syncSource === "samsung"
+                  ? "bg-emerald-600 text-white text-[10px] font-bold h-7 px-2.5"
+                  : "border-border text-muted-foreground text-[10px] font-bold h-7 px-2.5"
+                }
+              >
+                <Smartphone className="w-3 h-3 mr-1" />
+                {syncSource === "samsung" ? "Samsung ✓" : "Samsung Health"}
+              </Button>
+            </div>
+          )}
         </div>
         <p className="text-xs text-muted-foreground">10 Executive Health Metrics</p>
       </div>

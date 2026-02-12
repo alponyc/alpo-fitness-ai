@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Upload, ScanLine, Sparkles, ShieldCheck, ShieldAlert, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ const Scanner = () => {
   const [showResults, setShowResults] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState<HotspotKey | null>(null);
   const [animationPhase, setAnimationPhase] = useState<"idle" | "scanning" | "verifying">("idle");
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const currentResult = activeHotspot ? scannerHotspots[activeHotspot] : scannerHotspots.sampleMenu;
 
@@ -32,6 +33,7 @@ const Scanner = () => {
         setAnalyzing(false);
         setShowResults(true);
         callback();
+        setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
       }, 1000);
     }, 1000);
   };
@@ -140,7 +142,7 @@ const Scanner = () => {
 
       {/* Analysis Results */}
       {showResults && (
-        <>
+        <div ref={resultsRef}>
           <div className="glass rounded-2xl p-4 space-y-2">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary" />
@@ -207,7 +209,7 @@ const Scanner = () => {
               ))}
             </CardContent>
           </Card>
-        </>
+        </div>
       )}
     </>
   );
