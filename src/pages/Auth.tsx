@@ -172,6 +172,23 @@ const Auth = () => {
           </svg>
           Continue with Google
         </button>
+
+        <button
+          type="button"
+          onClick={async () => {
+            setError("");
+            const { error } = await lovable.auth.signInWithOAuth("apple", {
+              redirect_uri: window.location.origin,
+            });
+            if (error) setError(error.message);
+          }}
+          className="w-full flex items-center justify-center gap-2 bg-secondary/50 border border-border text-foreground font-semibold text-sm py-2.5 rounded-lg hover:bg-secondary/80 transition-colors"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.53-3.23 0-1.44.62-2.2.44-3.06-.4C4.24 16.7 4.89 10.5 8.82 10.3c1.23.06 2.08.7 2.8.74.96-.2 1.88-.76 2.93-.69 1.24.1 2.18.58 2.79 1.49-2.56 1.53-1.95 4.89.58 5.83-.46 1.17-.99 2.33-1.87 3.61zM12.05 10.23c-.12-2.19 1.68-4.07 3.72-4.23.28 2.42-2.17 4.32-3.72 4.23z"/>
+          </svg>
+          Continue with Apple
+        </button>
       </div>
     </div>
   );
