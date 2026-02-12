@@ -156,7 +156,7 @@ export const pantryGuide = {
 // === Dashboard Data per Profile ===
 export const dashboardDataByProfile: Record<ProfileKey, {
   timeline: { time: string; item: string; protein: string; icon: string }[];
-  weightHistory: { date: string; weight: string; delta: string | null }[];
+  weightHistory: { date: string; weight: string; delta: string | null; note?: string }[];
   macros: { protein: number; carbs: number; fats: number };
   insight: string;
 }> = {
@@ -169,9 +169,13 @@ export const dashboardDataByProfile: Record<ProfileKey, {
       { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
     ],
     weightHistory: [
-      { date: "1/13", weight: "204.8", delta: null },
-      { date: "1/29", weight: "196.7", delta: "-8.1" },
-      { date: "2/11", weight: "196.2", delta: "-0.5" },
+      { date: "Thu 2/5", weight: "201.8", delta: null, note: "Office Stress / High Sodium" },
+      { date: "Fri 2/6", weight: "201.2", delta: "-0.6", note: "Transition to RFL" },
+      { date: "Sat 2/7", weight: "200.4", delta: "-0.8", note: "The \"Arabic Chicken\" Baseline" },
+      { date: "Sun 2/8", weight: "199.5", delta: "-0.9", note: "First \"Sub-200\" dip / Leg Day" },
+      { date: "Mon 2/9", weight: "198.6", delta: "-0.9", note: "Scott Protocol / Chest & Back" },
+      { date: "Tue 2/10", weight: "197.4", delta: "-1.2", note: "Machine Flush / Neutral Grip" },
+      { date: "Wed 2/11", weight: "196.2", delta: "-1.2", note: "Current PR / 4,144 steps / Salmon Victory" },
     ],
     macros: { protein: 153, carbs: 20, fats: 35 },
     insight: 'I noticed the 196.2 weigh-in. Based on Saturday\'s sodium, this is water. Skip the peppers/onions tonight to minimize bloat; stick to the Chicken and Water. Kitchen is CLOSED.',
