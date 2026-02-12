@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Shield, Users, Lock, Bell, FileText, Instagram, Share2, AlertTriangle, X, Download, Watch, Smartphone, Heart, UserPlus } from "lucide-react";
+import { Shield, Users, Lock, Bell, FileText, Instagram, Share2, AlertTriangle, X, Download, Watch, Smartphone, Heart, UserPlus, HelpCircle, MessageCircle, Mail, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -228,6 +228,42 @@ const SettingsPage = () => {
             </div>
             <Switch />
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Help & Support */}
+      <Card className="border-border bg-card">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
+            <HelpCircle className="w-4 h-4 text-primary" />
+            Help & Support
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <Button
+            variant="outline"
+            onClick={() => window.open("mailto:support@alpofitness.com", "_blank")}
+            className="w-full justify-start text-xs font-semibold h-10 border-border text-foreground"
+          >
+            <Mail className="w-4 h-4 mr-2 text-primary" />
+            Contact Support
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast({ title: "Live Chat", description: "Live chat support coming soon!" })}
+            className="w-full justify-start text-xs font-semibold h-10 border-border text-foreground"
+          >
+            <MessageCircle className="w-4 h-4 mr-2 text-primary" />
+            Live Chat
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast({ title: "FAQ & Guides", description: "Knowledge base coming soon!" })}
+            className="w-full justify-start text-xs font-semibold h-10 border-border text-foreground"
+          >
+            <BookOpen className="w-4 h-4 mr-2 text-primary" />
+            FAQ & Guides
+          </Button>
         </CardContent>
       </Card>
 
