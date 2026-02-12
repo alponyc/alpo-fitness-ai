@@ -14,7 +14,7 @@ const workoutDays = [
 
 const fridgeItems = [
   { name: "Churrasco", detail: "2 portions" },
-  { name: "Arabic Chicken", detail: "3 portions" },
+  { name: "Chicken", detail: "3 portions" },
   { name: "Asparagus", detail: null },
   { name: "Peppers", detail: null },
   { name: "Onions", detail: null },
