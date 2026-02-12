@@ -8,7 +8,7 @@ const accounts = [
 ];
 
 const SocialRow = () => (
-  <div className="flex items-center justify-center gap-4 py-3">
+  <div className="grid grid-cols-4 gap-2 py-3">
     {accounts.map((a) => (
       <a
         key={a.handle}
@@ -20,7 +20,7 @@ const SocialRow = () => (
         <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center group-hover:bg-primary/20 transition-colors">
           <Instagram className="w-4 h-4 text-primary" />
         </div>
-        <span className="text-[8px] text-muted-foreground group-hover:text-primary transition-colors font-medium truncate max-w-[70px]">
+        <span className="text-[7px] text-muted-foreground group-hover:text-primary transition-colors font-medium text-center leading-tight">
           @{a.label}
         </span>
       </a>
