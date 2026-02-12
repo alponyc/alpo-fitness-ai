@@ -7,6 +7,8 @@ import AppLayout from "./components/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Scanner from "./pages/Scanner";
 import Vitality from "./pages/Vitality";
+import Research from "./pages/Research";
+import MedicalVault from "./pages/MedicalVault";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 
@@ -22,7 +24,9 @@ const App = () => (
           <Route element={<AppLayout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/scanner" element={<Scanner />} />
+            <Route path="/research" element={<Research />} />
             <Route path="/vitality" element={<Vitality />} />
+            <Route path="/medical" element={<MedicalVault />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
