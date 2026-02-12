@@ -7,18 +7,24 @@ import { toast } from "@/hooks/use-toast";
 import { scannerHotspots } from "@/data/executive-data";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
+import { useProfile } from "@/contexts/ProfileContext";
 
 type HotspotKey = keyof typeof scannerHotspots;
 
 const stripEthicalLabel = (text: string) => text.replace(/^Ethical Guardrail:/, "").trim();
 
 const Scanner = () => {
+  const { info } = useProfile();
   const [menuText, setMenuText] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState<HotspotKey | null>(null);
   const [animationPhase, setAnimationPhase] = useState<"idle" | "scanning" | "verifying">("idle");
   const resultsRef = useRef<HTMLDivElement>(null);
+
+  // Check if this is a new user (no fridge inventory data)
+  const isNewUser = !info.weight || info.weight === "—";
+  const shouldShowEmptyState = activeHotspot === "fridgeAudit" && isNewUser;
 
   const currentResult = activeHotspot ? scannerHotspots[activeHotspot] : scannerHotspots.sampleMenu;
 
@@ -141,7 +147,17 @@ const Scanner = () => {
       )}
 
       {/* Analysis Results */}
-      {showResults && (
+      {showResults && shouldShowEmptyState ? (
+        <div ref={resultsRef} className="glass rounded-2xl p-6 flex flex-col items-center justify-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+            <Upload className="w-6 h-6 text-muted-foreground" />
+          </div>
+          <div className="text-center space-y-1">
+            <p className="text-sm font-semibold text-foreground">No Inventory Yet</p>
+            <p className="text-xs text-muted-foreground">Upload a fridge photo or enter your inventory list to get started.</p>
+          </div>
+        </div>
+      ) : showResults && (
         <div ref={resultsRef}>
           <div className="glass rounded-2xl p-4 space-y-2">
             <div className="flex items-center gap-2">
