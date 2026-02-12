@@ -91,7 +91,11 @@ const MedicalVault = () => {
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Gender</p>
               <p className="text-sm font-bold text-foreground">{profile.gender}</p>
             </div>
-            <div className="col-span-2 bg-secondary/50 rounded-lg px-3 py-2.5 flex items-center gap-2">
+            <div className="bg-secondary/50 rounded-lg px-3 py-2.5">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Activity Level</p>
+              <p className="text-sm font-bold text-foreground capitalize">{info.activityLevel?.replace("_", " ") || "—"}</p>
+            </div>
+            <div className="bg-secondary/50 rounded-lg px-3 py-2.5 flex items-center gap-2">
               <Briefcase className="w-4 h-4 text-primary" />
               <div>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Work Week</p>

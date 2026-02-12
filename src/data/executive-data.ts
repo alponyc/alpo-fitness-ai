@@ -9,10 +9,7 @@ export function getDataKey(info: ProfileInfo): ProfileKey {
   if (name === "alex") return "alpo";
   if (name === "penelope") return "client";
   if (name === "sophie") return "family";
-  // Fallback by accountType for known roles
-  if (info.accountType === "client") return "client";
-  if (info.accountType === "family") return "family";
-  // Return a unique key so new profiles get empty defaults via ?? fallback
+  // All other profiles get unique keys so they use empty defaults
   return `user_${info.id}`;
 }
 
