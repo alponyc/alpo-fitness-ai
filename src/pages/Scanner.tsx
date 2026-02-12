@@ -190,19 +190,19 @@ const Scanner = () => {
 
           <Card className="border-border bg-card">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-bold flex items-center gap-2 text-destructive">
+              <CardTitle className={`text-sm font-bold flex items-center gap-2 ${activeHotspot === "fridgeAudit" ? "text-amber-400" : "text-destructive"}`}>
                 <ShieldAlert className="w-4 h-4" />
-                Avoid – Skip These
+                {activeHotspot === "fridgeAudit" ? "⚠️ Low Inventory" : "Avoid – Skip These"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {currentResult.avoid.map((item) => (
-                <div key={item.name} className="flex items-center justify-between bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2.5">
+                <div key={item.name} className={`flex items-center justify-between rounded-lg px-3 py-2.5 ${activeHotspot === "fridgeAudit" ? "bg-amber-500/10 border border-amber-500/20" : "bg-destructive/10 border border-destructive/20"}`}>
                   <div>
                     <p className="text-xs font-semibold text-foreground">{item.name}</p>
                     <p className="text-[10px] text-muted-foreground">{item.note}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-destructive">{item.cal}</span>
+                  <span className={`text-[10px] font-bold ${activeHotspot === "fridgeAudit" ? "text-amber-400" : "text-destructive"}`}>{item.cal}</span>
                 </div>
               ))}
             </CardContent>

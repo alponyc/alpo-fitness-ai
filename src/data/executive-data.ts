@@ -321,8 +321,8 @@ export const scannerHotspots = {
       { name: "Asparagus", cal: "40 cal", note: "Low carb, anti-inflammatory" },
     ],
     avoid: [
-      { name: "⚠️ Missing: Fairlife Shakes", cal: "—", note: "Restock needed for protein targets" },
-      { name: "⚠️ Low: Leafy Greens", cal: "—", note: "Fiber and micronutrient gap" },
+      { name: "Fairlife Shakes", cal: "Restock", note: "Critical for hitting daily protein targets" },
+      { name: "Leafy Greens", cal: "Restock", note: "Fiber and micronutrient gap detected" },
     ],
   },
 };
