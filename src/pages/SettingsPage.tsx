@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useProfile, GoalType, AccountType, ActivityLevel } from "@/contexts/ProfileContext";
+import { profileSchema } from "@/lib/validation";
 import SocialRow from "@/components/SocialRow";
 import avatarDefault from "@/assets/avatar-default.png";
 
@@ -41,7 +42,18 @@ const SettingsPage = () => {
   };
 
   const handleCreateProfile = async () => {
-    if (!regName.trim() || !regGoal || !regWeight.trim()) return;
+    const result = profileSchema.safeParse({
+      name: regName, weight: regWeight, goal: regGoal || undefined,
+      email: regEmail || undefined, phone: regPhone || undefined,
+      age: regAge ? parseInt(regAge) : undefined,
+      gender: regGender || undefined,
+      activityLevel: regActivity || undefined,
+      accountType: regRole || undefined,
+    });
+    if (!result.success) {
+      toast({ title: "Validation Error", description: result.error.errors[0].message, variant: "destructive" });
+      return;
+    }
     try {
       const initials = regName.trim().split(" ").map((w) => w[0]?.toUpperCase()).join("").slice(0, 2);
       const newKey = await addProfile({

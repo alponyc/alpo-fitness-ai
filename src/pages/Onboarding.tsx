@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProfile, GoalType, ActivityLevel } from "@/contexts/ProfileContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { profileSchema } from "@/lib/validation";
+import { toast } from "@/hooks/use-toast";
 import alpoLogo from "@/assets/alpo-logo.png";
 import splashBg from "@/assets/splash-bg.jpg";
 
@@ -30,16 +32,25 @@ const Onboarding = () => {
   const isFormValid = name.trim() && goal && weight.trim();
 
   const handleSubmit = async () => {
-    if (!isFormValid) return;
+    const result = profileSchema.safeParse({
+      name, weight, goal,
+      age: age ? parseInt(age) : undefined,
+      gender: gender || undefined,
+      activityLevel: activity || undefined,
+    });
+    if (!result.success) {
+      toast({ title: "Validation Error", description: result.error.errors[0].message, variant: "destructive" });
+      return;
+    }
     setSubmitting(true);
 
     await updateProfile({
-      name: name.trim(),
-      weight: weight.trim(),
-      goal: goal as GoalType,
-      age: age ? parseInt(age) : undefined,
-      gender: gender || undefined,
-      activityLevel: (activity || undefined) as ActivityLevel | undefined,
+      name: result.data.name,
+      weight: result.data.weight,
+      goal: result.data.goal as GoalType,
+      age: result.data.age,
+      gender: result.data.gender || undefined,
+      activityLevel: (result.data.activityLevel || undefined) as ActivityLevel | undefined,
     });
 
     setSubmitting(false);
