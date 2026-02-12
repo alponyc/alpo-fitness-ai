@@ -1,14 +1,20 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, LogOut, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useProfile } from "@/contexts/ProfileContext";
+import { useAuth } from "@/contexts/AuthContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 
 const AppHeader = () => {
   const { activeProfile, setActiveProfile, info, profiles, profileKeys, removeProfile } = useProfile();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/auth");
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border px-4 py-3 flex items-center justify-between">
@@ -63,7 +69,7 @@ const AppHeader = () => {
           })}
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() => navigate("/")}
+            onClick={handleSignOut}
             className="text-xs font-semibold text-destructive cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5 mr-2" />
