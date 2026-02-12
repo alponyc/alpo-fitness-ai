@@ -1,3 +1,5 @@
+import { ProfileKey } from "@/contexts/ProfileContext";
+
 // === 10 Protocols ===
 export const protocols = [
   { id: 1, name: "Larry Scott Pump", category: "Gain", description: "High-volume bicep/shoulder focus with preacher curls", icon: "💪" },
@@ -26,35 +28,96 @@ export const visionScenarios = [
   { id: 10, name: "Protein Density Check", trigger: "Meal photo scan", description: "Estimate protein content from visual analysis" },
 ];
 
-// === 10 Vitality Metrics ===
-export const vitalityMetrics = [
-  { id: 1, name: "Weight", value: "196.2", unit: "lbs", target: "195.0", status: "tracking" },
-  { id: 2, name: "Body Fat %", value: "18.4", unit: "%", target: "15.0", status: "tracking" },
-  { id: 3, name: "Skeletal Muscle Mass", value: "82.1", unit: "lbs", target: "85.0", status: "building" },
-  { id: 4, name: "Sleep Score", value: "68", unit: "/100", target: "85", status: "low" },
-  { id: 5, name: "Cortisol Level", value: "18.2", unit: "μg/dL", target: "<20", status: "normal" },
-  { id: 6, name: "Daily Protein", value: "153", unit: "g", target: "200", status: "under" },
-  { id: 7, name: "Water Intake", value: "2.1", unit: "L", target: "3.5", status: "under" },
-  { id: 8, name: "Step Count", value: "4,144", unit: "steps", target: "10,000", status: "low" },
-  { id: 9, name: "Commute Energy", value: "Medium", unit: "", target: "Low", status: "tracking" },
-  { id: 10, name: "Injury Status", value: "Left Elbow", unit: "", target: "Neutral Grip", status: "active" },
-];
-
-// === Medical Vault ===
-export const medicalProfile = {
-  age: 43,
-  gender: "Male",
-  workWeek: "37.5 hours",
-  surgicalHistory: [
-    { procedure: "Right Knee Meniscus Repair", date: "2011", notes: "Partial meniscectomy, arthroscopic. Full recovery." },
-    { procedure: "Left Elbow Arthroscopy", date: "2022", notes: "Loose body removal, lateral epicondyle debridement" },
+// === 10 Vitality Metrics (per profile) ===
+type VitalityMetric = { id: number; name: string; value: string; unit: string; target: string; status: string };
+export const vitalityMetricsByProfile: Record<ProfileKey, VitalityMetric[]> = {
+  alpo: [
+    { id: 1, name: "Weight", value: "196.2", unit: "lbs", target: "195.0", status: "tracking" },
+    { id: 2, name: "Body Fat %", value: "18.4", unit: "%", target: "15.0", status: "tracking" },
+    { id: 3, name: "Skeletal Muscle Mass", value: "82.1", unit: "lbs", target: "85.0", status: "building" },
+    { id: 4, name: "Sleep Score", value: "68", unit: "/100", target: "85", status: "low" },
+    { id: 5, name: "Cortisol Level", value: "18.2", unit: "μg/dL", target: "<20", status: "normal" },
+    { id: 6, name: "Daily Protein", value: "153", unit: "g", target: "200", status: "under" },
+    { id: 7, name: "Water Intake", value: "2.1", unit: "L", target: "3.5", status: "under" },
+    { id: 8, name: "Step Count", value: "4,144", unit: "steps", target: "10,000", status: "low" },
+    { id: 9, name: "Commute Energy", value: "Medium", unit: "", target: "Low", status: "tracking" },
+    { id: 10, name: "Injury Status", value: "Left Elbow", unit: "", target: "Neutral Grip", status: "active" },
   ],
-  injuryGuardrails: [
-    { area: "Left Elbow Sensitivity", protocol: "Neutral Grip Only", severity: "Active", notes: "Avoid pronated curls, skull crushers, close-grip bench" },
+  client: [
+    { id: 1, name: "Weight", value: "212.5", unit: "lbs", target: "205.0", status: "tracking" },
+    { id: 2, name: "Body Fat %", value: "22.1", unit: "%", target: "18.0", status: "tracking" },
+    { id: 3, name: "Skeletal Muscle Mass", value: "78.4", unit: "lbs", target: "82.0", status: "building" },
+    { id: 4, name: "Sleep Score", value: "74", unit: "/100", target: "85", status: "low" },
+    { id: 5, name: "Cortisol Level", value: "21.5", unit: "μg/dL", target: "<20", status: "active" },
+    { id: 6, name: "Daily Protein", value: "130", unit: "g", target: "180", status: "under" },
+    { id: 7, name: "Water Intake", value: "1.8", unit: "L", target: "3.0", status: "under" },
+    { id: 8, name: "Step Count", value: "6,210", unit: "steps", target: "8,000", status: "low" },
+    { id: 9, name: "Commute Energy", value: "High", unit: "", target: "Medium", status: "tracking" },
+    { id: 10, name: "Injury Status", value: "Lower Back", unit: "", target: "Core Brace", status: "active" },
   ],
-  allergies: ["None known"],
-  medications: ["Vitamin D3 5000IU", "Omega-3 2g", "Magnesium Glycinate 400mg"],
+  family: [
+    { id: 1, name: "Weight", value: "138.0", unit: "lbs", target: "135.0", status: "tracking" },
+    { id: 2, name: "Body Fat %", value: "24.2", unit: "%", target: "22.0", status: "tracking" },
+    { id: 3, name: "Skeletal Muscle Mass", value: "52.3", unit: "lbs", target: "54.0", status: "building" },
+    { id: 4, name: "Sleep Score", value: "82", unit: "/100", target: "85", status: "normal" },
+    { id: 5, name: "Cortisol Level", value: "14.1", unit: "μg/dL", target: "<20", status: "normal" },
+    { id: 6, name: "Daily Protein", value: "95", unit: "g", target: "120", status: "under" },
+    { id: 7, name: "Water Intake", value: "2.5", unit: "L", target: "2.5", status: "normal" },
+    { id: 8, name: "Step Count", value: "8,320", unit: "steps", target: "10,000", status: "tracking" },
+    { id: 9, name: "Commute Energy", value: "Low", unit: "", target: "Low", status: "normal" },
+    { id: 10, name: "Injury Status", value: "None", unit: "", target: "—", status: "normal" },
+  ],
 };
+
+export const vitalityMetrics = vitalityMetricsByProfile.alpo;
+
+// === Medical Profiles per user ===
+type MedicalProfile = {
+  age: number; gender: string; workWeek: string;
+  surgicalHistory: { procedure: string; date: string; notes: string }[];
+  injuryGuardrails: { area: string; protocol: string; severity: string; notes: string }[];
+  allergies: string[]; medications: string[];
+};
+export const medicalProfilesByUser: Record<ProfileKey, MedicalProfile> = {
+  alpo: {
+    age: 43,
+    gender: "Male",
+    workWeek: "37.5 hours",
+    surgicalHistory: [
+      { procedure: "Right Knee Meniscus Repair", date: "2011", notes: "Partial meniscectomy, arthroscopic. Full recovery." },
+      { procedure: "Left Elbow Arthroscopy", date: "2022", notes: "Loose body removal, lateral epicondyle debridement" },
+    ],
+    injuryGuardrails: [
+      { area: "Left Elbow Sensitivity", protocol: "Neutral Grip Only", severity: "Active", notes: "Avoid pronated curls, skull crushers, close-grip bench" },
+    ],
+    allergies: ["None known"],
+    medications: ["Vitamin D3 5000IU", "Omega-3 2g", "Magnesium Glycinate 400mg"],
+  },
+  client: {
+    age: 38,
+    gender: "Male",
+    workWeek: "45 hours",
+    surgicalHistory: [
+      { procedure: "ACL Reconstruction (Right)", date: "2015", notes: "Hamstring graft, full return to activity" },
+    ],
+    injuryGuardrails: [
+      { area: "Lower Back", protocol: "Core Brace + Belt", severity: "Moderate", notes: "Avoid deadlifts >315, no good mornings" },
+    ],
+    allergies: ["Shellfish"],
+    medications: ["Creatine 5g", "Vitamin D3 2000IU", "Zinc 30mg"],
+  },
+  family: {
+    age: 34,
+    gender: "Female",
+    workWeek: "40 hours",
+    surgicalHistory: [],
+    injuryGuardrails: [],
+    allergies: ["None known"],
+    medications: ["Multivitamin", "Iron 18mg", "Biotin 5000mcg"],
+  },
+};
+
+export const medicalProfile = medicalProfilesByUser.alpo;
 
 // === Executive Pantry ===
 export const pantryGuide = {
@@ -90,12 +153,102 @@ export const pantryGuide = {
   },
 };
 
+// === Dashboard Data per Profile ===
+export const dashboardDataByProfile: Record<ProfileKey, {
+  timeline: { time: string; item: string; protein: string; icon: string }[];
+  weightHistory: { date: string; weight: string; delta: string | null }[];
+  macros: { protein: number; carbs: number; fats: number };
+  insight: string;
+}> = {
+  alpo: {
+    timeline: [
+      { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+      { time: "10:00 AM", item: "Fairlife 42g Shake", protein: "42g", icon: "🥤" },
+      { time: "12:30 PM", item: "Sophie's Grilled Chicken Wrap", protein: "38g", icon: "🌯" },
+      { time: "3:00 PM", item: "Oikos Triple Zero", protein: "15g", icon: "🥛" },
+      { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
+    ],
+    weightHistory: [
+      { date: "1/13", weight: "204.8", delta: null },
+      { date: "1/29", weight: "196.7", delta: "-8.1" },
+      { date: "2/11", weight: "196.2", delta: "-0.5" },
+    ],
+    macros: { protein: 153, carbs: 20, fats: 35 },
+    insight: 'I noticed the 196.2 weigh-in. Based on Saturday\'s sodium, this is water. Skip the peppers/onions tonight to minimize bloat; stick to the Chicken and Water. Kitchen is CLOSED.',
+  },
+  client: {
+    timeline: [
+      { time: "7:00 AM", item: "Protein Oatmeal", protein: "30g", icon: "🥣" },
+      { time: "10:30 AM", item: "Protein Bar", protein: "20g", icon: "🍫" },
+      { time: "1:00 PM", item: "Grilled Chicken Salad", protein: "40g", icon: "🥗" },
+      { time: "4:00 PM", item: "Greek Yogurt", protein: "18g", icon: "🥛" },
+      { time: "7:30 PM", item: "Steak + Sweet Potato", protein: "45g", icon: "🥩" },
+    ],
+    weightHistory: [
+      { date: "1/15", weight: "218.3", delta: null },
+      { date: "2/01", weight: "215.0", delta: "-3.3" },
+      { date: "2/11", weight: "212.5", delta: "-2.5" },
+    ],
+    macros: { protein: 130, carbs: 95, fats: 55 },
+    insight: 'Client is trending well at 212.5. Cortisol is elevated — recommend reducing PM caffeine and adding a 20-min walk. Protein gap of 50g needs addressing.',
+  },
+  family: {
+    timeline: [
+      { time: "7:30 AM", item: "Smoothie Bowl", protein: "22g", icon: "🫐" },
+      { time: "12:00 PM", item: "Turkey Wrap", protein: "28g", icon: "🌯" },
+      { time: "3:30 PM", item: "Apple + Almonds", protein: "6g", icon: "🍎" },
+      { time: "7:00 PM", item: "Grilled Chicken + Quinoa", protein: "39g", icon: "🍗" },
+    ],
+    weightHistory: [
+      { date: "1/20", weight: "140.2", delta: null },
+      { date: "2/03", weight: "139.0", delta: "-1.2" },
+      { date: "2/11", weight: "138.0", delta: "-1.0" },
+    ],
+    macros: { protein: 95, carbs: 120, fats: 45 },
+    insight: 'Sophie is on track at 138. Sleep score is excellent. Recommend maintaining current plan and increasing protein by 25g for muscle retention.',
+  },
+};
+
+// === Kitchen Data per Profile ===
+export const kitchenDataByProfile: Record<ProfileKey, { fridgeItems: { name: string; detail: string | null }[] }> = {
+  alpo: {
+    fridgeItems: [
+      { name: "Churrasco", detail: "2 portions" },
+      { name: "Chicken", detail: "3 portions" },
+      { name: "Asparagus", detail: null },
+      { name: "Peppers", detail: null },
+      { name: "Onions", detail: null },
+      { name: "42g Fairlife", detail: "1" },
+    ],
+  },
+  client: {
+    fridgeItems: [
+      { name: "Chicken Breast", detail: "4 portions" },
+      { name: "Sweet Potato", detail: "3" },
+      { name: "Broccoli", detail: null },
+      { name: "Rice", detail: "2 cups" },
+      { name: "Protein Bars", detail: "6 pack" },
+      { name: "Greek Yogurt", detail: "2" },
+    ],
+  },
+  family: {
+    fridgeItems: [
+      { name: "Turkey Breast", detail: "2 portions" },
+      { name: "Quinoa", detail: "1 bag" },
+      { name: "Mixed Berries", detail: null },
+      { name: "Almonds", detail: "1 bag" },
+      { name: "Smoothie Mix", detail: null },
+      { name: "Eggs", detail: "12" },
+    ],
+  },
+};
+
 // === Scanner Hotspot Mock Responses ===
 export const scannerHotspots = {
   sampleMenu: {
-    label: "Sample Menu",
+    label: "Sophie's",
     icon: "🍽️",
-    aiResponse: "RAG-Verified Analysis: Detected 'Grilled Salmon' (360 cal, 42g P) — Safe for current RFL protocol. 'Caesar Salad w/ Dressing' (280 cal, 18g sodium flag) — Swap to oil & vinegar. 'Garlic Bread' — AVOID (310 cal, refined carbs, high sodium). Recommendation: Salmon + side salad, skip the bread basket.",
+    aiResponse: "RAG-Verified Analysis: Detected 'Grilled Salmon' (360 cal, 42g P) — Safe for current RFL protocol at 196.2 handle. 'Caesar Salad w/ Dressing' (280 cal, 18g sodium flag) — Swap to oil & vinegar. 'Garlic Bread' — AVOID (310 cal, refined carbs, high sodium). ⚠️ At 196.2, sodium sensitivity is elevated.",
     safe: [
       { name: "Grilled Salmon", cal: "360 cal", note: "42g protein, omega-3 rich" },
       { name: "Steamed Broccoli", cal: "55 cal", note: "Fiber-dense, anti-inflammatory" },
@@ -105,8 +258,47 @@ export const scannerHotspots = {
       { name: "Caesar Dressing", cal: "180 cal", note: "Hidden sodium, excess fat" },
     ],
   },
+  steakhouse: {
+    label: "Steakhouse",
+    icon: "🥩",
+    aiResponse: "RAG-Verified Steakhouse Scan: 'NY Strip 12oz' (580 cal, 62g P) — Excellent for Scott Protocol. 'Loaded Baked Potato' — AVOID (420 cal, 38g C, butter/sour cream). 'Creamed Spinach' — Caution (220 cal, hidden cream). ⚠️ At 196.2, skip the bread basket entirely. Order steak with asparagus.",
+    safe: [
+      { name: "NY Strip 12oz", cal: "580 cal", note: "62g protein, ideal for gain protocol" },
+      { name: "Grilled Asparagus", cal: "40 cal", note: "Low cal, anti-inflammatory" },
+    ],
+    avoid: [
+      { name: "Loaded Baked Potato", cal: "420 cal", note: "38g carbs, butter/sour cream" },
+      { name: "Bread Basket", cal: "280 cal", note: "Refined carbs, sodium spike at 196.2" },
+    ],
+  },
+  greek: {
+    label: "Greek",
+    icon: "🫒",
+    aiResponse: "RAG-Verified Greek Menu: 'Chicken Souvlaki' (320 cal, 38g P) — Protocol-safe, request no pita. 'Greek Salad' (180 cal) — Safe with oil/vinegar. 'Moussaka' — AVOID (480 cal, heavy béchamel). 'Baklava' — AVOID (310 cal, sugar bomb). ⚠️ At 196.2, feta sodium is a concern — limit to 1oz.",
+    safe: [
+      { name: "Chicken Souvlaki (no pita)", cal: "320 cal", note: "38g protein, lean grilled" },
+      { name: "Greek Salad", cal: "180 cal", note: "Oil & vinegar dressing only" },
+    ],
+    avoid: [
+      { name: "Moussaka", cal: "480 cal", note: "Heavy béchamel, high fat" },
+      { name: "Baklava", cal: "310 cal", note: "Sugar bomb, refined pastry" },
+    ],
+  },
+  macaroniGrill: {
+    label: "Macaroni Grill",
+    icon: "🍝",
+    aiResponse: "RAG-Verified Macaroni Grill: 'Grilled Chicken Spiedini' (380 cal, 44g P) — Best option, skip the pasta side. 'Caesar Salad' — Caution (dressing has 680mg sodium). 'Fettuccine Alfredo' — AVOID (1,220 cal, 72g fat). ⚠️ At 196.2, this restaurant is a sodium minefield. Stick to grilled proteins only.",
+    safe: [
+      { name: "Chicken Spiedini", cal: "380 cal", note: "44g protein, skip pasta side" },
+      { name: "Steamed Vegetables", cal: "80 cal", note: "Request no butter" },
+    ],
+    avoid: [
+      { name: "Fettuccine Alfredo", cal: "1,220 cal", note: "72g fat, sodium overload" },
+      { name: "Bread + Olive Oil", cal: "340 cal", note: "Refined carbs, triggers bloat at 196.2" },
+    ],
+  },
   sampleReceipt: {
-    label: "Sample Receipt",
+    label: "Receipt",
     icon: "🧾",
     aiResponse: "RAG-Verified Receipt Scan: Fairlife 42g Protein Shake (✓ Protocol-aligned), Oikos Triple Zero (✓ 15g protein, low sugar), Chicken Breast 2lb (✓ Lean protein staple), Doritos Family Size — FLAGGED (non-compliant, 140mg sodium/serving). Overall: 3/4 items compliant with current McDonald RFL protocol.",
     safe: [

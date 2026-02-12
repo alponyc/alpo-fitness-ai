@@ -15,34 +15,39 @@ const Scanner = () => {
   const [analyzing, setAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState<HotspotKey | null>(null);
+  const [animationPhase, setAnimationPhase] = useState<"idle" | "scanning" | "verifying">("idle");
 
   const currentResult = activeHotspot ? scannerHotspots[activeHotspot] : scannerHotspots.sampleMenu;
 
-  const handleAnalyze = () => {
+  const runGeminiAnimation = (callback: () => void) => {
     setAnalyzing(true);
     setShowResults(false);
-    setActiveHotspot(null);
+    setAnimationPhase("scanning");
     setTimeout(() => {
-      setAnalyzing(false);
-      setShowResults(true);
-    }, 2000);
+      setAnimationPhase("verifying");
+      setTimeout(() => {
+        setAnimationPhase("idle");
+        setAnalyzing(false);
+        setShowResults(true);
+        callback();
+      }, 1000);
+    }, 1000);
+  };
+
+  const handleAnalyze = () => {
+    setActiveHotspot(null);
+    runGeminiAnimation(() => {});
   };
 
   const handleHotspot = (key: HotspotKey) => {
     setActiveHotspot(key);
-    setAnalyzing(true);
-    setShowResults(false);
-    setTimeout(() => {
-      setAnalyzing(false);
-      setShowResults(true);
-    }, 1500);
+    runGeminiAnimation(() => {});
   };
 
   const handleUpload = () => {
-    toast({
-      title: "Photo uploaded",
-      description: "Analyzing macros...",
-    });
+    toast({ title: "Photo uploaded", description: "Analyzing macros..." });
+    setActiveHotspot("fridgeAudit");
+    runGeminiAnimation(() => {});
   };
 
   return (
@@ -117,11 +122,17 @@ const Scanner = () => {
         </CardContent>
       </Card>
 
-      {/* Loading State */}
+      {/* Gemini RAG-Audit Animation */}
       {analyzing && (
         <div className="glass rounded-2xl p-6 flex flex-col items-center gap-3">
           <Loader2 className="w-8 h-8 text-primary animate-spin" />
-          <p className="text-xs text-muted-foreground font-medium">Gemini is analyzing your menu...</p>
+          <p className="text-xs text-muted-foreground font-medium">
+            {animationPhase === "scanning" ? "Gemini scanning menu data..." : "RAG-Verifying against your protocols..."}
+          </p>
+          <div className="flex gap-1.5">
+            <div className={`w-2 h-2 rounded-full ${animationPhase === "scanning" ? "bg-primary animate-pulse" : "bg-primary"}`} />
+            <div className={`w-2 h-2 rounded-full ${animationPhase === "verifying" ? "bg-primary animate-pulse" : animationPhase === "scanning" ? "bg-muted" : "bg-primary"}`} />
+          </div>
         </div>
       )}
 
@@ -131,7 +142,7 @@ const Scanner = () => {
           <div className="glass rounded-2xl p-4 space-y-2">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Gemini-Powered Analysis</span>
+              <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Gemini RAG-Audit</span>
               <RAGBadge />
             </div>
             <p className="text-sm text-foreground/90 leading-relaxed">

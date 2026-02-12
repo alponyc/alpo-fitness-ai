@@ -1,7 +1,8 @@
 import { Moon, Footprints, Brain, TrendingDown, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { vitalityMetrics } from "@/data/executive-data";
+import { vitalityMetricsByProfile } from "@/data/executive-data";
+import { useProfile } from "@/contexts/ProfileContext";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
@@ -15,6 +16,9 @@ const statusColor: Record<string, string> = {
 };
 
 const Vitality = () => {
+  const { activeProfile } = useProfile();
+  const metrics = vitalityMetricsByProfile[activeProfile];
+
   return (
     <>
       <div className="space-y-1">
@@ -64,7 +68,7 @@ const Vitality = () => {
         <CardContent className="space-y-3">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-3xl font-black text-foreground">4,144</p>
+              <p className="text-3xl font-black text-foreground">{metrics.find(m => m.name === "Step Count")?.value || "4,144"}</p>
               <p className="text-[10px] text-muted-foreground mt-0.5">Target: 10,000</p>
             </div>
             <div className="flex items-center gap-1 text-destructive">
@@ -90,7 +94,7 @@ const Vitality = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-2">
-            {vitalityMetrics.map((m) => (
+            {metrics.map((m) => (
               <div key={m.id} className="bg-secondary/50 rounded-lg px-3 py-2.5">
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{m.name}</p>
                 <p className="text-sm font-bold text-foreground">
@@ -113,7 +117,7 @@ const Vitality = () => {
           <RAGBadge />
         </div>
         <p className="text-sm text-foreground/90 leading-relaxed">
-          Sleep is low (<span className="font-bold text-destructive">6h 45m</span>); keeping caffeine high and sodium low for today's <span className="font-bold text-foreground">196.x goal</span>. Step count at <span className="font-bold text-destructive">4,144</span> — consider a 30-min evening walk to hit target. Cortisol within range but monitor post-commute.
+          Sleep is low (<span className="font-bold text-destructive">6h 45m</span>); keeping caffeine high and sodium low for today's <span className="font-bold text-foreground">{metrics[0]?.value || "196.x"} goal</span>. Step count at <span className="font-bold text-destructive">{metrics.find(m => m.name === "Step Count")?.value || "4,144"}</span> — consider a 30-min evening walk to hit target. Cortisol within range but monitor post-commute.
         </p>
       </div>
 
