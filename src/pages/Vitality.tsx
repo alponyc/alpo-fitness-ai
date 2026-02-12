@@ -3,7 +3,7 @@ import { Moon, Footprints, Brain, TrendingDown, TrendingUp, Activity, Smartphone
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { vitalityMetricsByProfile, vitalityDetailsByProfile } from "@/data/executive-data";
+import { vitalityMetricsByProfile, vitalityDetailsByProfile, getDataKey } from "@/data/executive-data";
 import { useProfile } from "@/contexts/ProfileContext";
 import { getDefaultVitalityMetrics, getDefaultVitalityDetails, getSyncedVitalityMetrics, getSyncedVitalityDetails } from "@/data/default-profile-data";
 import RAGBadge from "@/components/RAGBadge";
@@ -20,19 +20,20 @@ const statusColor: Record<string, string> = {
 
 const Vitality = () => {
   const { activeProfile, info } = useProfile();
+  const dataKey = getDataKey(info);
   const [healthSynced, setHealthSynced] = useState(false);
   const [syncSource, setSyncSource] = useState<"apple" | "samsung" | null>(null);
 
-  const hasHardcodedData = !!vitalityMetricsByProfile[activeProfile];
+  const hasHardcodedData = !!vitalityMetricsByProfile[dataKey];
 
   const metrics = hasHardcodedData
-    ? vitalityMetricsByProfile[activeProfile]
+    ? vitalityMetricsByProfile[dataKey]
     : healthSynced
       ? getSyncedVitalityMetrics(info.name, info.weight || "180", info.goal || "maintain")
       : getDefaultVitalityMetrics(info.name, info.weight || "180", info.goal || "maintain");
 
   const details = hasHardcodedData
-    ? vitalityDetailsByProfile[activeProfile]
+    ? vitalityDetailsByProfile[dataKey]
     : healthSynced
       ? getSyncedVitalityDetails(info.goal || "maintain")
       : getDefaultVitalityDetails();
