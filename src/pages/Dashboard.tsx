@@ -131,7 +131,7 @@ const Dashboard = () => {
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <div ref={carouselRef} className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory flex-1">
+            <div ref={carouselRef} className="flex gap-2 overflow-x-hidden pb-2 scrollbar-hide flex-1">
               {prCards.map((pr, i) => (
                 <div key={i} className="snap-start shrink-0 w-28 bg-secondary/50 rounded-lg px-3 py-2.5 text-center">
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{pr.date}</p>
