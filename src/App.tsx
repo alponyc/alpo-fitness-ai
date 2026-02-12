@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProfileProvider } from "./contexts/ProfileContext";
 import AppLayout from "./components/AppLayout";
+import Splash from "./pages/Splash";
 import Dashboard from "./pages/Dashboard";
 import Scanner from "./pages/Scanner";
 import Vitality from "./pages/Vitality";
@@ -13,7 +14,6 @@ import MedicalVault from "./pages/MedicalVault";
 import Kitchen from "./pages/Kitchen";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,8 +24,9 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Splash />} />
             <Route element={<AppLayout />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/scanner" element={<Scanner />} />
               <Route path="/research" element={<Research />} />
               <Route path="/vitality" element={<Vitality />} />

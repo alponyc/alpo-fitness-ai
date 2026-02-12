@@ -3,7 +3,7 @@ import { LayoutDashboard, ScanLine, BookOpen, Heart, Stethoscope, ChefHat, Setti
 import { cn } from "@/lib/utils";
 
 const tabs = [
-  { path: "/", label: "Dash", icon: LayoutDashboard },
+  { path: "/dashboard", label: "Dash", icon: LayoutDashboard },
   { path: "/scanner", label: "Scan", icon: ScanLine },
   { path: "/research", label: "Research", icon: BookOpen },
   { path: "/vitality", label: "Vitals", icon: Heart },
