@@ -2,23 +2,15 @@ import { useState } from "react";
 import { Zap, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { protocols } from "@/data/executive-data";
+import { protocols, weeklyScheduleByProfile } from "@/data/executive-data";
+import { useProfile } from "@/contexts/ProfileContext";
 import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
-import SocialRow from "@/components/SocialRow";
-
-const weeklySchedule = [
-  { day: "Sun", protocol: "Rest / Sodium Flush", icon: "💧" },
-  { day: "Mon", protocol: "Larry Scott Pump", icon: "💪" },
-  { day: "Tue", protocol: "Fasted Productivity", icon: "🧠" },
-  { day: "Wed", protocol: "Vince Gironda Incline", icon: "📐" },
-  { day: "Thu", protocol: "Lyle McDonald RFL", icon: "🔥" },
-  { day: "Fri", protocol: "Cortisol Shield", icon: "🛡️" },
-  { day: "Sat", protocol: "Metabolic Reset", icon: "🔄" },
-];
 
 const Research = () => {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const { activeProfile } = useProfile();
+  const weeklySchedule = weeklyScheduleByProfile[activeProfile];
 
   return (
     <>
@@ -29,14 +21,6 @@ const Research = () => {
         </div>
         <p className="text-xs text-muted-foreground">Protocol Library & Weekly Schedule</p>
       </div>
-
-      {/* Social Command Center */}
-      <Card className="border-border bg-card">
-        <CardContent className="py-3">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold text-center mb-1">Follow the Journey</p>
-          <SocialRow />
-        </CardContent>
-      </Card>
 
       {/* Weekly Schedule */}
       <Card className="border-border bg-card">
