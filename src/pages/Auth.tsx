@@ -101,6 +101,8 @@ const Auth = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="bg-secondary/50 border-border text-foreground text-sm"
               required
+              autoComplete="email"
+              name="email"
             />
           </div>
           <div className="space-y-1.5">
@@ -113,6 +115,8 @@ const Auth = () => {
               className="bg-secondary/50 border-border text-foreground text-sm"
               required
               minLength={6}
+              autoComplete={isSignUp ? "new-password" : "current-password"}
+              name="password"
             />
           </div>
 
