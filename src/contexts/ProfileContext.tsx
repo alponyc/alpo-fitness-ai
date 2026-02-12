@@ -91,44 +91,59 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
   const [activeProfile, setActiveProfile] = useState<ProfileKey>("");
   const [loading, setLoading] = useState(true);
 
-  const fetchProfiles = useCallback(async () => {
-    if (!user) {
-      setProfiles({});
-      setActiveProfile("");
-      setLoading(false);
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.error("Error fetching profiles:", error);
-      setLoading(false);
-      return;
-    }
-
-    if (data && data.length > 0) {
-      const map: Record<string, ProfileInfo> = {};
-      data.forEach((row) => {
-        map[row.id] = rowToProfile(row);
-      });
-      setProfiles(map);
-      // Set first profile as active if none selected or current not in list
-      setActiveProfile((prev) => {
-        if (prev && map[prev]) return prev;
-        return data[0].id;
-      });
-    }
-    setLoading(false);
-  }, [user]);
-
   useEffect(() => {
-    fetchProfiles();
-  }, [fetchProfiles]);
+    let isMounted = true;
+
+    const initializeProfiles = async () => {
+      if (!user) {
+        if (isMounted) {
+          setProfiles({});
+          setActiveProfile("");
+          setLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: true });
+
+        if (!isMounted) return;
+
+        if (error) {
+          console.error("Error fetching profiles:", error);
+          setLoading(false);
+          return;
+        }
+
+        if (data && data.length > 0) {
+          const map: Record<string, ProfileInfo> = {};
+          data.forEach((row) => {
+            map[row.id] = rowToProfile(row);
+          });
+          setProfiles(map);
+          setActiveProfile((prev) => {
+            if (prev && map[prev]) return prev;
+            return data[0].id;
+          });
+        } else {
+          console.warn("No profiles found for user:", user.id);
+          setProfiles({});
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    initializeProfiles();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
 
   const addProfile = async (profile: Omit<ProfileInfo, "id">): Promise<ProfileKey> => {
     if (!user) return "";
