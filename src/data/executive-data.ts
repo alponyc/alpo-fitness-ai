@@ -156,6 +156,7 @@ export const pantryGuide = {
 // === Dashboard Data per Profile ===
 export const dashboardDataByProfile: Record<ProfileKey, {
   timeline: { time: string; item: string; protein: string; icon: string }[];
+  executionLogsByDay: Record<string, { time: string; item: string; protein: string; icon: string }[]>;
   weightHistory: { date: string; weight: string; delta: string | null; note?: string }[];
   macros: { protein: number; carbs: number; fats: number };
   insight: string;
@@ -168,6 +169,48 @@ export const dashboardDataByProfile: Record<ProfileKey, {
       { time: "3:00 PM", item: "Oikos Triple Zero", protein: "15g", icon: "🥛" },
       { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
     ],
+    executionLogsByDay: {
+      Sun: [
+        { time: "8:00 AM", item: "Protein Pancakes", protein: "30g", icon: "🥞" },
+        { time: "12:00 PM", item: "Grilled Chicken Salad", protein: "40g", icon: "🥗" },
+        { time: "6:00 PM", item: "Salmon + Rice", protein: "42g", icon: "🐟" },
+      ],
+      Mon: [
+        { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+        { time: "10:00 AM", item: "Fairlife 42g", protein: "42g", icon: "🥤" },
+        { time: "1:00 PM", item: "Turkey Wrap", protein: "35g", icon: "🌯" },
+        { time: "7:00 PM", item: "Steak + Veggies", protein: "52g", icon: "🥩" },
+      ],
+      Tue: [
+        { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+        { time: "12:00 PM", item: "Chicken Breast + Broccoli", protein: "43g", icon: "🍗" },
+        { time: "6:30 PM", item: "Egg Whites + Oats", protein: "28g", icon: "🍳" },
+      ],
+      Wed: [
+        { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+        { time: "10:00 AM", item: "Fairlife 42g Shake", protein: "42g", icon: "🥤" },
+        { time: "12:30 PM", item: "Sophie's Grilled Chicken Wrap", protein: "38g", icon: "🌯" },
+        { time: "3:00 PM", item: "Oikos Triple Zero", protein: "15g", icon: "🥛" },
+        { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
+      ],
+      Thu: [
+        { time: "7:00 AM", item: "Protein Oatmeal", protein: "25g", icon: "🥣" },
+        { time: "12:00 PM", item: "Grilled Chicken Caesar", protein: "40g", icon: "🥗" },
+        { time: "4:00 PM", item: "Fairlife 42g", protein: "42g", icon: "🥤" },
+        { time: "7:30 PM", item: "Lean Beef + Sweet Potato", protein: "48g", icon: "🥩" },
+      ],
+      Fri: [
+        { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
+        { time: "11:00 AM", item: "Egg White Omelette", protein: "30g", icon: "🍳" },
+        { time: "2:00 PM", item: "Greek Yogurt + Berries", protein: "18g", icon: "🫐" },
+        { time: "7:00 PM", item: "Client Dinner — Souvlaki", protein: "38g", icon: "🍽️" },
+      ],
+      Sat: [
+        { time: "9:00 AM", item: "Protein Smoothie", protein: "35g", icon: "🥤" },
+        { time: "1:00 PM", item: "Churrasco + Rice", protein: "50g", icon: "🥩" },
+        { time: "7:00 PM", item: "Sophie's Date Night", protein: "32g", icon: "🍷" },
+      ],
+    },
     weightHistory: [
       { date: "Thu 2/5", weight: "201.8", delta: null, note: "Office Stress / High Sodium" },
       { date: "Fri 2/6", weight: "201.2", delta: "-0.6", note: "Transition to RFL" },
@@ -188,6 +231,47 @@ export const dashboardDataByProfile: Record<ProfileKey, {
       { time: "4:00 PM", item: "Greek Yogurt", protein: "18g", icon: "🥛" },
       { time: "7:30 PM", item: "Steak + Sweet Potato", protein: "45g", icon: "🥩" },
     ],
+    executionLogsByDay: {
+      Sun: [
+        { time: "8:30 AM", item: "Egg Scramble + Toast", protein: "28g", icon: "🍳" },
+        { time: "12:30 PM", item: "Tuna Sandwich", protein: "35g", icon: "🥪" },
+        { time: "6:30 PM", item: "Grilled Chicken + Rice", protein: "42g", icon: "🍗" },
+      ],
+      Mon: [
+        { time: "7:00 AM", item: "Protein Oatmeal", protein: "30g", icon: "🥣" },
+        { time: "10:30 AM", item: "Protein Bar", protein: "20g", icon: "🍫" },
+        { time: "1:00 PM", item: "Grilled Chicken Salad", protein: "40g", icon: "🥗" },
+        { time: "7:30 PM", item: "Steak + Sweet Potato", protein: "45g", icon: "🥩" },
+      ],
+      Tue: [
+        { time: "7:00 AM", item: "Overnight Oats", protein: "18g", icon: "🥣" },
+        { time: "12:00 PM", item: "Chicken Burrito Bowl", protein: "44g", icon: "🌯" },
+        { time: "6:00 PM", item: "Ground Turkey + Peppers", protein: "38g", icon: "🥘" },
+      ],
+      Wed: [
+        { time: "7:00 AM", item: "Protein Shake", protein: "30g", icon: "🥤" },
+        { time: "11:00 AM", item: "Beef Jerky", protein: "15g", icon: "🥩" },
+        { time: "1:30 PM", item: "Salmon Bowl", protein: "40g", icon: "🐟" },
+        { time: "4:00 PM", item: "Greek Yogurt", protein: "18g", icon: "🥛" },
+        { time: "7:30 PM", item: "Chicken Stir Fry", protein: "42g", icon: "🍗" },
+      ],
+      Thu: [
+        { time: "6:30 AM", item: "Egg Whites + Avocado", protein: "24g", icon: "🥑" },
+        { time: "12:00 PM", item: "Turkey Club Wrap", protein: "36g", icon: "🌯" },
+        { time: "3:00 PM", item: "Cottage Cheese", protein: "14g", icon: "🧀" },
+        { time: "7:00 PM", item: "BBQ Chicken + Corn", protein: "45g", icon: "🍗" },
+      ],
+      Fri: [
+        { time: "7:00 AM", item: "Protein Pancakes", protein: "28g", icon: "🥞" },
+        { time: "12:30 PM", item: "Philly Cheesesteak (lean)", protein: "40g", icon: "🥪" },
+        { time: "6:30 PM", item: "Shrimp + Veggies", protein: "32g", icon: "🦐" },
+      ],
+      Sat: [
+        { time: "9:00 AM", item: "Brunch — Omelette", protein: "32g", icon: "🍳" },
+        { time: "2:00 PM", item: "Grilled Chicken Pita", protein: "38g", icon: "🫓" },
+        { time: "7:00 PM", item: "Ribeye + Broccoli", protein: "55g", icon: "🥩" },
+      ],
+    },
     weightHistory: [
       { date: "Thu 2/5", weight: "218.3", delta: null },
       { date: "Fri 2/6", weight: "217.8", delta: "-0.5" },
@@ -207,6 +291,46 @@ export const dashboardDataByProfile: Record<ProfileKey, {
       { time: "3:30 PM", item: "Apple + Almonds", protein: "6g", icon: "🍎" },
       { time: "7:00 PM", item: "Grilled Chicken + Quinoa", protein: "39g", icon: "🍗" },
     ],
+    executionLogsByDay: {
+      Sun: [
+        { time: "9:00 AM", item: "Açaí Bowl", protein: "12g", icon: "🫐" },
+        { time: "12:30 PM", item: "Caprese Salad + Chicken", protein: "30g", icon: "🥗" },
+        { time: "6:00 PM", item: "Pasta Primavera + Turkey", protein: "28g", icon: "🍝" },
+      ],
+      Mon: [
+        { time: "7:30 AM", item: "Greek Yogurt Parfait", protein: "20g", icon: "🥛" },
+        { time: "12:00 PM", item: "Chicken Caesar Wrap", protein: "32g", icon: "🌯" },
+        { time: "3:00 PM", item: "Protein Ball Snack", protein: "10g", icon: "🍫" },
+        { time: "7:00 PM", item: "Salmon + Quinoa Bowl", protein: "38g", icon: "🐟" },
+      ],
+      Tue: [
+        { time: "7:00 AM", item: "Avocado Toast + Egg", protein: "14g", icon: "🥑" },
+        { time: "12:00 PM", item: "Turkey Wrap", protein: "28g", icon: "🌯" },
+        { time: "6:30 PM", item: "Shrimp Stir Fry", protein: "30g", icon: "🦐" },
+      ],
+      Wed: [
+        { time: "7:30 AM", item: "Smoothie Bowl", protein: "22g", icon: "🫐" },
+        { time: "11:30 AM", item: "Hummus + Veggie Plate", protein: "8g", icon: "🥕" },
+        { time: "12:30 PM", item: "Grilled Chicken Salad", protein: "35g", icon: "🥗" },
+        { time: "3:30 PM", item: "Apple + Almonds", protein: "6g", icon: "🍎" },
+        { time: "7:00 PM", item: "Grilled Chicken + Quinoa", protein: "39g", icon: "🍗" },
+      ],
+      Thu: [
+        { time: "7:30 AM", item: "Overnight Oats + Berries", protein: "15g", icon: "🥣" },
+        { time: "12:00 PM", item: "Chicken Pesto Wrap", protein: "34g", icon: "🌯" },
+        { time: "6:30 PM", item: "Turkey Meatballs + Zucchini", protein: "36g", icon: "🍝" },
+      ],
+      Fri: [
+        { time: "8:00 AM", item: "Eggs Benedict (turkey)", protein: "26g", icon: "🍳" },
+        { time: "12:30 PM", item: "Poke Bowl", protein: "30g", icon: "🍣" },
+        { time: "7:00 PM", item: "Date Night — Grilled Fish", protein: "35g", icon: "🍽️" },
+      ],
+      Sat: [
+        { time: "9:30 AM", item: "Brunch — French Toast + Turkey Bacon", protein: "22g", icon: "🥞" },
+        { time: "1:00 PM", item: "Chicken Shawarma Bowl", protein: "38g", icon: "🫓" },
+        { time: "7:00 PM", item: "Family BBQ — Lean Burgers", protein: "40g", icon: "🍔" },
+      ],
+    },
     weightHistory: [
       { date: "Thu 2/5", weight: "140.2", delta: null },
       { date: "Fri 2/6", weight: "139.9", delta: "-0.3" },

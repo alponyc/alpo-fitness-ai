@@ -10,49 +10,6 @@ import { dashboardDataByProfile, kitchenDataByProfile } from "@/data/executive-d
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const executionLogsByDay: Record<string, { time: string; item: string; protein: string; icon: string }[]> = {
-  Sun: [
-    { time: "8:00 AM", item: "Protein Pancakes", protein: "30g", icon: "🥞" },
-    { time: "12:00 PM", item: "Grilled Chicken Salad", protein: "40g", icon: "🥗" },
-    { time: "6:00 PM", item: "Salmon + Rice", protein: "42g", icon: "🐟" },
-  ],
-  Mon: [
-    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
-    { time: "10:00 AM", item: "Fairlife 42g", protein: "42g", icon: "🥤" },
-    { time: "1:00 PM", item: "Turkey Wrap", protein: "35g", icon: "🌯" },
-    { time: "7:00 PM", item: "Steak + Veggies", protein: "52g", icon: "🥩" },
-  ],
-  Tue: [
-    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
-    { time: "12:00 PM", item: "Chicken Breast + Broccoli", protein: "43g", icon: "🍗" },
-    { time: "6:30 PM", item: "Egg Whites + Oats", protein: "28g", icon: "🍳" },
-  ],
-  Wed: [
-    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
-    { time: "10:00 AM", item: "Fairlife 42g Shake", protein: "42g", icon: "🥤" },
-    { time: "12:30 PM", item: "Sophie's Grilled Chicken Wrap", protein: "38g", icon: "🌯" },
-    { time: "3:00 PM", item: "Oikos Triple Zero", protein: "15g", icon: "🥛" },
-    { time: "7:00 PM", item: "Grilled Salmon + Asparagus", protein: "42g", icon: "🐟" },
-  ],
-  Thu: [
-    { time: "7:00 AM", item: "Protein Oatmeal", protein: "25g", icon: "🥣" },
-    { time: "12:00 PM", item: "Grilled Chicken Caesar", protein: "40g", icon: "🥗" },
-    { time: "4:00 PM", item: "Fairlife 42g", protein: "42g", icon: "🥤" },
-    { time: "7:30 PM", item: "Lean Beef + Sweet Potato", protein: "48g", icon: "🥩" },
-  ],
-  Fri: [
-    { time: "6:30 AM", item: "Black Coffee", protein: "0g", icon: "☕" },
-    { time: "11:00 AM", item: "Egg White Omelette", protein: "30g", icon: "🍳" },
-    { time: "2:00 PM", item: "Greek Yogurt + Berries", protein: "18g", icon: "🫐" },
-    { time: "7:00 PM", item: "Client Dinner — Souvlaki", protein: "38g", icon: "🍽️" },
-  ],
-  Sat: [
-    { time: "9:00 AM", item: "Protein Smoothie", protein: "35g", icon: "🥤" },
-    { time: "1:00 PM", item: "Churrasco + Rice", protein: "50g", icon: "🥩" },
-    { time: "7:00 PM", item: "Sophie's Date Night", protein: "32g", icon: "🍷" },
-  ],
-};
-
 const workoutDays = [
   { label: "Thu 2/5", day: "Thu", workout: "Upper Body Push (Gironda Incline)" },
   { label: "Fri 2/6", day: "Fri", workout: "Pull Day (Cable Row + Lat Focus)" },
@@ -86,7 +43,7 @@ const Dashboard = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const currentDayKey = weekDays[execDayIndex];
-  const currentTimeline = executionLogsByDay[currentDayKey] || data.timeline;
+  const currentTimeline = data.executionLogsByDay[currentDayKey] || data.timeline;
   const totalProtein = currentTimeline.reduce((sum, t) => sum + parseInt(t.protein), 0);
 
   return (
