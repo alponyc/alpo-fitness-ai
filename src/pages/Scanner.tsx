@@ -23,7 +23,7 @@ const Scanner = () => {
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Hardcoded profiles have fridge data; dynamically created ones don't
-  const hasExistingData = false; // Per-user profiles — no hardcoded data
+  const hasExistingData = !!info.goal; // Users with profile data have existing data
   const isFridgeEmpty = activeHotspot === "fridgeAudit" && !hasExistingData;
 
   const currentResult = activeHotspot ? scannerHotspots[activeHotspot] : scannerHotspots.sampleMenu;
