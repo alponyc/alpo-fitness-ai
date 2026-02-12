@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/AppLayout";
 import Splash from "./pages/Splash";
 import Auth from "./pages/Auth";
+import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import Scanner from "./pages/Scanner";
 import Vitality from "./pages/Vitality";
@@ -30,6 +31,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Splash />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/onboarding" element={<Onboarding />} />
               <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/scanner" element={<Scanner />} />
