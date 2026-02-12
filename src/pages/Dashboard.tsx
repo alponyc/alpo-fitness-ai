@@ -247,18 +247,31 @@ const Dashboard = () => {
             Fridge Inventory
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent>
           <div className="grid grid-cols-2 gap-2">
-            {kitchen.fridgeItems.map((item) => (
-              <div key={item.name} className="bg-secondary/50 rounded-lg px-3 py-2">
-                <p className="text-xs font-semibold text-foreground">{item.name}</p>
-                {item.detail && <p className="text-[10px] text-muted-foreground">{item.detail}</p>}
-              </div>
-            ))}
+            {kitchen.fridgeItems.map((item) => {
+              const levelStyles = item.level === "low"
+                ? "bg-destructive/10 border border-destructive/20"
+                : item.level === "mid"
+                ? "bg-amber-500/10 border border-amber-500/20"
+                : "bg-emerald-500/10 border border-emerald-500/20";
+              const badgeStyles = item.level === "low"
+                ? "text-destructive"
+                : item.level === "mid"
+                ? "text-amber-400"
+                : "text-emerald-400";
+              const badgeLabel = item.level === "low" ? "Low" : item.level === "mid" ? "Mid" : "Full";
+              return (
+                <div key={item.name} className={`rounded-lg px-3 py-2 ${levelStyles}`}>
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-semibold text-foreground">{item.name}</p>
+                    <span className={`text-[9px] font-black uppercase ${badgeStyles}`}>{badgeLabel}</span>
+                  </div>
+                  {item.detail && <p className="text-[10px] text-muted-foreground">{item.detail}</p>}
+                </div>
+              );
+            })}
           </div>
-           <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-9">
-             Update Inventory
-           </Button>
         </CardContent>
       </Card>
 

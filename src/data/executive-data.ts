@@ -214,35 +214,39 @@ export const dashboardDataByProfile: Record<ProfileKey, {
 };
 
 // === Kitchen Data per Profile ===
-export const kitchenDataByProfile: Record<ProfileKey, { fridgeItems: { name: string; detail: string | null }[] }> = {
+export const kitchenDataByProfile: Record<ProfileKey, { fridgeItems: { name: string; detail: string | null; level: "full" | "mid" | "low" }[] }> = {
   alpo: {
     fridgeItems: [
-      { name: "Churrasco", detail: "2 portions" },
-      { name: "Chicken", detail: "3 portions" },
-      { name: "Asparagus", detail: null },
-      { name: "Peppers", detail: null },
-      { name: "Onions", detail: null },
-      { name: "42g Fairlife", detail: "1" },
+      { name: "Churrasco", detail: "2 portions", level: "full" },
+      { name: "Chicken", detail: "3 portions", level: "full" },
+      { name: "Asparagus", detail: "1 bunch", level: "mid" },
+      { name: "Peppers", detail: "4", level: "full" },
+      { name: "Onions", detail: "3", level: "mid" },
+      { name: "42g Fairlife", detail: "1 left", level: "low" },
+      { name: "Salmon", detail: "2 fillets", level: "full" },
+      { name: "Oikos Triple Zero", detail: "2", level: "mid" },
+      { name: "Eggs", detail: "4 left", level: "low" },
+      { name: "Leafy Greens", detail: "Low", level: "low" },
     ],
   },
   client: {
     fridgeItems: [
-      { name: "Chicken Breast", detail: "4 portions" },
-      { name: "Sweet Potato", detail: "3" },
-      { name: "Broccoli", detail: null },
-      { name: "Rice", detail: "2 cups" },
-      { name: "Protein Bars", detail: "6 pack" },
-      { name: "Greek Yogurt", detail: "2" },
+      { name: "Chicken Breast", detail: "4 portions", level: "full" },
+      { name: "Sweet Potato", detail: "3", level: "full" },
+      { name: "Broccoli", detail: "1 head", level: "mid" },
+      { name: "Rice", detail: "2 cups", level: "full" },
+      { name: "Protein Bars", detail: "2 left", level: "low" },
+      { name: "Greek Yogurt", detail: "2", level: "mid" },
     ],
   },
   family: {
     fridgeItems: [
-      { name: "Turkey Breast", detail: "2 portions" },
-      { name: "Quinoa", detail: "1 bag" },
-      { name: "Mixed Berries", detail: null },
-      { name: "Almonds", detail: "1 bag" },
-      { name: "Smoothie Mix", detail: null },
-      { name: "Eggs", detail: "12" },
+      { name: "Turkey Breast", detail: "2 portions", level: "full" },
+      { name: "Quinoa", detail: "1 bag", level: "full" },
+      { name: "Mixed Berries", detail: "Half box", level: "mid" },
+      { name: "Almonds", detail: "1 bag", level: "full" },
+      { name: "Smoothie Mix", detail: "Low", level: "low" },
+      { name: "Eggs", detail: "12", level: "full" },
     ],
   },
 };
