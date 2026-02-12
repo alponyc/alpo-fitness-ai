@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, LogOut, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useProfile } from "@/contexts/ProfileContext";
 import alpoLogo from "@/assets/alpo-logo.png";
 
 const AppHeader = () => {
-  const { activeProfile, setActiveProfile, info, profiles, profileKeys } = useProfile();
+  const { activeProfile, setActiveProfile, info, profiles, profileKeys, removeProfile } = useProfile();
   const navigate = useNavigate();
 
   return (
@@ -50,6 +50,14 @@ const AppHeader = () => {
                 </Avatar>
                 {p.label}
                 {activeProfile === key && <span className="ml-auto text-[8px] text-primary">●</span>}
+                {!["alpo", "client", "family"].includes(key) && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); removeProfile(key); }}
+                    className="ml-auto p-0.5 rounded hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
               </DropdownMenuItem>
             );
           })}
