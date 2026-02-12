@@ -1,21 +1,76 @@
 import { useState } from "react";
-import { Shield, Users, Lock, Bell, FileText, Instagram, Share2, AlertTriangle, X, Download, Watch, Smartphone, Heart } from "lucide-react";
+import { Shield, Users, Lock, Bell, FileText, Instagram, Share2, AlertTriangle, X, Download, Watch, Smartphone, Heart, UserPlus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { useProfile, GoalType, AccountType, ActivityLevel } from "@/contexts/ProfileContext";
 import SocialRow from "@/components/SocialRow";
+import avatarDefault from "@/assets/avatar-default.png";
 
 const SettingsPage = () => {
+  const { addProfile, setActiveProfile } = useProfile();
   const [consentOpen, setConsentOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [aiConsent, setAiConsent] = useState(true);
   const [bioConsent, setBioConsent] = useState(false);
+
+  // Add profile form state
+  const [regName, setRegName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regRole, setRegRole] = useState<AccountType | "">("");
+  const [regPhone, setRegPhone] = useState("");
+  const [regWeight, setRegWeight] = useState("");
+  const [regGoal, setRegGoal] = useState<GoalType | "">("");
+  const [regAge, setRegAge] = useState("");
+  const [regGender, setRegGender] = useState("");
+  const [regActivity, setRegActivity] = useState<ActivityLevel | "">("");
 
   const handleDownload = (format: string) => {
     toast({ title: `Exporting as ${format}`, description: "Your data export will be ready shortly." });
   };
+
+  const resetForm = () => {
+    setRegName(""); setRegEmail(""); setRegRole(""); setRegPhone("");
+    setRegWeight(""); setRegGoal(""); setRegAge(""); setRegGender(""); setRegActivity("");
+  };
+
+  const handleCreateProfile = async () => {
+    if (!regName.trim() || !regGoal || !regWeight.trim()) return;
+    try {
+      const initials = regName.trim().split(" ").map((w) => w[0]?.toUpperCase()).join("").slice(0, 2);
+      const newKey = await addProfile({
+        name: regName.trim(),
+        initials,
+        label: regName.trim().split(" ")[0],
+        avatar: avatarDefault,
+        goal: regGoal as GoalType,
+        weight: regWeight.trim(),
+        accountType: (regRole || "user") as AccountType,
+        email: regEmail.trim() || undefined,
+        phone: regPhone.trim() || undefined,
+        age: regAge ? parseInt(regAge) : undefined,
+        gender: regGender || undefined,
+        activityLevel: (regActivity || undefined) as ActivityLevel | undefined,
+      });
+      resetForm();
+      setAddOpen(false);
+      if (newKey) {
+        setActiveProfile(newKey);
+        toast({ title: "Profile created", description: `${regName.trim()} has been added.` });
+      }
+    } catch (error) {
+      console.error("Error adding profile:", error);
+      toast({ title: "Error", description: "Failed to add profile. Please try again.", variant: "destructive" });
+    }
+  };
+
+  const isFormValid = regName.trim() && regGoal && regWeight.trim();
 
   return (
     <>
@@ -23,6 +78,16 @@ const SettingsPage = () => {
         <h2 className="text-xl font-black text-foreground tracking-tight">Settings</h2>
         <p className="text-xs text-muted-foreground">Privacy, sharing, and preferences.</p>
       </div>
+
+      {/* Add Profile Button */}
+      <Card className="border-border bg-card">
+        <CardContent className="pt-4 pb-4">
+          <Button onClick={() => setAddOpen(true)} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-10">
+            <UserPlus className="w-4 h-4 mr-2" />
+            Add Profile
+          </Button>
+        </CardContent>
+      </Card>
 
       {/* Social Command Center */}
       <Card className="border-border bg-card">
@@ -209,6 +274,106 @@ const SettingsPage = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Add Profile Dialog */}
+      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+        <DialogContent className="bg-card border-border max-w-[340px] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-foreground text-lg font-black">Add Profile</DialogTitle>
+            <DialogDescription className="text-muted-foreground text-xs">
+              Create a new profile on Alpo Fitness AI
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3.5 pt-1 max-h-[60vh] overflow-y-auto">
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Full Name *</Label>
+              <Input placeholder="e.g. Jordan Smith" value={regName} onChange={(e) => setRegName(e.target.value)} className="bg-secondary/50 border-border text-foreground text-sm" />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Email</Label>
+              <Input type="email" placeholder="jordan@example.com" value={regEmail} onChange={(e) => setRegEmail(e.target.value)} className="bg-secondary/50 border-border text-foreground text-sm" />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Phone (optional)</Label>
+              <Input type="tel" placeholder="+1 (555) 000-0000" value={regPhone} onChange={(e) => setRegPhone(e.target.value)} className="bg-secondary/50 border-border text-foreground text-sm" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Weight (lbs) *</Label>
+                <Input type="number" placeholder="185" value={regWeight} onChange={(e) => setRegWeight(e.target.value)} className="bg-secondary/50 border-border text-foreground text-sm" />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Goal *</Label>
+                <Select value={regGoal} onValueChange={(v) => setRegGoal(v as GoalType)}>
+                  <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                    <SelectValue placeholder="Select…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border z-[60]">
+                    <SelectItem value="lose">Lose</SelectItem>
+                    <SelectItem value="gain">Gain</SelectItem>
+                    <SelectItem value="maintain">Maintain</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Age</Label>
+                <Input type="number" placeholder="30" value={regAge} onChange={(e) => setRegAge(e.target.value)} className="bg-secondary/50 border-border text-foreground text-sm" />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground font-semibold">Gender</Label>
+                <Select value={regGender} onValueChange={setRegGender}>
+                  <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                    <SelectValue placeholder="Select…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border z-[60]">
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Activity Level</Label>
+              <Select value={regActivity} onValueChange={(v) => setRegActivity(v as ActivityLevel)}>
+                <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                  <SelectValue placeholder="Select activity…" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border z-[60]">
+                  <SelectItem value="sedentary">Sedentary — Desk / Remote</SelectItem>
+                  <SelectItem value="light">Light — Office + Commute</SelectItem>
+                  <SelectItem value="moderate">Moderate — On-your-feet job</SelectItem>
+                  <SelectItem value="active">Active — Physical labor / Training</SelectItem>
+                  <SelectItem value="very_active">Very Active — Athlete / Manual</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground font-semibold">Account Type</Label>
+              <Select value={regRole} onValueChange={(v) => setRegRole(v as AccountType)}>
+                <SelectTrigger className="bg-secondary/50 border-border text-foreground text-sm">
+                  <SelectValue placeholder="Select role…" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border z-[60]">
+                  <SelectItem value="user">User — Personal Training</SelectItem>
+                  <SelectItem value="client">Client — Coached Athlete</SelectItem>
+                  <SelectItem value="family">Family — Shared Access</SelectItem>
+                  <SelectItem value="trainer">Trainer — Coach / PT</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <button
+              onClick={handleCreateProfile}
+              disabled={!isFormValid}
+              className="w-full bg-primary text-primary-foreground font-bold text-sm py-2.5 rounded-lg hover:bg-primary/90 transition-colors mt-1 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Create Profile
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Consent Modal */}
       <Dialog open={consentOpen} onOpenChange={setConsentOpen}>
