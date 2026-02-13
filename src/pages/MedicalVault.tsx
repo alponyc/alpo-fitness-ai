@@ -11,12 +11,12 @@ import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
 const symptomResponses: Record<string, string> = {
-  fever: "RAG-Verified: Low-grade fever detected. Activate Cortisol Shield protocol immediately. Recommend rest, hydration (3.5L target), and postpone tonight's workout. Monitor for 24h. If >101°F, contact your physician.",
-  elbow: "RAG-Verified: Left elbow flare noted. Switch ALL pressing to neutral grip immediately. Apply ice 15min post-workout. Avoid: skull crushers, pronated curls, close-grip bench. Recommend: hammer curls, neutral-grip DB press.",
-  shoulder: "RAG-Verified: Shoulder impingement risk. Switch to neutral grip pressing ONLY. Add face pulls (3×15) to every session. Avoid: behind-the-neck press, upright rows, wide-grip bench. Recommend: landmine press, cable lateral raises.",
-  knee: "RAG-Verified: Knee protocol activated. Switch to sled pushes and TKE (Terminal Knee Extensions) for quad work. Avoid: deep squats, leg extensions with heavy load, box jumps. Recommend: reverse sled drag, wall sits, isometric holds.",
-  stiffness: "RAG-Verified: General stiffness detected. Add face pulls (3×20) and band pull-aparts to warm-up. Increase mobility work: 10min foam rolling pre-session. Consider: Epsom salt bath tonight, magnesium before bed.",
-  default: "RAG-Verified: Symptom logged. Cross-referencing with your surgical history and current protocols. Recommend consulting your physician if symptoms persist beyond 48 hours.",
+  fever: "RAG-VERIFIED: Low-grade fever detected. Activate Cortisol Shield protocol immediately. Recommend rest, hydration (3.5L target), and postpone tonight's workout. Monitor for 24h. If >101°F, contact your physician.",
+  elbow: "RAG-VERIFIED: Left elbow flare noted. Switch ALL pressing to neutral grip immediately. Apply ice 15min post-workout. Avoid: skull crushers, pronated curls, close-grip bench. Recommend: hammer curls, neutral-grip DB press.",
+  shoulder: "RAG-VERIFIED: Shoulder impingement risk. Switch to neutral grip pressing ONLY. Add face pulls (3×15) to every session. Avoid: behind-the-neck press, upright rows, wide-grip bench. Recommend: landmine press, cable lateral raises.",
+  knee: "RAG-VERIFIED: Knee protocol activated. Switch to sled pushes and TKE (Terminal Knee Extensions) for quad work. Avoid: deep squats, leg extensions with heavy load, box jumps. Recommend: reverse sled drag, wall sits, isometric holds.",
+  stiffness: "RAG-VERIFIED: General stiffness detected. Add face pulls (3×20) and band pull-aparts to warm-up. Increase mobility work: 10min foam rolling pre-session. Consider: Epsom salt bath tonight, magnesium before bed.",
+  default: "RAG-VERIFIED: Symptom logged. Cross-referencing with your surgical history and current protocols. Recommend consulting your physician if symptoms persist beyond 48 hours.",
 };
 
 const MedicalVault = () => {
@@ -49,7 +49,7 @@ const MedicalVault = () => {
       <div className="space-y-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="text-xl font-black text-foreground tracking-tight">Medical Vault</h2>
+            <h2 className="text-xl font-black text-foreground tracking-tight">MEDICAL VAULT</h2>
             <RAGBadge />
           </div>
           <Button
@@ -60,67 +60,67 @@ const MedicalVault = () => {
               if (!myChartSynced) window.open("https://mychart.com", "_blank");
             }}
             className={myChartSynced
-              ? "bg-emerald-600 text-white text-[10px] font-bold h-7 px-2.5"
-              : "border-border text-muted-foreground text-[10px] font-bold h-7 px-2.5"
+              ? "bg-primary text-primary-foreground text-[10px] font-black h-7 px-2.5 uppercase tracking-wider"
+              : "border-border text-muted-foreground text-[10px] font-black h-7 px-2.5 uppercase tracking-wider"
             }
           >
             <Activity className="w-3 h-3 mr-1" />
-            {myChartSynced ? "MyChart ✓" : "Sync MyChart"}
+            {myChartSynced ? "MYCHART ✓" : "SYNC MYCHART"}
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground">Doctor's View — Executive Health Profile</p>
+        <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold">CLINICAL TERMINAL — EXECUTIVE HEALTH PROFILE</p>
       </div>
 
-      <EthicalGuardrail message="Medical Vault data is self-reported. Always verify with your healthcare provider before modifying protocols." />
+      <EthicalGuardrail message="MEDICAL VAULT DATA IS SELF-REPORTED. ALWAYS VERIFY WITH YOUR HEALTHCARE PROVIDER BEFORE MODIFYING PROTOCOLS." />
 
       {/* Profile Overview */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
-            <User className="w-4 h-4 text-primary" />
-            Profile
+            <User className="w-4 h-4 text-foreground" />
+            PROFILE
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-secondary/50 rounded-lg px-3 py-2.5">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Age</p>
-              <p className="text-sm font-bold text-foreground">{profile.age}</p>
+            <div className="bg-secondary border border-border px-3 py-2.5">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">AGE</p>
+              <p className="text-sm font-black text-foreground font-mono-data">{profile.age}</p>
             </div>
-            <div className="bg-secondary/50 rounded-lg px-3 py-2.5">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Gender</p>
-              <p className="text-sm font-bold text-foreground">{profile.gender}</p>
+            <div className="bg-secondary border border-border px-3 py-2.5">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">GENDER</p>
+              <p className="text-sm font-black text-foreground font-mono-data">{profile.gender}</p>
             </div>
-            <div className="bg-secondary/50 rounded-lg px-3 py-2.5">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Activity Level</p>
-              <p className="text-sm font-bold text-foreground capitalize">{info.activityLevel?.replace("_", " ") || "—"}</p>
+            <div className="bg-secondary border border-border px-3 py-2.5">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">ACTIVITY</p>
+              <p className="text-sm font-black text-foreground font-mono-data uppercase">{info.activityLevel?.replace("_", " ") || "—"}</p>
             </div>
-            <div className="bg-secondary/50 rounded-lg px-3 py-2.5 flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-primary" />
+            <div className="bg-secondary border border-border px-3 py-2.5 flex items-center gap-2">
+              <Briefcase className="w-4 h-4 text-foreground" />
               <div>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Work Week</p>
-                <p className="text-sm font-bold text-foreground">{profile.workWeek}</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">WORK WEEK</p>
+                <p className="text-sm font-black text-foreground font-mono-data">{profile.workWeek}</p>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Surgical History / Injury Archive */}
+      {/* Surgical History */}
       {profile.surgicalHistory.length > 0 && (
         <Card className="border-border bg-card">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
-              <Scissors className="w-4 h-4 text-primary" />
-              Injury Archive
+              <Scissors className="w-4 h-4 text-foreground" />
+              INJURY ARCHIVE
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {profile.surgicalHistory.map((s) => (
-              <div key={s.procedure} className="bg-secondary/50 rounded-lg px-3 py-2.5">
+              <div key={s.procedure} className="bg-secondary border border-border px-3 py-2.5">
                 <div className="flex items-center justify-between">
-                  <p className="text-xs font-semibold text-foreground">{s.procedure}</p>
-                  <Badge variant="outline" className="text-[9px] text-muted-foreground border-border">{s.date}</Badge>
+                  <p className="text-xs font-black text-foreground uppercase">{s.procedure}</p>
+                  <Badge variant="outline" className="text-[9px] text-muted-foreground border-border font-mono-data">{s.date}</Badge>
                 </div>
                 <p className="text-[10px] text-muted-foreground mt-1">{s.notes}</p>
               </div>
@@ -131,21 +131,21 @@ const MedicalVault = () => {
 
       {/* Injury Guardrails */}
       {profile.injuryGuardrails.length > 0 && (
-        <Card className="border-destructive/30 bg-card">
+        <Card className="border-primary/30 bg-card">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-bold flex items-center gap-2 text-destructive">
+            <CardTitle className="text-sm font-bold flex items-center gap-2 text-primary">
               <AlertTriangle className="w-4 h-4" />
-              Injury Guardrails
+              INJURY GUARDRAILS
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {profile.injuryGuardrails.map((g) => (
-              <div key={g.area} className="bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2.5">
+              <div key={g.area} className="bg-primary/5 border border-primary/30 px-3 py-2.5">
                 <div className="flex items-center justify-between">
-                  <p className="text-xs font-semibold text-foreground">{g.area}</p>
-                  <Badge className="bg-destructive text-destructive-foreground text-[9px] border-none">{g.severity}</Badge>
+                  <p className="text-xs font-black text-foreground uppercase">{g.area}</p>
+                  <Badge className="bg-primary text-primary-foreground text-[9px] border-none font-black uppercase">{g.severity}</Badge>
                 </div>
-                <p className="text-[10px] text-primary font-bold mt-1">Protocol: {g.protocol}</p>
+                <p className="text-[10px] text-primary font-black mt-1 uppercase">PROTOCOL: {g.protocol}</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">{g.notes}</p>
               </div>
             ))}
@@ -158,19 +158,19 @@ const MedicalVault = () => {
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
             <Brain className="w-4 h-4 text-primary" />
-            Symptom Check
+            SYMPTOM CHECK
             <RAGBadge />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <p className="text-[10px] text-muted-foreground">Try: "shoulder", "knee", "stiffness", "fever", or "elbow" for tactical AI triage.</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">TRY: "SHOULDER", "KNEE", "STIFFNESS", "FEVER", "ELBOW"</p>
           <div className="flex gap-2">
             <Input
               value={symptomInput}
               onChange={(e) => setSymptomInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSymptomSubmit()}
-              placeholder="shoulder pain, knee stiffness..."
-              className="bg-secondary/50 border-border text-foreground text-xs h-9"
+              placeholder="ENTER SYMPTOM..."
+              className="bg-secondary border-border text-foreground text-xs h-9 font-mono-data uppercase placeholder:text-muted-foreground placeholder:normal-case"
             />
             <Button onClick={handleSymptomSubmit} disabled={symptomLoading} size="sm" className="bg-primary text-primary-foreground h-9 px-3">
               {symptomLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
@@ -179,16 +179,16 @@ const MedicalVault = () => {
           {symptomLoading && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <Loader2 className="w-4 h-4 animate-spin text-primary" />
-              <span className="text-[10px]">Gemini analyzing symptoms...</span>
+              <span className="text-[10px] uppercase tracking-wider font-bold">ANALYZING SYMPTOMS...</span>
             </div>
           )}
           {symptomResponse && (
-            <div className="glass rounded-xl p-3 space-y-1">
+            <div className="glass p-3 space-y-1">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                <span className="text-[9px] uppercase tracking-widest text-primary font-bold">Gemini Triage</span>
+                <span className="text-[9px] uppercase tracking-widest text-primary font-black">GEMINI TRIAGE</span>
               </div>
-              <p className="text-xs text-foreground/90 leading-relaxed">{symptomResponse}</p>
+              <p className="text-xs text-foreground/90 leading-relaxed font-mono-data">{symptomResponse}</p>
             </div>
           )}
         </CardContent>
@@ -198,14 +198,14 @@ const MedicalVault = () => {
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
-            <Pill className="w-4 h-4 text-primary" />
-            Current Supplements
+            <Pill className="w-4 h-4 text-foreground" />
+            CURRENT SUPPLEMENTS
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
             {profile.medications.map((med) => (
-              <Badge key={med} variant="secondary" className="text-[10px] font-medium">{med}</Badge>
+              <Badge key={med} variant="secondary" className="text-[10px] font-black border border-border uppercase tracking-wider">{med}</Badge>
             ))}
           </div>
         </CardContent>

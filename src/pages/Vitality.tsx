@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Moon, Footprints, Brain, TrendingDown, TrendingUp, Activity, Smartphone, Watch } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -10,12 +10,12 @@ import RAGBadge from "@/components/RAGBadge";
 import EthicalGuardrail from "@/components/EthicalGuardrail";
 
 const statusColor: Record<string, string> = {
-  tracking: "text-primary",
-  building: "text-primary",
-  low: "text-destructive",
-  normal: "text-emerald-400",
-  under: "text-warning",
-  active: "text-destructive",
+  tracking: "text-foreground",
+  building: "text-foreground",
+  low: "text-primary",
+  normal: "text-muted-foreground",
+  under: "text-primary",
+  active: "text-primary",
 };
 
 const Vitality = () => {
@@ -51,7 +51,7 @@ const Vitality = () => {
       <div className="space-y-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="text-xl font-black text-foreground tracking-tight">Vitality Hub</h2>
+            <h2 className="text-xl font-black text-foreground tracking-tight">VITALITY HUB</h2>
             <RAGBadge />
           </div>
           {!hasHardcodedData && (
@@ -61,55 +61,55 @@ const Vitality = () => {
                 variant={syncSource === "apple" ? "default" : "outline"}
                 onClick={() => handleSync("apple")}
                 className={syncSource === "apple"
-                  ? "bg-emerald-600 text-white text-[10px] font-bold h-7 px-2.5"
-                  : "border-border text-muted-foreground text-[10px] font-bold h-7 px-2.5"
+                  ? "bg-primary text-primary-foreground text-[10px] font-black h-7 px-2.5 uppercase tracking-wider"
+                  : "border-border text-muted-foreground text-[10px] font-black h-7 px-2.5 uppercase tracking-wider"
                 }
               >
                 <Watch className="w-3 h-3 mr-1" />
-                {syncSource === "apple" ? "Apple ✓" : "Apple Health"}
+                {syncSource === "apple" ? "APPLE ✓" : "APPLE"}
               </Button>
               <Button
                 size="sm"
                 variant={syncSource === "samsung" ? "default" : "outline"}
                 onClick={() => handleSync("samsung")}
                 className={syncSource === "samsung"
-                  ? "bg-emerald-600 text-white text-[10px] font-bold h-7 px-2.5"
-                  : "border-border text-muted-foreground text-[10px] font-bold h-7 px-2.5"
+                  ? "bg-primary text-primary-foreground text-[10px] font-black h-7 px-2.5 uppercase tracking-wider"
+                  : "border-border text-muted-foreground text-[10px] font-black h-7 px-2.5 uppercase tracking-wider"
                 }
               >
                 <Smartphone className="w-3 h-3 mr-1" />
-                {syncSource === "samsung" ? "Samsung ✓" : "Samsung Health"}
+                {syncSource === "samsung" ? "SAMSUNG ✓" : "SAMSUNG"}
               </Button>
             </div>
           )}
         </div>
-        <p className="text-xs text-muted-foreground">10 Executive Health Metrics</p>
+        <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold">10 EXECUTIVE HEALTH METRICS</p>
       </div>
 
       {/* Sleep Card */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
-            <Moon className="w-4 h-4 text-primary" />
-            Sleep
+            <Moon className="w-4 h-4 text-foreground" />
+            SLEEP
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-end justify-between">
             <div>
               <p className="text-3xl font-black text-foreground">{details.sleep.total}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">Target: {details.sleep.target}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5 font-bold uppercase">TARGET: {details.sleep.target}</p>
             </div>
-            <div className={`flex items-center gap-1 ${sleepOnTrack ? "text-emerald-400" : "text-destructive"}`}>
+            <div className={`flex items-center gap-1 ${sleepOnTrack ? "text-foreground" : "text-primary"}`}>
               {sleepOnTrack ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-              <span className="text-xs font-bold">{details.sleep.status}</span>
+              <span className="text-xs font-black uppercase">{details.sleep.status}</span>
             </div>
           </div>
           <Progress value={details.sleep.progress} className="h-2 bg-secondary" />
-          <div className="flex justify-between text-[10px] text-muted-foreground">
-            <span>Deep: {details.sleep.deep}</span>
+          <div className="flex justify-between text-[10px] text-muted-foreground font-mono-data">
+            <span>DEEP: {details.sleep.deep}</span>
             <span>REM: {details.sleep.rem}</span>
-            <span>Light: {details.sleep.light}</span>
+            <span>LIGHT: {details.sleep.light}</span>
           </div>
         </CardContent>
       </Card>
@@ -118,26 +118,26 @@ const Vitality = () => {
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
-            <Footprints className="w-4 h-4 text-primary" />
-            Steps
+            <Footprints className="w-4 h-4 text-foreground" />
+            STEPS
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex items-end justify-between">
             <div>
               <p className="text-3xl font-black text-foreground">{details.steps.value}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">Target: {details.steps.target}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5 font-bold uppercase">TARGET: {details.steps.target}</p>
             </div>
-            <div className={`flex items-center gap-1 ${stepsOnTrack ? "text-emerald-400" : "text-destructive"}`}>
+            <div className={`flex items-center gap-1 ${stepsOnTrack ? "text-foreground" : "text-primary"}`}>
               {stepsOnTrack ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-              <span className="text-xs font-bold">{details.steps.status}</span>
+              <span className="text-xs font-black uppercase">{details.steps.status}</span>
             </div>
           </div>
           <Progress value={details.steps.progress} className="h-2 bg-secondary" />
-          <div className="flex justify-between text-[10px] text-muted-foreground">
-            <span>Distance: {details.steps.distance}</span>
-            <span>Calories: {details.steps.calories}</span>
-            <span>Floors: {details.steps.floors}</span>
+          <div className="flex justify-between text-[10px] text-muted-foreground font-mono-data">
+            <span>DIST: {details.steps.distance}</span>
+            <span>CAL: {details.steps.calories}</span>
+            <span>FLOORS: {details.steps.floors}</span>
           </div>
         </CardContent>
       </Card>
@@ -146,20 +146,20 @@ const Vitality = () => {
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
-            <Activity className="w-4 h-4 text-primary" />
-            All Metrics
+            <Activity className="w-4 h-4 text-foreground" />
+            ALL METRICS
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-2">
             {metrics.map((m) => (
-              <div key={m.id} className="bg-secondary/50 rounded-lg px-3 py-2.5">
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{m.name}</p>
-                <p className="text-sm font-bold text-foreground">
+              <div key={m.id} className="bg-secondary border border-border px-3 py-2.5">
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">{m.name}</p>
+                <p className="text-sm font-black text-foreground font-mono-data">
                   {m.value}<span className="text-[10px] text-muted-foreground ml-0.5">{m.unit}</span>
                 </p>
-                <p className={`text-[9px] font-bold uppercase ${statusColor[m.status] || "text-muted-foreground"}`}>
-                  {m.status === "normal" ? "✓ Normal" : m.status === "low" || m.status === "under" ? "↓ " + m.status : m.status}
+                <p className={`text-[9px] font-black uppercase tracking-wider ${statusColor[m.status] || "text-muted-foreground"}`}>
+                  {m.status === "normal" ? "✓ NOMINAL" : m.status === "low" || m.status === "under" ? "↓ " + m.status.toUpperCase() : m.status.toUpperCase()}
                 </p>
               </div>
             ))}
@@ -168,10 +168,10 @@ const Vitality = () => {
       </Card>
 
       {/* AI Recovery Note */}
-      <div className="glass rounded-2xl p-4 space-y-2">
+      <div className="glass p-4 space-y-2">
         <div className="flex items-center gap-2">
           <Brain className="w-4 h-4 text-primary" />
-          <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Recovery Insight</span>
+          <span className="text-[10px] uppercase tracking-widest text-primary font-black">RECOVERY INSIGHT</span>
           <RAGBadge />
         </div>
         <p className="text-sm text-foreground/90 leading-relaxed">
@@ -179,7 +179,7 @@ const Vitality = () => {
         </p>
       </div>
 
-      <EthicalGuardrail message="Vitality metrics are self-reported estimates. Consult your physician for clinical-grade measurements." />
+      <EthicalGuardrail message="VITALITY METRICS ARE SELF-REPORTED ESTIMATES. CONSULT YOUR PHYSICIAN FOR CLINICAL-GRADE MEASUREMENTS." />
     </>
   );
 };
