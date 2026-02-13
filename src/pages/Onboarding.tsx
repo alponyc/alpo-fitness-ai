@@ -72,7 +72,7 @@ const Onboarding = () => {
       </button>
 
       <div className="relative z-10 flex flex-col items-center gap-5 px-6 w-full max-w-[360px]">
-        <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+        <div className="w-16 h-16 overflow-hidden border border-[#FFFFFF]">
           <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
         </div>
 

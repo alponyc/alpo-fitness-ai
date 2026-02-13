@@ -13,7 +13,7 @@ const Splash = () => {
           className="w-28 h-28 overflow-hidden border border-[#FFFFFF] animate-scale-in"
           style={{ animationDuration: "0.6s", animationDelay: "0.2s", animationFillMode: "both" }}
         >
-          <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover brightness-0 invert" />
+          <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
         </div>
 
         {/* Title */}
