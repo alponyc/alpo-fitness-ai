@@ -133,8 +133,26 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
             return data[0].id;
           });
         } else {
-          if (import.meta.env.DEV) console.warn("No profiles found for user:", user.id);
-          setProfiles({});
+          // Seed 3 demo profiles for brand-new users
+          const demoProfiles = [
+            { name: "Alpha", initials: "AL", goal: "lose", weight: "196.2", account_type: "user" },
+            { name: "Bravo", initials: "BR", goal: "gain", weight: "267.4", account_type: "client" },
+            { name: "Charlie", initials: "CH", goal: "maintain", weight: "138.0", account_type: "family" },
+          ];
+          const { data: seeded, error: seedErr } = await supabase
+            .from("profiles")
+            .insert(demoProfiles.map((p) => ({ user_id: user.id, ...p })))
+            .select();
+
+          if (!seedErr && seeded && seeded.length > 0) {
+            const map: Record<string, ProfileInfo> = {};
+            seeded.forEach((row) => { map[row.id] = rowToProfile(row); });
+            setProfiles(map);
+            setActiveProfile(seeded[0].id);
+          } else {
+            if (import.meta.env.DEV) console.error("Error seeding demo profiles:", seedErr);
+            setProfiles({});
+          }
         }
       } finally {
         if (isMounted) setLoading(false);

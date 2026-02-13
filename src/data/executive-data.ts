@@ -6,9 +6,9 @@ import { ProfileKey, ProfileInfo } from "@/contexts/ProfileContext";
  */
 export function getDataKey(info: ProfileInfo): ProfileKey {
   const name = info.name?.toLowerCase();
-  if (name === "alex") return "alpo";
-  if (name === "penelope") return "client";
-  if (name === "sophie") return "family";
+  if (name === "alex" || name === "alpha") return "alpo";
+  if (name === "penelope" || name === "bravo") return "client";
+  if (name === "sophie" || name === "charlie") return "family";
   // All other profiles get unique keys so they use empty defaults
   return `user_${info.id}`;
 }
