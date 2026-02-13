@@ -21,15 +21,10 @@ const Splash = () => {
           className="animate-fade-in"
           style={{ animationDuration: "0.6s", animationDelay: "0.5s", animationFillMode: "both" }}
         >
-          <h1 className="text-4xl font-black tracking-tight text-[#FFFFFF]">
-            ALPO <span className="text-primary">FITNESS</span> AI
+          <h1 className="text-2xl font-black tracking-tight text-[#FFFFFF]">
+            Adaptive Lifestyle Performance Optimization
           </h1>
-          <div className="mt-3 space-y-1">
-            <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold">A.L.P.O.</p>
-            <p className="text-[11px] tracking-[0.15em] text-[#FFFFFF] font-medium">
-              Adaptive Lifestyle Performance Optimization
-            </p>
-          </div>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mt-2">(A.L.P.O.) AI</p>
         </div>
 
         {/* Divider */}
