@@ -127,13 +127,33 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
           data.forEach((row) => {
             map[row.id] = rowToProfile(row);
           });
+
+          // Auto-seed demo companions if they don't exist yet
+          const names = data.map((r) => r.name?.toLowerCase());
+          const hasDemo = names.includes("alpha") || names.includes("bravo") || names.includes("charlie");
+          if (!hasDemo) {
+            const demoProfiles = [
+              { name: "Alpha", initials: "AL", goal: "lose", weight: "196.2", account_type: "user" },
+              { name: "Bravo", initials: "BR", goal: "gain", weight: "267.4", account_type: "client" },
+              { name: "Charlie", initials: "CH", goal: "maintain", weight: "138.0", account_type: "family" },
+            ];
+            const { data: seeded, error: seedErr } = await supabase
+              .from("profiles")
+              .insert(demoProfiles.map((p) => ({ user_id: user.id, ...p })))
+              .select();
+
+            if (!seedErr && seeded && isMounted) {
+              seeded.forEach((row) => { map[row.id] = rowToProfile(row); });
+            }
+          }
+
           setProfiles(map);
           setActiveProfile((prev) => {
             if (prev && map[prev]) return prev;
             return data[0].id;
           });
         } else {
-          // Seed 3 demo profiles for brand-new users
+          // No profiles at all — seed all 3 demos
           const demoProfiles = [
             { name: "Alpha", initials: "AL", goal: "lose", weight: "196.2", account_type: "user" },
             { name: "Bravo", initials: "BR", goal: "gain", weight: "267.4", account_type: "client" },
