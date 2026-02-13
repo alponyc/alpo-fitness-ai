@@ -24,15 +24,15 @@ const MacroRing = ({ label, value, max, unit }: { label: string; value: number; 
           strokeWidth={stroke}
           strokeDasharray={circumference}
           strokeDashoffset={circumference - progress}
-          strokeLinecap="round"
+          strokeLinecap="butt"
           transform="rotate(-90 44 44)"
           className="transition-all duration-1000 ease-out"
         />
-        <text x="44" y="44" textAnchor="middle" dominantBaseline="central" className="fill-foreground text-sm font-bold">
+        <text x="44" y="44" textAnchor="middle" dominantBaseline="central" className="fill-foreground text-sm font-black">
           {value}{unit}
         </text>
       </svg>
-      <span className="text-xs text-muted-foreground font-medium tracking-wide uppercase">{label}</span>
+      <span className="text-[10px] text-muted-foreground font-black tracking-widest uppercase">{label}</span>
     </div>
   );
 };

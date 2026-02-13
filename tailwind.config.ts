@@ -63,9 +63,9 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "0px",
+        md: "0px",
+        sm: "0px",
       },
       keyframes: {
         "accordion-down": {
@@ -77,12 +77,12 @@ export default {
           to: { height: "0" },
         },
         "pulse-red": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.5" },
+          "0%, 100%": { opacity: "1", boxShadow: "0 0 12px hsl(0 100% 50% / 0.6)" },
+          "50%": { opacity: "0.7", boxShadow: "0 0 4px hsl(0 100% 50% / 0.3)" },
         },
         "glow": {
-          "0%, 100%": { boxShadow: "0 0 8px hsl(160 84% 39% / 0.4)" },
-          "50%": { boxShadow: "0 0 16px hsl(160 84% 39% / 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 8px hsl(0 100% 50% / 0.4)" },
+          "50%": { boxShadow: "0 0 16px hsl(0 100% 50% / 0.6)" },
         },
       },
       animation: {

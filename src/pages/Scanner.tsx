@@ -22,8 +22,7 @@ const Scanner = () => {
   const [animationPhase, setAnimationPhase] = useState<"idle" | "scanning" | "verifying">("idle");
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // Hardcoded profiles have fridge data; dynamically created ones don't
-  const hasExistingData = !!info.goal; // Users with profile data have existing data
+  const hasExistingData = !!info.goal;
   const isFridgeEmpty = activeHotspot === "fridgeAudit" && !hasExistingData;
 
   const currentResult = activeHotspot ? scannerHotspots[activeHotspot] : scannerHotspots.sampleMenu;
@@ -55,7 +54,7 @@ const Scanner = () => {
   };
 
   const handleUpload = () => {
-    toast({ title: "Photo uploaded", description: "Analyzing macros..." });
+    toast({ title: "PHOTO UPLOADED", description: "Analyzing macros..." });
     setActiveHotspot("fridgeAudit");
     runGeminiAnimation(() => {});
   };
@@ -64,10 +63,10 @@ const Scanner = () => {
     <>
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <h2 className="text-xl font-black text-foreground tracking-tight">Menu Analysis</h2>
+          <h2 className="text-xl font-black text-foreground tracking-tight">MENU ANALYSIS</h2>
           <RAGBadge />
         </div>
-        <p className="text-xs text-muted-foreground">Upload an Uber Eats screenshot or paste a menu for AI breakdown.</p>
+        <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold">UPLOAD SCREENSHOT OR PASTE MENU FOR AI BREAKDOWN</p>
       </div>
 
       {/* Hotspot Buttons */}
@@ -81,8 +80,8 @@ const Scanner = () => {
               onClick={() => handleHotspot(key)}
               className={
                 activeHotspot === key
-                  ? "bg-primary text-primary-foreground text-[10px] font-bold h-auto py-2 flex flex-col gap-1"
-                  : "border-border text-muted-foreground hover:text-foreground text-[10px] font-bold h-auto py-2 flex flex-col gap-1"
+                  ? "bg-primary text-primary-foreground text-[10px] font-black h-auto py-2 flex flex-col gap-1 uppercase tracking-wider"
+                  : "border-border text-muted-foreground hover:text-foreground text-[10px] font-black h-auto py-2 flex flex-col gap-1 uppercase tracking-wider"
               }
             >
               <span className="text-base">{spot.icon}</span>
@@ -95,16 +94,16 @@ const Scanner = () => {
       {/* Upload Area */}
       <Card className="border-border bg-card border-dashed">
         <CardContent className="p-6 flex flex-col items-center justify-center text-center space-y-3">
-          <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
+          <div className="w-16 h-16 bg-secondary border border-border flex items-center justify-center">
             <Upload className="w-7 h-7 text-muted-foreground" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-foreground">Upload Screenshot</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">Uber Eats, DoorDash, or any menu image</p>
+            <p className="text-sm font-black text-foreground uppercase">UPLOAD SCREENSHOT</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5 uppercase tracking-wider">UBER EATS, DOORDASH, OR ANY MENU IMAGE</p>
           </div>
-          <Button onClick={handleUpload} className="bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-9 px-5">
+          <Button onClick={handleUpload} className="bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-black h-9 px-5 uppercase tracking-wider">
             <ScanLine className="w-4 h-4 mr-1.5" />
-            Choose Image
+            CHOOSE IMAGE
           </Button>
         </CardContent>
       </Card>
@@ -112,57 +111,57 @@ const Scanner = () => {
       {/* Paste Menu */}
       <Card className="border-border bg-card">
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-bold text-foreground">Paste Menu Text</CardTitle>
+          <CardTitle className="text-sm font-bold text-foreground uppercase">PASTE MENU TEXT</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <Textarea
             value={menuText}
             onChange={(e) => setMenuText(e.target.value)}
             placeholder="Paste restaurant menu items here..."
-            className="bg-secondary/50 border-border text-foreground placeholder:text-muted-foreground text-sm min-h-[80px] resize-none"
+            className="bg-secondary border-border text-foreground placeholder:text-muted-foreground text-sm min-h-[80px] resize-none"
           />
-          <Button onClick={handleAnalyze} disabled={analyzing} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold h-9">
+          <Button onClick={handleAnalyze} disabled={analyzing} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-black h-9 uppercase tracking-wider">
             {analyzing ? (
               <Loader2 className="w-4 h-4 mr-1.5 animate-spin" />
             ) : (
               <Sparkles className="w-4 h-4 mr-1.5" />
             )}
-            {analyzing ? "Analyzing..." : "Analyze with Gemini"}
+            {analyzing ? "ANALYZING..." : "ANALYZE WITH GEMINI"}
           </Button>
         </CardContent>
       </Card>
 
       {/* Gemini RAG-Audit Animation */}
       {analyzing && (
-        <div className="glass rounded-2xl p-6 flex flex-col items-center gap-3">
+        <div className="glass p-6 flex flex-col items-center gap-3">
           <Loader2 className="w-8 h-8 text-primary animate-spin" />
-          <p className="text-xs text-muted-foreground font-medium">
-            {animationPhase === "scanning" ? "Gemini scanning menu data..." : "RAG-Verifying against your protocols..."}
+          <p className="text-xs text-muted-foreground font-black uppercase tracking-wider">
+            {animationPhase === "scanning" ? "SCANNING MENU DATA..." : "RAG-VERIFYING AGAINST PROTOCOLS..."}
           </p>
           <div className="flex gap-1.5">
-            <div className={`w-2 h-2 rounded-full ${animationPhase === "scanning" ? "bg-primary animate-pulse" : "bg-primary"}`} />
-            <div className={`w-2 h-2 rounded-full ${animationPhase === "verifying" ? "bg-primary animate-pulse" : animationPhase === "scanning" ? "bg-muted" : "bg-primary"}`} />
+            <div className={`w-2 h-2 ${animationPhase === "scanning" ? "bg-primary animate-pulse" : "bg-primary"}`} />
+            <div className={`w-2 h-2 ${animationPhase === "verifying" ? "bg-primary animate-pulse" : animationPhase === "scanning" ? "bg-muted" : "bg-primary"}`} />
           </div>
         </div>
       )}
 
       {/* Analysis Results */}
       {showResults && isFridgeEmpty ? (
-        <div ref={resultsRef} className="glass rounded-2xl p-6 flex flex-col items-center justify-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+        <div ref={resultsRef} className="glass p-6 flex flex-col items-center justify-center gap-4">
+          <div className="w-12 h-12 bg-secondary border border-border flex items-center justify-center">
             <Upload className="w-6 h-6 text-muted-foreground" />
           </div>
           <div className="text-center space-y-1">
-            <p className="text-sm font-semibold text-foreground">No Inventory Yet</p>
-            <p className="text-xs text-muted-foreground">Upload a fridge photo or enter your inventory list to get started.</p>
+            <p className="text-sm font-black text-foreground uppercase">NO INVENTORY YET</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">UPLOAD A FRIDGE PHOTO TO GET STARTED</p>
           </div>
         </div>
       ) : showResults && (
         <div ref={resultsRef}>
-          <div className="glass rounded-2xl p-4 space-y-2">
+          <div className="glass p-4 space-y-2">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-[10px] uppercase tracking-widest text-primary font-bold">Gemini RAG-Audit</span>
+              <span className="text-[10px] uppercase tracking-widest text-primary font-black">GEMINI RAG-AUDIT</span>
               <RAGBadge />
             </div>
             <div className="space-y-2">
@@ -170,11 +169,11 @@ const Scanner = () => {
                 const trimmed = line.trim();
                 if (!trimmed) return null;
                 if (trimmed.startsWith("**") && trimmed.endsWith("**")) {
-                  return <p key={i} className="text-xs font-black text-foreground mt-3 first:mt-0">{trimmed.replace(/\*\*/g, "")}</p>;
+                  return <p key={i} className="text-xs font-black text-foreground mt-3 first:mt-0 uppercase">{trimmed.replace(/\*\*/g, "")}</p>;
                 }
                 if (trimmed.startsWith("**") && trimmed.includes(":**")) {
                   const parts = trimmed.split(":**");
-                  return <p key={i} className="text-xs font-black text-foreground mt-3 first:mt-0">{parts[0].replace(/\*\*/g, "")}: <span className="font-normal text-foreground/80">{parts.slice(1).join(":**").replace(/\*\*/g, "")}</span></p>;
+                  return <p key={i} className="text-xs font-black text-foreground mt-3 first:mt-0 uppercase">{parts[0].replace(/\*\*/g, "")}: <span className="font-normal text-foreground/80 normal-case">{parts.slice(1).join(":**").replace(/\*\*/g, "")}</span></p>;
                 }
                 if (trimmed.startsWith("•")) {
                   return <p key={i} className="text-xs text-foreground/80 leading-relaxed pl-3">{trimmed}</p>;
@@ -184,43 +183,41 @@ const Scanner = () => {
             </div>
           </div>
 
-          
-
-          <Card className="border-border bg-card">
+          <Card className="border-border bg-card mt-2">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-bold flex items-center gap-2 text-emerald-400">
+              <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
                 <ShieldCheck className="w-4 h-4" />
-                Safe – Eat These
+                SAFE — CLEARED
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {currentResult.safe.map((item) => (
-                <div key={item.name} className="flex items-center justify-between bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2.5">
+                <div key={item.name} className="flex items-center justify-between bg-secondary border border-border px-3 py-2.5">
                   <div>
-                    <p className="text-xs font-semibold text-foreground">{item.name}</p>
+                    <p className="text-xs font-bold text-foreground uppercase">{item.name}</p>
                     <p className="text-[10px] text-muted-foreground">{item.note}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-400">{item.cal}</span>
+                  <span className="text-[10px] font-black text-foreground font-mono-data">{item.cal}</span>
                 </div>
               ))}
             </CardContent>
           </Card>
 
-          <Card className="border-border bg-card">
+          <Card className="border-primary/30 bg-card mt-2">
             <CardHeader className="pb-3">
-              <CardTitle className={`text-sm font-bold flex items-center gap-2 ${activeHotspot === "fridgeAudit" ? "text-amber-400" : "text-destructive"}`}>
+              <CardTitle className="text-sm font-bold flex items-center gap-2 text-primary">
                 <ShieldAlert className="w-4 h-4" />
-                {activeHotspot === "fridgeAudit" ? "⚠️ Low Inventory" : "Avoid – Skip These"}
+                {activeHotspot === "fridgeAudit" ? "⚠ LOW INVENTORY" : "AVOID — FLAGGED"}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {currentResult.avoid.map((item) => (
-                <div key={item.name} className={`flex items-center justify-between rounded-lg px-3 py-2.5 ${activeHotspot === "fridgeAudit" ? "bg-amber-500/10 border border-amber-500/20" : "bg-destructive/10 border border-destructive/20"}`}>
+                <div key={item.name} className="flex items-center justify-between bg-primary/5 border border-primary/30 px-3 py-2.5">
                   <div>
-                    <p className="text-xs font-semibold text-foreground">{item.name}</p>
+                    <p className="text-xs font-bold text-foreground uppercase">{item.name}</p>
                     <p className="text-[10px] text-muted-foreground">{item.note}</p>
                   </div>
-                  <span className={`text-[10px] font-bold ${activeHotspot === "fridgeAudit" ? "text-amber-400" : "text-destructive"}`}>{item.cal}</span>
+                  <span className="text-[10px] font-black text-primary font-mono-data">{item.cal}</span>
                 </div>
               ))}
             </CardContent>

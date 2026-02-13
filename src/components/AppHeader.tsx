@@ -17,15 +17,15 @@ const AppHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border px-4 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-background border-b border-border px-4 py-3 flex items-center justify-between">
       <div className="flex items-center gap-2.5">
-        <img src={alpoLogo} alt="Alpo Fitness" className="w-8 h-8 rounded-lg object-cover" />
+        <img src={alpoLogo} alt="Alpo Fitness" className="w-8 h-8 object-cover" />
         <div>
           <h1 className="text-base font-black tracking-tight leading-none">
-            Alpo <span className="text-primary">Fitness</span> AI
+            ALPO <span className="text-primary">FITNESS</span> AI
           </h1>
           <p className="text-[7px] uppercase tracking-[0.2em] text-muted-foreground font-bold leading-none mt-0.5">
-            A.L.P.O. — Adaptive Lifestyle Performance Optimization
+            ADAPTIVE LIFESTYLE PERFORMANCE OPTIMIZATION
           </p>
         </div>
       </div>
@@ -44,7 +44,7 @@ const AppHeader = () => {
         <DropdownMenuContent align="end" className="bg-card border-border min-w-[160px]">
           {profileKeys.map((key) => {
             const p = profiles[key];
-            const isFirst = key === profileKeys[0]; // First profile is the "owner" — can't delete
+            const isFirst = key === profileKeys[0];
             return (
               <DropdownMenuItem
                 key={key}
@@ -63,7 +63,7 @@ const AppHeader = () => {
                 {!isFirst && (
                   <button
                     onClick={(e) => { e.stopPropagation(); removeProfile(key); }}
-                    className="ml-auto p-0.5 rounded hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
+                    className="ml-auto p-0.5 hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -77,14 +77,14 @@ const AppHeader = () => {
             className="text-xs font-semibold text-primary cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5 mr-2" />
-            Add Profile
+            ADD PROFILE
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleSignOut}
             className="text-xs font-semibold text-destructive cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5 mr-2" />
-            Sign Out
+            SIGN OUT
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
