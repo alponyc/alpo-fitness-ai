@@ -84,7 +84,7 @@ const Auth = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#000000]">
       <div className="flex flex-col items-center gap-6 px-6 w-full max-w-[340px]">
         <div className="w-20 h-20 overflow-hidden border border-[#FFFFFF]">
-          <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover brightness-0 invert" />
+          <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
         </div>
 
         <div className="text-center">
