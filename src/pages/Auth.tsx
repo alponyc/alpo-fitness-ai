@@ -83,15 +83,15 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#000000]">
       <div className="flex flex-col items-center gap-6 px-6 w-full max-w-[340px]">
-        <div className="w-28 h-28 overflow-hidden">
-          <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
+        <div className="w-36 h-36 overflow-hidden">
+          <img src={alpoLogo} alt="A.L.P.O." className="w-full h-full object-cover" />
         </div>
 
         <div className="text-center">
-          <h1 className="text-xl font-black tracking-tight text-[#FFFFFF]">
+          <h1 className="text-lg font-black tracking-tight text-[#FFFFFF]">
             Adaptive Lifestyle Performance Optimization
           </h1>
-          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mt-1">(A.L.P.O.) AI</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mt-1">(A.L.P.O.)</p>
           <p className="text-[10px] uppercase tracking-[0.2em] text-[#FFFFFF] font-bold mt-1">
             {isSignUp ? "CREATE ACCOUNT" : "SIGN IN"}
           </p>

@@ -10,7 +10,7 @@ const Splash = () => {
       <div className="flex flex-col items-center gap-6 px-8 text-center">
         {/* Logo — monochrome */}
         <div
-          className="w-36 h-36 overflow-hidden animate-scale-in"
+          className="w-44 h-44 overflow-hidden animate-scale-in"
           style={{ animationDuration: "0.6s", animationDelay: "0.2s", animationFillMode: "both" }}
         >
           <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
@@ -24,7 +24,7 @@ const Splash = () => {
           <h1 className="text-2xl font-black tracking-tight text-[#FFFFFF]">
             Adaptive Lifestyle Performance Optimization
           </h1>
-          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mt-2">(A.L.P.O.) AI</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mt-2">(A.L.P.O.)</p>
         </div>
 
         {/* Divider */}
