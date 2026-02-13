@@ -83,7 +83,7 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#000000]">
       <div className="flex flex-col items-center gap-6 px-6 w-full max-w-[340px]">
-        <div className="w-20 h-20 overflow-hidden border border-[#FFFFFF]">
+        <div className="w-28 h-28 overflow-hidden">
           <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
         </div>
 

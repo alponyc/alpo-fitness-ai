@@ -10,7 +10,7 @@ const Splash = () => {
       <div className="flex flex-col items-center gap-6 px-8 text-center">
         {/* Logo — monochrome */}
         <div
-          className="w-28 h-28 overflow-hidden border border-[#FFFFFF] animate-scale-in"
+          className="w-36 h-36 overflow-hidden animate-scale-in"
           style={{ animationDuration: "0.6s", animationDelay: "0.2s", animationFillMode: "both" }}
         >
           <img src={alpoLogo} alt="Alpo Fitness AI" className="w-full h-full object-cover" />
