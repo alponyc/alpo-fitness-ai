@@ -88,9 +88,10 @@ const Auth = () => {
         </div>
 
         <div className="text-center">
-          <h1 className="text-3xl font-black tracking-tight text-[#FFFFFF]">
-            ALPO <span className="text-primary">FITNESS</span> AI
+          <h1 className="text-xl font-black tracking-tight text-[#FFFFFF]">
+            Adaptive Lifestyle Performance Optimization
           </h1>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary font-bold mt-1">(A.L.P.O.) AI</p>
           <p className="text-[10px] uppercase tracking-[0.2em] text-[#FFFFFF] font-bold mt-1">
             {isSignUp ? "CREATE ACCOUNT" : "SIGN IN"}
           </p>
